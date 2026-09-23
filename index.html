@@ -13,7 +13,6 @@
       --text-muted: #8b949e;
       --accent: #58a6ff;
       --accent-hover: #1f6feb;
-      --emerald: #3fb950;
       --purple: #a371f7;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
@@ -61,7 +60,6 @@
       border: 1px solid var(--card-border);
       backdrop-filter: blur(12px);
       border-radius: 50px;
-      gap: 10px;
     }
 
     .brand {
@@ -71,6 +69,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .brand-icon {
@@ -79,47 +78,6 @@
       background-color: var(--accent);
       border-radius: 50%;
       box-shadow: 0 0 12px var(--accent);
-    }
-
-    .nav-links { 
-      display: flex; 
-      gap: 8px; 
-      align-items: center;
-    }
-
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      border-radius: 20px;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .nav-link:hover, .nav-link.active-link {
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .btn-nav-purple {
-      background: rgba(163, 113, 247, 0.15);
-      border: 1px solid rgba(163, 113, 247, 0.3);
-      color: var(--purple);
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-nav-purple:hover {
-      background: rgba(163, 113, 247, 0.25);
     }
 
     .card {
@@ -139,6 +97,7 @@
       color: #fff;
       margin-bottom: 12px;
       line-height: 1.25;
+      text-align: center;
     }
 
     p.subtitle {
@@ -146,6 +105,7 @@
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 24px;
+      text-align: center;
     }
 
     .input-group {
@@ -170,6 +130,12 @@
     input[type="text"]:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     button, .btn {
@@ -209,6 +175,16 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
+    .btn-purple {
+      background: rgba(163, 113, 247, 0.15);
+      border: 1px solid rgba(163, 113, 247, 0.3);
+      color: var(--purple);
+    }
+
+    .btn-purple:hover {
+      background: rgba(163, 113, 247, 0.25);
+    }
+
     .box {
       background: rgba(9, 13, 22, 0.9);
       border: 1px solid var(--card-border);
@@ -227,32 +203,106 @@
       gap: 10px;
     }
 
+    /* Recents list */
+    .recents-container {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .recents-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .recents-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      width: auto;
+      padding: 0;
+    }
+
+    .clear-btn:hover {
+      color: #f85149;
+      background: none;
+      transform: none;
+    }
+
+    .recent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .recent-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(9, 13, 22, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .recent-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--card-border);
+    }
+
+    .recent-url {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80%;
+    }
+
+    .recent-arrow {
+      color: var(--text-muted);
+    }
+
     .stats-container {
-      margin-top: 32px;
-      padding-top: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
       border-top: 1px solid var(--card-border);
     }
 
     .stat-item-full {
       background: rgba(9, 13, 22, 0.4);
-      padding: 16px;
+      padding: 14px;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.03);
     }
 
     .stat-val-full {
       font-family: var(--mono);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: #fff;
       word-break: break-all;
-      line-height: 1.4;
     }
 
     .stat-lbl-full {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     #toast {
@@ -287,6 +337,10 @@
       text-align: center;
       margin-top: 40px;
     }
+
+    @media (max-width: 480px) {
+      .button-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -296,33 +350,40 @@
   <div class="app-container">
     
     <nav>
-      <div class="brand">
+      <div class="brand" onclick="window.location.hash=''">
         <span class="brand-icon"></span>
         <span>BABEL WEB</span>
       </div>
-      <div class="nav-links">
-        <a class="nav-link active-link" id="nav-home" onclick="navigateTo('home')">Home</a>
-        <a class="nav-link" id="nav-search" onclick="navigateTo('search')">Search</a>
-        <button class="btn-nav-purple" onclick="exploreRandomUrl()">
-          <span>Random</span>
-        </button>
-      </div>
     </nav>
 
-    <!-- PAGE 1 : HOME -->
+    <!-- MAIN SEARCH PAGE -->
     <div id="page-home" class="page active">
       <div class="card">
         <h1>Every URL already exists.</h1>
         <p class="subtitle">
-          Inspired by the Library of Babel, this system mathematically calculates the location of every Web address.
+          Search a URL or Babel location key to calculate its reciprocal position.
         </p>
 
         <div class="input-group">
-          <input type="text" id="home-input" placeholder="https://example.com/path" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
-          <button onclick="generateUrl()">
-            <span>Find location</span>
-            <span>→</span>
-          </button>
+          <input type="text" id="home-input" placeholder="https://example.com or Babel key" autocomplete="off" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          
+          <div class="button-row">
+            <button onclick="searchOrGenerate()">
+              <span>Find Location</span>
+            </button>
+            <button class="btn btn-purple" onclick="exploreRandomUrl()">
+              <span>🎲 I'm Feeling Lucky</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RECENT EXPLORATIONS -->
+        <div id="recents-section" class="recents-container" style="display: none;">
+          <div class="recents-header">
+            <span class="recents-title">Recent Explorations</span>
+            <button class="clear-btn" onclick="clearRecents()">Clear</button>
+          </div>
+          <div id="recent-list" class="recent-list"></div>
         </div>
 
         <div class="stats-container">
@@ -334,28 +395,11 @@
       </div>
     </div>
 
-    <!-- PAGE 2 : SEARCH -->
-    <div id="page-search" class="page">
-      <div class="card">
-        <h1>Search a location</h1>
-        <p class="subtitle">
-          Enter a key or standard URL to calculate its reciprocal location.
-        </p>
-
-        <div class="input-group">
-          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... or https://site.com" autocomplete="off" onkeydown="if(event.key==='Enter') searchUrl()">
-          <button onclick="searchUrl()">Calculate / Decode</button>
-        </div>
-
-        <div id="search-results"></div>
-      </div>
-    </div>
-
-    <!-- PAGE 3 : VIEW LOCATION -->
+    <!-- VIEW LOCATION PAGE -->
     <div id="page-view" class="page">
       <div class="card">
-        <h1>Calculated destination</h1>
-        <p class="subtitle">Here is the URL associated with this Babel location:</p>
+        <h1 style="text-align: left;">Calculated destination</h1>
+        <p class="subtitle" style="text-align: left;">Here is the URL associated with this Babel location:</p>
 
         <div id="decoded-url-box" class="box">---</div>
 
@@ -365,6 +409,9 @@
           </a>
           <button class="btn btn-secondary" onclick="copyCurrentLink()">
             Copy Babel link
+          </button>
+          <button class="btn btn-secondary" onclick="window.location.hash=''">
+            ← Back to Search
           </button>
         </div>
       </div>
@@ -397,69 +444,63 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    function navigateTo(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
-      
-      const targetPage = document.getElementById('page-' + pageId);
-      if(targetPage) targetPage.classList.add('active');
-      
-      const targetNav = document.getElementById('nav-' + pageId);
-      if(targetNav) targetNav.classList.add('active-link');
-
-      if(pageId === 'home') window.location.hash = '';
-      if(pageId === 'search') window.location.hash = 'search';
+    /* LOCAL STORAGE / RECENTS MANAGER */
+    function addRecent(url, hashKey) {
+      let recents = JSON.parse(localStorage.getItem('babel_recents') || '[]');
+      recents = recents.filter(item => item.hashKey !== hashKey);
+      recents.unshift({ url, hashKey });
+      if (recents.length > 5) recents.pop();
+      localStorage.setItem('babel_recents', JSON.stringify(recents));
     }
 
-    function generateUrl() {
-      let input = document.getElementById('home-input').value.trim();
-      if (!input) return;
-      if (!/^https?:\/\//i.test(input)) input = 'https://' + input;
+    function renderRecents() {
+      const recents = JSON.parse(localStorage.getItem('babel_recents') || '[]');
+      const section = document.getElementById('recents-section');
+      const list = document.getElementById('recent-list');
 
-      const encoded = encodeBase64(input);
-      window.location.hash = 'web/' + encoded;
+      if (recents.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      list.innerHTML = recents.map(item => `
+        <a class="recent-item" href="#web/${item.hashKey}">
+          <span class="recent-url">${item.url}</span>
+          <span class="recent-arrow">→</span>
+        </a>
+      `).join('');
     }
 
-    // Simplified random generator: https://[text].[text]
-    function exploreRandomUrl() {
-      const randStr = () => Math.random().toString(36).substring(2, 7);
-      const generatedUrl = `https://${randStr()}.${randStr()}`;
-      window.location.hash = 'web/' + encodeBase64(generatedUrl);
+    function clearRecents() {
+      localStorage.removeItem('babel_recents');
+      renderRecents();
     }
 
-    function searchUrl() {
-      let query = document.getElementById('search-input').value.trim();
+    /* SEARCH OR DECODE LOGIC */
+    function searchOrGenerate() {
+      let query = document.getElementById('home-input').value.trim();
       if (!query) return;
 
       if (query.includes('#web/')) query = query.split('#web/')[1];
       if (query.includes('/web/')) query = query.split('/web/')[1];
 
-      const resultsDiv = document.getElementById('search-results');
-
       try {
         const decoded = decodeBase64(query);
-        resultsDiv.innerHTML = `
-          <div style="margin-top:20px;">
-            <p class="subtitle" style="margin-bottom:8px;">Decoded string in this ID:</p>
-            <div class="box">${decoded}</div>
-            <button onclick="window.location.hash='web/${query}'">Open this location</button>
-          </div>
-        `;
+        window.location.hash = 'web/' + query;
         return;
       } catch (e) {}
 
       let formatted = query;
       if (!/^https?:\/\//i.test(formatted)) formatted = 'https://' + formatted;
       const encoded = encodeBase64(formatted);
-      const fullLink = window.location.origin + window.location.pathname + '#web/' + encoded;
+      window.location.hash = 'web/' + encoded;
+    }
 
-      resultsDiv.innerHTML = `
-        <div style="margin-top:20px;">
-          <p class="subtitle" style="margin-bottom:8px;">Calculated location:</p>
-          <div class="box">${fullLink}</div>
-          <button onclick="window.location.hash='web/${encoded}'">View location</button>
-        </div>
-      `;
+    function exploreRandomUrl() {
+      const randStr = () => Math.random().toString(36).substring(2, 7);
+      const generatedUrl = `https://${randStr()}.${randStr()}`;
+      window.location.hash = 'web/' + encodeBase64(generatedUrl);
     }
 
     function copyCurrentLink() {
@@ -490,13 +531,15 @@
           extBtn.style.display = 'none';
         }
 
+        addRecent(decoded, encoded);
+
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-view').classList.add('active');
 
-      } else if (hash === '#search') {
-        navigateTo('search');
       } else {
-        navigateTo('home');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-home').classList.add('active');
+        renderRecents();
       }
     }
 
