@@ -11,11 +11,9 @@
       --border-color: #2e2e34;
       --text-main: #ffffff;
       --text-muted: #8e8e93;
-      --accent: #4a4a52;
       --font: system-ui, -apple-system, sans-serif;
       --mono: ui-monospace, SFMono-Regular, monospace;
 
-      /* Couleurs par défaut (Seront écrasées par JS selon la saison) */
       --c1: #ffffff;
       --c2: #ffffff;
       --c3: #ffffff;
@@ -68,7 +66,6 @@
       justify-content: center;
       flex: 1;
       padding: 20px;
-      margin-top: -50px;
     }
 
     /* LOGO DOODLE SAISONNIER */
@@ -84,7 +81,6 @@
       user-select: none;
     }
 
-    /* Attribution des couleurs dynamic par saison aux lettres */
     .logo span.l1 { color: var(--c1); }
     .logo span.l2 { color: var(--c2); }
     .logo span.l3 { color: var(--c3); }
@@ -99,7 +95,7 @@
       margin-top: 4px;
     }
 
-    /* BARRE DE RECHERCHE ET HISTORIQUE */
+    /* BARRE DE RECHERCHE CLIQUABLE & HISTORIQUE COLLE */
     .search-box {
       width: 100%;
       max-width: 580px;
@@ -114,6 +110,7 @@
       border-radius: 12px;
       padding: 14px 18px;
       gap: 12px;
+      cursor: text;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -122,10 +119,11 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
-    /* Arrondir les coins du haut quand l'historique est ouvert */
+    /* Suppression des arrondis bas quand l'historique est ouvert */
     .search-box.has-history .input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      border-bottom-color: var(--border-color);
     }
 
     .search-icon {
@@ -133,6 +131,7 @@
       height: 18px;
       fill: var(--text-muted);
       flex-shrink: 0;
+      pointer-events: none;
     }
 
     input[type="text"] {
@@ -145,7 +144,7 @@
       font-family: var(--font);
     }
 
-    /* MENU DEROULANT HISTORIQUE */
+    /* MENU HISTORIQUE DIRECTEMENT COLLE */
     .history-dropdown {
       position: absolute;
       top: 100%;
@@ -160,6 +159,7 @@
       z-index: 10;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
       overflow: hidden;
+      margin-top: 0;
     }
 
     .history-header {
@@ -214,7 +214,6 @@
       flex: 1;
     }
 
-    /* BOUTONS D'ACTION */
     .button-row {
       display: flex;
       gap: 12px;
@@ -237,49 +236,134 @@
       background-color: var(--border-color);
     }
 
-    /* PAGE DE RESULTAT */
+    /* PAGE DE RÉSULTATS AMÉLIORÉE */
     .result-container {
       width: 100%;
-      max-width: 580px;
+      max-width: 680px;
       display: none;
+      margin: 20px 0;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
 
     .result-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .result-preview {
+    .result-meta-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .site-favicon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .site-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-name {
       font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .site-url-breadcrumb {
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-bottom: 8px;
       word-break: break-all;
     }
 
-    .result-title {
-      font-size: 1.3rem;
-      color: var(--text-main);
+    .result-title-main {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
       margin-bottom: 16px;
-      font-weight: 600;
+      line-height: 1.3;
     }
 
-    .box {
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
       background: var(--bg);
       border: 1px solid var(--border-color);
-      padding: 14px;
+      padding: 12px 14px;
       border-radius: 8px;
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      word-break: break-all;
+    }
+
+    .url-box {
+      background: var(--bg);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 10px;
       word-break: break-all;
       font-family: var(--mono);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--text-main);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
     .action-stack {
       display: flex;
-      gap: 10px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background-color: var(--text-main);
+      color: var(--bg);
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background-color: #d1d1d6;
     }
 
     /* FOOTER */
@@ -332,7 +416,6 @@
     <!-- ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- LOGO DOODLE AUTOMATIQUE -->
       <div class="logo-container">
         <div class="logo">
           <span class="l1">B</span><span class="l2">a</span><span class="l3">b</span><span class="l4">e</span><span class="l5">l</span>
@@ -340,16 +423,16 @@
         <div id="season-name" class="season-tag">---</div>
       </div>
 
-      <!-- BARRE DE RECHERCHE + HISTORIQUE -->
+      <!-- BARRE CLIQUABLE -->
       <div class="search-box" id="search-box-container">
-        <div class="input-wrapper">
+        <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <svg class="search-icon" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
           </svg>
           <input type="text" id="search-input" placeholder="Entrer une URL ou une clé Babel..." autocomplete="off" onkeydown="if(event.key==='Enter') searchOrGenerate()">
         </div>
 
-        <!-- DEROULANT HISTORIQUE AU CLIC -->
+        <!-- DÉROULANT HISTORIQUE DIRECTEMENT COLLÉ -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
             <span>Recherches récentes</span>
@@ -366,21 +449,52 @@
 
     </div>
 
-    <!-- RESULTAT -->
+    <!-- PAGE DE RÉSULTATS AMÉLIORÉE -->
     <div id="result-view" class="result-container">
-      <div class="result-card">
-        <div class="result-preview" id="decoded-url-preview">https://example.com</div>
-        <div class="result-title">Emplacement Babel</div>
-        
-        <div id="decoded-url-box" class="box">---</div>
+      
+      <div class="result-header">
+        <button class="btn" onclick="window.location.hash=''">← Nouvelle recherche</button>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Résultat déterministe Babel</span>
+      </div>
 
-        <div class="action-stack">
-          <a id="external-btn" class="btn" style="text-decoration: none; display: inline-flex; align-items: center;" href="#" target="_blank" rel="noopener noreferrer">
-            Ouvrir l'URL ↗
-          </a>
-          <button class="btn" onclick="copyCurrentLink()">Copier le lien</button>
-          <button class="btn" onclick="window.location.hash=''">← Retour</button>
+      <div class="result-card">
+        
+        <!-- EN-TÊTE SITE & BREADCRUMB -->
+        <div class="result-meta-top">
+          <div id="res-favicon" class="site-favicon">B</div>
+          <div class="site-info">
+            <span id="res-domain" class="site-name">babel.index</span>
+            <span id="res-breadcrumb" class="site-url-breadcrumb">https://...</span>
+          </div>
         </div>
+
+        <h1 id="res-title" class="result-title-main">Emplacement de destination</h1>
+
+        <!-- DÉTAILS DU RÉSULTAT -->
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Protocole</div>
+            <div id="res-protocol" class="info-value">HTTPS</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Statut du lien</div>
+            <div id="res-status" class="info-value" style="color: #88d498;">Indexé & Prêt</div>
+          </div>
+        </div>
+
+        <!-- AFFICHAGE DE L'URL -->
+        <div class="url-box">
+          <span id="decoded-url-box">---</span>
+        </div>
+
+        <!-- BOUTONS D'ACTION -->
+        <div class="action-stack">
+          <a id="external-btn" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center;" href="#" target="_blank" rel="noopener noreferrer">
+            Visiter la destination ↗
+          </a>
+          <button class="btn" onclick="copyCurrentLink()">Copier la clé Babel</button>
+        </div>
+
       </div>
     </div>
 
@@ -395,9 +509,9 @@
   <div id="toast">Lien copié dans le presse-papier !</div>
 
   <script>
-    /* 1. SYSTEME DOODLE PAR SAISON */
+    /* 1. DOODLE SAISONNIER */
     function applySeasonalDoodle() {
-      const month = new Date().getMonth() + 1; // 1-12
+      const month = new Date().getMonth() + 1;
       const root = document.documentElement;
       const tag = document.getElementById('season-name');
 
@@ -424,7 +538,7 @@
       });
     }
 
-    /* 2. ENCODAGE BASE64 */
+    /* 2. BASE64 */
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -443,14 +557,18 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* 3. HISTORIQUE AU CLIC SUR LA BARRE */
+    /* 3. BARRE DE RECHERCHE & HISTORIQUE */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
 
+    function focusSearchInput() {
+      searchInput.focus();
+      showHistory();
+    }
+
     searchInput.addEventListener('focus', showHistory);
 
-    // Fermer quand on clique en dehors
     document.addEventListener('click', (e) => {
       if (!searchBoxContainer.contains(e.target)) {
         hideHistory();
@@ -475,7 +593,7 @@
       }
 
       list.innerHTML = history.map(item => `
-        <div class="history-item" onclick="loadFromHistory('${item.hashKey}')">
+        <div class="history-item" onclick="loadFromHistory('${item.hashKey}', event)">
           <svg class="history-icon" viewBox="0 0 24 24">
             <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
           </svg>
@@ -498,12 +616,13 @@
       hideHistory();
     }
 
-    function loadFromHistory(hashKey) {
+    function loadFromHistory(hashKey, e) {
+      e.stopPropagation();
       window.location.hash = 'web/' + hashKey;
       hideHistory();
     }
 
-    /* 4. ACTIONS DE RECHERCHE */
+    /* 4. RECHERCHE ET NAVIGATION */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -533,7 +652,7 @@
       showToast("Lien copié dans le presse-papier !");
     }
 
-    /* 5. ROUTAGE */
+    /* 5. ROUTAGE ET MISE A JOUR DES RESULTATS */
     function handleRoute() {
       const hash = window.location.hash;
 
@@ -547,8 +666,27 @@
           decoded = "[Données non déchiffrables: " + encoded + "]";
         }
 
+        // Mise à jour de la page de résultat améliorée
         document.getElementById('decoded-url-box').innerText = decoded;
-        document.getElementById('decoded-url-preview').innerText = decoded;
+        document.getElementById('res-breadcrumb').innerText = decoded;
+
+        let domain = 'Emplacement Web';
+        let initial = 'B';
+        let protocol = 'Générique';
+
+        if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+          try {
+            const urlObj = new URL(decoded);
+            domain = urlObj.hostname;
+            initial = domain.replace('www.', '')[0].toUpperCase();
+            protocol = urlObj.protocol.replace(':', '').toUpperCase();
+          } catch(e) {}
+        }
+
+        document.getElementById('res-domain').innerText = domain;
+        document.getElementById('res-title').innerText = domain !== 'Emplacement Web' ? `Destination : ${domain}` : 'Résultat d\'emplacement Babel';
+        document.getElementById('res-favicon').innerText = initial;
+        document.getElementById('res-protocol').innerText = protocol;
 
         const extBtn = document.getElementById('external-btn');
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
