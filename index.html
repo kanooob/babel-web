@@ -15,7 +15,6 @@
       --accent-hover: #1f6feb;
       --emerald: #3fb950;
       --purple: #a371f7;
-      --red: #f85149;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
     }
@@ -36,7 +35,6 @@
       padding: 20px;
     }
 
-    /* Fond animé grille hexagonale */
     .bg-grid {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -244,7 +242,6 @@
       margin-top: 2px;
     }
 
-    /* Notification Toast */
     #toast {
       position: fixed;
       bottom: 30px;
@@ -310,8 +307,8 @@
             <span>Trouver l'emplacement</span>
             <span>→</span>
           </button>
-          <button class="btn btn-purple" onclick="pureRandomUrl()">
-            <span>🎲 Emplacement purement aléatoire</span>
+          <button class="btn btn-purple" onclick="exploreRandomUrl()">
+            <span>🎲 Explorer un emplacement</span>
           </button>
         </div>
 
@@ -361,17 +358,6 @@
             Copier le lien Babel
           </button>
         </div>
-      </div>
-    </div>
-
-    <!-- PAGE 4 : ERREUR OU CONTENU ILLISIBLE -->
-    <div id="page-error" class="page">
-      <div class="card" style="text-align: center;">
-        <h1 style="color:var(--red);">Emplacement Invalide</h1>
-        <p class="subtitle">
-          Cet emplacement contient du texte ou une structure non interprétable comme une URL.
-        </p>
-        <button onclick="navigateTo('home')">Retourner à l'accueil</button>
       </div>
     </div>
 
@@ -425,10 +411,9 @@
       window.location.hash = 'web/' + encoded;
     }
 
-    // VRAI ALEATOIRE : Génère une séquence Base64 pur hasard
-    function pureRandomUrl() {
+    function exploreRandomUrl() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-      let randomLength = Math.floor(Math.random() * 30) + 15; // Taille variable
+      let randomLength = Math.floor(Math.random() * 25) + 12;
       let randomString = '';
       for (let i = 0; i < randomLength; i++) {
         randomString += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -447,16 +432,14 @@
 
       try {
         const decoded = decodeBase64(query);
-        if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
-          resultsDiv.innerHTML = `
-            <div style="margin-top:20px;">
-              <p class="subtitle" style="margin-bottom:8px;">URL trouvée dans cet identifiant :</p>
-              <div class="box">${decoded}</div>
-              <button onclick="window.location.hash='web/${query}'">Ouvrir cet emplacement</button>
-            </div>
-          `;
-          return;
-        }
+        resultsDiv.innerHTML = `
+          <div style="margin-top:20px;">
+            <p class="subtitle" style="margin-bottom:8px;">Chaîne décodée dans cet identifiant :</p>
+            <div class="box">${decoded}</div>
+            <button onclick="window.location.hash='web/${query}'">Ouvrir cet emplacement</button>
+          </div>
+        `;
+        return;
       } catch (e) {}
 
       let formatted = query;
@@ -483,27 +466,27 @@
 
       if (hash.startsWith('#web/')) {
         const encoded = hash.replace('#web/', '');
+        let decoded = '';
+
         try {
-          const decoded = decodeBase64(encoded);
-          
-          document.getElementById('decoded-url-box').innerText = decoded;
-          
-          const extBtn = document.getElementById('external-btn');
-          if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
-            extBtn.href = decoded;
-            extBtn.style.display = 'inline-flex';
-          } else {
-            // Si la chaîne décodée n'est pas une URL HTTP valide (ex: pur hasard)
-            extBtn.href = '#';
-            extBtn.style.display = 'none';
-          }
-          
-          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-          document.getElementById('page-view').classList.add('active');
+          decoded = decodeBase64(encoded);
         } catch (e) {
-          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-          document.getElementById('page-error').classList.add('active');
+          decoded = "[Données brutes non décodables : " + encoded + "]";
         }
+
+        document.getElementById('decoded-url-box').innerText = decoded;
+
+        const extBtn = document.getElementById('external-btn');
+        if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+          extBtn.href = decoded;
+          extBtn.style.display = 'inline-flex';
+        } else {
+          extBtn.style.display = 'none';
+        }
+
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-view').classList.add('active');
+
       } else if (hash === '#search') {
         navigateTo('search');
       } else {
