@@ -3,125 +3,387 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bibliothèque d'URL</title>
+  <title>La Bibliothèque de Babel du Web</title>
   <style>
     :root {
-      --bg: #0d1117;
-      --card: #161b22;
-      --text: #c9d1d9;
+      --bg: #090d16;
+      --card-bg: rgba(22, 27, 34, 0.75);
+      --card-border: rgba(48, 54, 61, 0.8);
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
       --accent: #58a6ff;
-      --border: #30363d;
-      --font: system-ui, -apple-system, sans-serif;
+      --accent-hover: #1f6feb;
+      --emerald: #3fb950;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background-color: var(--bg);
-      color: var(--text);
+      color: var(--text-main);
       font-family: var(--font);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow-x: hidden;
       padding: 20px;
-      box-sizing: border-box;
     }
-    .container {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 600px;
+
+    /* Fond animé en grille hexagonale (Babel) */
+    .bg-grid {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: radial-gradient(rgba(88, 166, 255, 0.08) 1px, transparent 0);
+      background-size: 24px 24px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Container principal */
+    .app-container {
       width: 100%;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      max-width: 680px;
+      margin: 40px auto;
+      z-index: 1;
     }
-    h1 { margin-top: 0; color: #fff; font-size: 1.8rem; }
-    p { line-height: 1.6; color: #8b949e; }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 10px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      border-radius: 50px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-icon {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .nav-links { display: flex; gap: 8px; }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .nav-link:hover, .nav-link.active-link {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Carte globale */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--emerald);
+      background: rgba(63, 185, 80, 0.1);
+      border: 1px solid rgba(63, 185, 80, 0.2);
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    /* Champs de saisie & Boutons */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     input[type="text"] {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0 20px 0;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: #090d16;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: rgba(9, 13, 22, 0.8);
       color: #fff;
-      box-sizing: border-box;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      font-family: var(--mono);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
     button, .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       background: var(--accent);
       color: #fff;
-      padding: 12px 20px;
+      padding: 14px 20px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
       text-decoration: none;
-      font-size: 1rem;
-      text-align: center;
     }
-    button:hover, .btn:hover { opacity: 0.9; }
+
+    button:hover, .btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    button:active, .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Zone de résultat */
+    .result-box {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+    }
+
     .box {
-      background: #090d16;
-      border: 1px dashed var(--border);
-      padding: 15px;
-      border-radius: 6px;
+      background: rgba(9, 13, 22, 0.9);
+      border: 1px solid var(--card-border);
+      padding: 14px;
+      border-radius: 8px;
       word-break: break-all;
-      font-family: monospace;
-      color: #7ee787;
-      margin: 15px 0;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin: 12px 0;
     }
-    nav { margin-bottom: 20px; }
-    nav a { color: var(--accent); text-decoration: none; margin-right: 15px; font-weight: 500; cursor: pointer; }
-    nav a:hover { text-decoration: underline; }
+
+    /* Compteur / Footer Info */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .stat-item {
+      background: rgba(9, 13, 22, 0.4);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .stat-val {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
     .page { display: none; }
     .active { display: block; }
+
+    footer {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <div class="bg-grid"></div>
+
+  <div class="app-container">
+    
+    <!-- BARRE DE NAVIGATION -->
     <nav>
-      <a onclick="showPage('home')">Accueil</a>
-      <a onclick="showPage('search')">Recherche</a>
+      <div class="brand">
+        <span class="brand-icon"></span>
+        <span>BABEL WEB</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active-link" id="nav-home" onclick="navigateTo('home')">Accueil</a>
+        <a class="nav-link" id="nav-search" onclick="navigateTo('search')">Rechercher</a>
+      </div>
     </nav>
 
-    <!-- PAGE ACCUEIL -->
+    <!-- PAGE 1 : ACCUEIL -->
     <div id="page-home" class="page active">
-      <h1>Bibliothèque d'URL</h1>
-      <p>Entrez une URL (avec ou sans chemin) pour obtenir son emplacement virtuel.</p>
-      <input type="text" id="home-input" placeholder="https://exemple.com/mon/chemin">
-      <button onclick="generateUrl()">Générer le lien Babel</button>
+      <div class="card">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          BASE DE DONNÉES : 0 OCTET
+        </div>
+        
+        <h1>Chaque URL existe déjà.</h1>
+        <p class="subtitle">
+          Inspiré de la métaphore de Jorge Luis Borges, ce système calcule la position universelle de n'importe quel lien web sans conserver aucune donnée.
+        </p>
+
+        <div class="input-group">
+          <input type="text" id="home-input" placeholder="https://exemple.com/chemin/article" autocomplete="off">
+          <button onclick="generateUrl()">
+            <span>Calculer l'emplacement</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-val">∞</div>
+            <div class="stat-lbl">Liens théoriques</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-val">Stateless</div>
+            <div class="stat-lbl">Architecture pur calcul</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- PAGE RECHERCHE -->
+    <!-- PAGE 2 : RECHERCHE -->
     <div id="page-search" class="page">
-      <h1>Recherche dans la Bibliothèque</h1>
-      <p>Recherchez une URL classique ou collez un code Base64 / lien pour retrouver sa destination.</p>
-      <input type="text" id="search-input" placeholder="Ex: https://site.com ou code Base64">
-      <button onclick="searchUrl()">Rechercher</button>
-      <div id="search-results"></div>
+      <div class="card">
+        <h1>Rechercher un emplacement</h1>
+        <p class="subtitle">
+          Entrez un lien Babel (hash) pour le décoder, ou saisissez une URL standard pour en retrouver la clé mathématique.
+        </p>
+
+        <div class="input-group">
+          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... ou https://site.com" autocomplete="off">
+          <button onclick="searchUrl()">Décoder / Rechercher</button>
+        </div>
+
+        <div id="search-results"></div>
+      </div>
     </div>
 
-    <!-- PAGE LIEN DECODÉ -->
+    <!-- PAGE 3 : VUE D'UN EMPLACEMENT -->
     <div id="page-view" class="page">
-      <h1>Emplacement de l'URL</h1>
-      <p>Voici l'URL décodée associée à cet emplacement Babel :</p>
-      <div id="decoded-url-box" class="box"></div>
-      <p style="margin-top:25px;">
-        <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">Accéder au site externe ↗</a>
-      </p>
+      <div class="card">
+        <div class="badge" style="color:var(--accent); border-color:rgba(88,166,255,0.2); background:rgba(88,166,255,0.1);">
+          EMPLACEMENT DÉCHIFFRÉ
+        </div>
+        
+        <h1>Destination virtuelle</h1>
+        <p class="subtitle">Voici l'URL associée à cet identifiant universel :</p>
+
+        <div id="decoded-url-box" class="box">---</div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
+            Visiter le site ↗
+          </a>
+          <button class="btn btn-secondary" onclick="copyCurrentLink()">Copier le lien Babel</button>
+        </div>
+      </div>
     </div>
 
-    <!-- PAGE ERREUR -->
+    <!-- PAGE 4 : ERREUR -->
     <div id="page-error" class="page">
-      <h1>Emplacement Invalide</h1>
-      <p>Cet emplacement de la bibliothèque ne contient pas d'URL valide ou le code est corrompu.</p>
-      <button onclick="showPage('home')">Retourner à l'accueil</button>
+      <div class="card" style="text-align: center;">
+        <h1 style="color:#f85149;">404 - Emplacement Invalide</h1>
+        <p class="subtitle">
+          Cette combinaison de caractères ne correspond à aucune URL valide dans cet univers.
+        </p>
+        <button onclick="navigateTo('home')">Retourner à l'accueil</button>
+      </div>
     </div>
+
+    <footer>
+      Bibliothèque d'URL — Générateur déterministe sans stockage
+    </footer>
+
   </div>
 
   <script>
-    // Encodage / Décodage Base64 URL-Safe
+    // Algorithme de conversion Base64 URL-Safe
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -133,11 +395,22 @@
       return decodeURIComponent(escape(atob(str)));
     }
 
-    function showPage(pageId) {
+    // Gestion du changement de page
+    function navigateTo(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + pageId).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+      
+      const targetPage = document.getElementById('page-' + pageId);
+      if(targetPage) targetPage.classList.add('active');
+      
+      const targetNav = document.getElementById('nav-' + pageId);
+      if(targetNav) targetNav.classList.add('active-link');
+
+      if(pageId === 'home') window.location.hash = '';
+      if(pageId === 'search') window.location.hash = 'search';
     }
 
+    // Action : Générer le lien
     function generateUrl() {
       let input = document.getElementById('home-input').value.trim();
       if (!input) return;
@@ -147,6 +420,7 @@
       window.location.hash = 'web/' + encoded;
     }
 
+    // Action : Rechercher / Décoder
     function searchUrl() {
       let query = document.getElementById('search-input').value.trim();
       if (!query) return;
@@ -160,30 +434,40 @@
         const decoded = decodeBase64(query);
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
           resultsDiv.innerHTML = `
-            <p style="margin-top:20px;">Résultat trouvé :</p>
-            <div class="box">${decoded}</div>
-            <button onclick="window.location.hash='web/${query}'">Ouvrir la page</button>
+            <div class="result-box">
+              <p class="subtitle" style="margin-bottom:8px;">URL trouvée dans cet identifiant :</p>
+              <div class="box">${decoded}</div>
+              <button onclick="window.location.hash='web/${query}'">Ouvrir cet emplacement</button>
+            </div>
           `;
           return;
         }
       } catch (e) {}
 
-      // Si c'est une URL classique
       let formatted = query;
       if (!/^https?:\/\//i.test(formatted)) formatted = 'https://' + formatted;
       const encoded = encodeBase64(formatted);
       const fullLink = window.location.origin + window.location.pathname + '#web/' + encoded;
 
       resultsDiv.innerHTML = `
-        <p style="margin-top:20px;">Lien généré pour "${formatted}" :</p>
-        <div class="box">${fullLink}</div>
-        <button onclick="window.location.hash='web/${encoded}'">Voir la page</button>
+        <div class="result-box">
+          <p class="subtitle" style="margin-bottom:8px;">Emplacement calculé :</p>
+          <div class="box">${fullLink}</div>
+          <button onclick="window.location.hash='web/${encoded}'">Voir la page</button>
+        </div>
       `;
     }
 
-    // Gestion de la navigation par URL / Hash (#web/xxxx)
+    // Copier le lien
+    function copyCurrentLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Lien Babel copié dans le presse-papier !");
+    }
+
+    // Routage dynamique par le Hash (#)
     function handleRoute() {
       const hash = window.location.hash;
+
       if (hash.startsWith('#web/')) {
         const encoded = hash.replace('#web/', '');
         try {
@@ -193,14 +477,17 @@
 
           document.getElementById('decoded-url-box').innerText = decoded;
           document.getElementById('external-btn').href = decoded;
-          showPage('view');
+          
+          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+          document.getElementById('page-view').classList.add('active');
         } catch (e) {
-          showPage('error');
+          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+          document.getElementById('page-error').classList.add('active');
         }
       } else if (hash === '#search') {
-        showPage('search');
+        navigateTo('search');
       } else {
-        showPage('home');
+        navigateTo('home');
       }
     }
 
