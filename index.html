@@ -213,33 +213,32 @@
       gap: 10px;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    .stats-container {
       margin-top: 32px;
       padding-top: 24px;
       border-top: 1px solid var(--card-border);
     }
 
-    .stat-item {
+    .stat-item-full {
       background: rgba(9, 13, 22, 0.4);
-      padding: 12px;
+      padding: 16px;
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.03);
     }
 
-    .stat-val {
+    .stat-val-full {
       font-family: var(--mono);
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
+      word-break: break-all;
+      line-height: 1.4;
     }
 
-    .stat-lbl {
-      font-size: 0.75rem;
+    .stat-lbl-full {
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 6px;
     }
 
     #toast {
@@ -312,14 +311,10 @@
           </button>
         </div>
 
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-val">~ 1,09 × 10³⁶</div>
-            <div class="stat-lbl">Combinatoire théorique (Base64)</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-val">Stateless</div>
-            <div class="stat-lbl">Architecture pur calcul</div>
+        <div class="stats-container">
+          <div class="stat-item-full">
+            <div class="stat-val-full">1 090 000 000 000 000 000 000 000 000 000 000 000</div>
+            <div class="stat-lbl-full">Combinatoire théorique (Environ 1,09 décillion d'emplacements uniques en Base64)</div>
           </div>
         </div>
       </div>
@@ -346,7 +341,7 @@
     <div id="page-view" class="page">
       <div class="card">
         <h1>Destination calculée</h1>
-        <p class="subtitle">Voici la chaîne décodée associée à cet emplacement Babel :</p>
+        <p class="subtitle">Voici l'URL associée à cet emplacement Babel :</p>
 
         <div id="decoded-url-box" class="box">---</div>
 
@@ -411,14 +406,26 @@
       window.location.hash = 'web/' + encoded;
     }
 
+    // Génération d'une URL aléatoire respectant la syntaxe des URL web
     function exploreRandomUrl() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-      let randomLength = Math.floor(Math.random() * 25) + 12;
-      let randomString = '';
-      for (let i = 0; i < randomLength; i++) {
-        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      window.location.hash = 'web/' + randomString;
+      const alpha = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      const tlds = ['.com', '.org', '.net', '.fr', '.io', '.dev', '.info'];
+      const protocols = ['https://', 'http://'];
+
+      const randomStr = (len) => {
+        let res = '';
+        for (let i = 0; i < len; i++) res += alpha.charAt(Math.floor(Math.random() * alpha.length));
+        return res;
+      };
+
+      const protocol = protocols[Math.floor(Math.random() * protocols.length)];
+      const domain = randomStr(Math.floor(Math.random() * 8) + 4);
+      const tld = tlds[Math.floor(Math.random() * tlds.length)];
+      const path = randomStr(Math.floor(Math.random() * 10) + 3);
+
+      const generatedUrl = `${protocol}${domain}${tld}/${path}`;
+      const encoded = encodeBase64(generatedUrl);
+      window.location.hash = 'web/' + encoded;
     }
 
     function searchUrl() {
