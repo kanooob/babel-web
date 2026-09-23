@@ -9,6 +9,7 @@
       --bg: #121214;
       --card-bg: #1e1e22;
       --border-color: #2e2e34;
+      --border-hover: #44444c;
       --text-main: #ffffff;
       --text-muted: #8e8e93;
       --font: system-ui, -apple-system, sans-serif;
@@ -33,31 +34,6 @@
       justify-content: space-between;
     }
 
-    /* HEADER */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 28px;
-      font-size: 0.9rem;
-    }
-
-    .nav-right {
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--text-main);
-    }
-
     /* MAIN CONTAINER */
     main {
       display: flex;
@@ -71,13 +47,13 @@
     /* LOGO DOODLE SAISONNIER */
     .logo-container {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
     .logo {
-      font-size: 4.8rem;
+      font-size: 5.2rem;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -1.5px;
       user-select: none;
     }
 
@@ -92,13 +68,13 @@
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
-    /* BARRE DE RECHERCHE CLIQUABLE & HISTORIQUE COLLE */
+    /* BARRE DE RECHERCHE OPTIMISÉE */
     .search-box {
       width: 100%;
-      max-width: 580px;
+      max-width: 620px;
       position: relative;
     }
 
@@ -107,31 +83,43 @@
       align-items: center;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 14px 18px;
-      gap: 12px;
+      border-radius: 16px;
+      padding: 16px 20px;
+      gap: 14px;
       cursor: text;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .input-wrapper:hover {
+      border-color: var(--border-hover);
+      background: #232328;
     }
 
     .input-wrapper:focus-within {
-      border-color: var(--text-muted);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      border-color: #666670;
+      background: #232328;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
-    /* Suppression des arrondis bas quand l'historique est ouvert */
+    /* Arrondis ajustés quand l'historique est actif */
     .search-box.has-history .input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       border-bottom-color: var(--border-color);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
     .search-icon {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       fill: var(--text-muted);
       flex-shrink: 0;
       pointer-events: none;
+      transition: fill 0.2s;
+    }
+
+    .input-wrapper:focus-within .search-icon {
+      fill: var(--text-main);
     }
 
     input[type="text"] {
@@ -140,24 +128,50 @@
       border: none;
       outline: none;
       color: var(--text-main);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-family: var(--font);
     }
 
-    /* MENU HISTORIQUE DIRECTEMENT COLLE */
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+
+    /* BOUTON EFFACER RAPIDE (×) */
+    .clear-input-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .clear-input-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    /* HISTORIQUE DIRECTEMENT COLLÉ */
     .history-dropdown {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--card-bg);
+      background: #232328;
       border: 1px solid var(--border-color);
       border-top: none;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
       display: none;
       z-index: 10;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
       overflow: hidden;
       margin-top: 0;
     }
@@ -166,10 +180,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 16px;
+      padding: 12px 20px;
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -188,17 +203,17 @@
     .history-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
+      gap: 14px;
+      padding: 14px 20px;
       color: var(--text-main);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: background 0.15s;
     }
 
     .history-item:hover {
-      background: var(--bg);
+      background: var(--card-bg);
     }
 
     .history-icon {
@@ -217,7 +232,7 @@
     .button-row {
       display: flex;
       gap: 12px;
-      margin-top: 24px;
+      margin-top: 28px;
       justify-content: center;
     }
 
@@ -225,18 +240,20 @@
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 11px 22px;
+      border-radius: 10px;
       font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.15s, border-color 0.15s;
+      transition: all 0.2s;
     }
 
     .btn:hover {
-      background-color: var(--border-color);
+      background-color: var(--border-hover);
+      border-color: #555560;
     }
 
-    /* PAGE DE RÉSULTATS AMÉLIORÉE */
+    /* PAGE DE RÉSULTATS */
     .result-container {
       width: 100%;
       max-width: 680px;
@@ -262,20 +279,20 @@
     .result-meta-top {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .site-favicon {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       color: var(--text-main);
     }
 
@@ -285,13 +302,13 @@
     }
 
     .site-name {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text-main);
     }
 
     .site-url-breadcrumb {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
       word-break: break-all;
     }
@@ -300,7 +317,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       line-height: 1.3;
     }
 
@@ -343,10 +360,6 @@
       font-size: 0.95rem;
       color: var(--text-main);
       margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
     }
 
     .action-stack {
@@ -401,15 +414,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div>Babel Search</div>
-    <div class="nav-right">
-      <a class="nav-link" onclick="window.location.hash=''">Accueil</a>
-      <a class="nav-link" onclick="exploreRandomUrl()">URL Aléatoire</a>
-    </div>
-  </header>
-
   <!-- MAIN -->
   <main>
     
@@ -423,16 +427,17 @@
         <div id="season-name" class="season-tag">---</div>
       </div>
 
-      <!-- BARRE CLIQUABLE -->
+      <!-- BARRE AMÉLIORÉE & CLIQUABLE -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <svg class="search-icon" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
           </svg>
-          <input type="text" id="search-input" placeholder="Entrer une URL ou une clé Babel..." autocomplete="off" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Entrer une URL ou une clé Babel..." autocomplete="off" oninput="toggleClearBtn()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
         </div>
 
-        <!-- DÉROULANT HISTORIQUE DIRECTEMENT COLLÉ -->
+        <!-- DÉROULANT HISTORIQUE COLLÉ -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
             <span>Recherches récentes</span>
@@ -449,7 +454,7 @@
 
     </div>
 
-    <!-- PAGE DE RÉSULTATS AMÉLIORÉE -->
+    <!-- PAGE DE RÉSULTATS -->
     <div id="result-view" class="result-container">
       
       <div class="result-header">
@@ -459,7 +464,6 @@
 
       <div class="result-card">
         
-        <!-- EN-TÊTE SITE & BREADCRUMB -->
         <div class="result-meta-top">
           <div id="res-favicon" class="site-favicon">B</div>
           <div class="site-info">
@@ -470,7 +474,6 @@
 
         <h1 id="res-title" class="result-title-main">Emplacement de destination</h1>
 
-        <!-- DÉTAILS DU RÉSULTAT -->
         <div class="info-grid">
           <div class="info-item">
             <div class="info-label">Protocole</div>
@@ -482,12 +485,10 @@
           </div>
         </div>
 
-        <!-- AFFICHAGE DE L'URL -->
         <div class="url-box">
           <span id="decoded-url-box">---</span>
         </div>
 
-        <!-- BOUTONS D'ACTION -->
         <div class="action-stack">
           <a id="external-btn" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center;" href="#" target="_blank" rel="noopener noreferrer">
             Visiter la destination ↗
@@ -561,10 +562,22 @@
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
+    const clearInputBtn = document.getElementById('clear-input-btn');
 
     function focusSearchInput() {
       searchInput.focus();
       showHistory();
+    }
+
+    function toggleClearBtn() {
+      clearInputBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+    }
+
+    function clearSearchInput(e) {
+      e.stopPropagation();
+      searchInput.value = '';
+      toggleClearBtn();
+      searchInput.focus();
     }
 
     searchInput.addEventListener('focus', showHistory);
@@ -652,7 +665,7 @@
       showToast("Lien copié dans le presse-papier !");
     }
 
-    /* 5. ROUTAGE ET MISE A JOUR DES RESULTATS */
+    /* 5. ROUTAGE ET RÉSULTATS */
     function handleRoute() {
       const hash = window.location.hash;
 
@@ -666,7 +679,6 @@
           decoded = "[Données non déchiffrables: " + encoded + "]";
         }
 
-        // Mise à jour de la page de résultat améliorée
         document.getElementById('decoded-url-box').innerText = decoded;
         document.getElementById('res-breadcrumb').innerText = decoded;
 
