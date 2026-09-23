@@ -3,19 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Library of Babel URLs</title>
+  <title>Babel Search</title>
   <style>
     :root {
-      --bg: #090d16;
-      --card-bg: rgba(22, 27, 34, 0.75);
-      --card-border: rgba(48, 54, 61, 0.8);
-      --text-main: #f0f6fc;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-hover: #1f6feb;
-      --purple: #a371f7;
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+      --bg: #202124;
+      --card-bg: #303134;
+      --search-bg: #202124;
+      --text-main: #e8eaed;
+      --text-muted: #9aa0a6;
+      --border-color: #5f6368;
+      --btn-bg: #303134;
+      --btn-hover: #3c4043;
+      --blue: #8ab4f8;
+      --red: #ea4335;
+      --yellow: #fbbc04;
+      --green: #34a853;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,199 +31,184 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: space-between;
-      position: relative;
-      overflow-x: hidden;
-      padding: 20px;
     }
 
-    .bg-grid {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background-image: radial-gradient(rgba(88, 166, 255, 0.1) 1px, transparent 0);
-      background-size: 28px 28px;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 680px;
-      margin: 30px auto;
-      z-index: 1;
-    }
-
-    nav {
+    /* NAV HEADER */
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
-      padding: 10px 18px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
-      border-radius: 50px;
+      padding: 16px 24px;
+      font-size: 0.88rem;
     }
 
-    .brand {
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
+    .nav-right {
       display: flex;
+      gap: 16px;
       align-items: center;
-      gap: 10px;
+    }
+
+    .nav-link {
+      color: var(--text-main);
+      text-decoration: none;
       cursor: pointer;
     }
 
-    .brand-icon {
-      width: 10px;
-      height: 10px;
-      background-color: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 12px var(--accent);
+    .nav-link:hover {
+      text-decoration: underline;
     }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      border-radius: 16px;
-      padding: 36px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    /* MAIN GOOGLE CONTAINER */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 20px;
+      margin-top: -40px;
+    }
+
+    /* LOGO GOOGLE-STYLE */
+    .logo {
+      font-size: 5rem;
+      font-weight: 700;
+      letter-spacing: -2px;
+      margin-bottom: 28px;
+      user-select: none;
+    }
+    .logo span.g { color: var(--blue); }
+    .logo span.o1 { color: var(--red); }
+    .logo span.o2 { color: var(--yellow); }
+    .logo span.g2 { color: var(--blue); }
+    .logo span.l { color: var(--green); }
+    .logo span.e { color: var(--red); }
+
+    /* SEARCH BAR (GOOGLE STYLE) */
+    .search-box {
+      width: 100%;
+      max-width: 584px;
       position: relative;
     }
 
-    h1 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: #fff;
-      margin-bottom: 12px;
-      line-height: 1.25;
-      text-align: center;
-    }
-
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .input-group {
+    .input-wrapper {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      background: var(--bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 12px 16px;
       gap: 12px;
+      transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .input-wrapper:hover, .input-wrapper:focus-within {
+      background: var(--card-bg);
+      border-color: transparent;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-muted);
+      flex-shrink: 0;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--card-border);
-      background: rgba(9, 13, 22, 0.8);
-      color: #fff;
-      font-size: 0.95rem;
-      font-family: var(--mono);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
-    }
-
-    .button-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    button, .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #fff;
-      padding: 14px 20px;
+      background: transparent;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      width: 100%;
-    }
-
-    button:hover, .btn:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-
-    button:active, .btn:active {
-      transform: translateY(0);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      outline: none;
       color: var(--text-main);
+      font-size: 1rem;
+      font-family: var(--font);
     }
 
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
+    /* BUTTONS BELOW BAR */
+    .button-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+      justify-content: center;
     }
 
-    .btn-purple {
-      background: rgba(163, 113, 247, 0.15);
-      border: 1px solid rgba(163, 113, 247, 0.3);
-      color: var(--purple);
+    .btn-google {
+      background-color: var(--btn-bg);
+      border: 1px solid transparent;
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background-color 0.15s;
     }
 
-    .btn-purple:hover {
-      background: rgba(163, 113, 247, 0.25);
+    .btn-google:hover {
+      border-color: #5f6368;
+      background-color: var(--btn-hover);
+    }
+
+    /* RESULT CARD (GOOGLE RESULT PAGE STYLE) */
+    .result-container {
+      width: 100%;
+      max-width: 600px;
+      display: none;
+    }
+
+    .result-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .result-url-preview {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      word-break: break-all;
+    }
+
+    .result-title {
+      font-size: 1.4rem;
+      color: var(--blue);
+      margin-bottom: 16px;
+      font-weight: 500;
     }
 
     .box {
-      background: rgba(9, 13, 22, 0.9);
-      border: 1px solid var(--card-border);
-      padding: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border-color);
+      padding: 14px;
       border-radius: 8px;
       word-break: break-all;
       font-family: var(--mono);
-      font-size: 0.88rem;
-      color: var(--accent);
-      margin: 12px 0 20px 0;
+      font-size: 0.9rem;
+      color: var(--blue);
+      margin-bottom: 20px;
     }
 
     .action-stack {
       display: flex;
-      flex-direction: column;
       gap: 10px;
     }
 
-    /* Recents list */
+    /* RECENTS / HISTORY (GOOGLE SEARCH SUGGESTIONS STYLE) */
     .recents-container {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid var(--card-border);
+      width: 100%;
+      max-width: 584px;
+      margin-top: 32px;
+      display: none;
     }
 
     .recents-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .recents-title {
-      font-size: 0.85rem;
-      font-weight: 600;
+      padding: 0 8px 8px 8px;
+      font-size: 0.8rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -229,95 +218,88 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      width: auto;
-      padding: 0;
     }
 
     .clear-btn:hover {
-      color: #f85149;
-      background: none;
-      transform: none;
+      color: var(--red);
+      text-decoration: underline;
     }
 
     .recent-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     .recent-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      background: rgba(9, 13, 22, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: var(--mono);
-      font-size: 0.82rem;
+      gap: 12px;
+      padding: 12px 16px;
       color: var(--text-main);
       text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.15s;
+    }
+
+    .recent-item:last-child {
+      border-bottom: none;
     }
 
     .recent-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--card-border);
+      background: var(--btn-hover);
     }
 
-    .recent-url {
+    .history-icon {
+      width: 16px;
+      height: 16px;
+      fill: var(--text-muted);
+    }
+
+    .recent-text {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 80%;
+      flex: 1;
     }
 
-    .recent-arrow {
+    /* FOOTER (GOOGLE STYLE) */
+    footer {
+      background: #171717;
       color: var(--text-muted);
+      font-size: 0.85rem;
     }
 
-    .stats-container {
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid var(--card-border);
+    .footer-top {
+      padding: 12px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .stat-item-full {
-      background: rgba(9, 13, 22, 0.4);
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-
-    .stat-val-full {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-      word-break: break-all;
-    }
-
-    .stat-lbl-full {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 4px;
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 24px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     #toast {
       position: fixed;
-      bottom: 30px;
+      bottom: 60px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #1f6feb;
+      background: #323232;
       color: #fff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease, opacity 0.25s ease;
       opacity: 0;
       pointer-events: none;
       z-index: 10;
@@ -328,100 +310,84 @@
       opacity: 1;
     }
 
-    .page { display: none; }
-    .active { display: block; }
-
-    footer {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-align: center;
-      margin-top: 40px;
-    }
-
     @media (max-width: 480px) {
-      .button-row { grid-template-columns: 1fr; }
+      .logo { font-size: 3.5rem; }
+      .footer-bottom { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
+  <!-- HEADER -->
+  <header>
+    <div>Babel Search</div>
+    <div class="nav-right">
+      <a class="nav-link" onclick="window.location.hash=''">Home</a>
+      <a class="nav-link" onclick="exploreRandomUrl()">Random URL</a>
+    </div>
+  </header>
 
-  <div class="app-container">
+  <!-- MAIN SEARCH AREA -->
+  <main>
     
-    <nav>
-      <div class="brand" onclick="window.location.hash=''">
-        <span class="brand-icon"></span>
-        <span>BABEL WEB</span>
+    <!-- GOOGLE HOMEPAGE VIEW -->
+    <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div class="logo">
+        <span class="g">B</span><span class="o1">a</span><span class="o2">b</span><span class="g2">e</span><span class="l">l</span>
       </div>
-    </nav>
 
-    <!-- MAIN SEARCH PAGE -->
-    <div id="page-home" class="page active">
-      <div class="card">
-        <h1>Every URL already exists.</h1>
-        <p class="subtitle">
-          Search a URL or Babel location key to calculate its reciprocal position.
-        </p>
-
-        <div class="input-group">
-          <input type="text" id="home-input" placeholder="https://example.com or Babel key" autocomplete="off" onkeydown="if(event.key==='Enter') searchOrGenerate()">
-          
-          <div class="button-row">
-            <button onclick="searchOrGenerate()">
-              <span>Find Location</span>
-            </button>
-            <button class="btn btn-purple" onclick="exploreRandomUrl()">
-              <span>🎲 I'm Feeling Lucky</span>
-            </button>
-          </div>
+      <div class="search-box">
+        <div class="input-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search a URL or enter Babel key..." autocomplete="off" onkeydown="if(event.key==='Enter') searchOrGenerate()">
         </div>
 
-        <!-- RECENT EXPLORATIONS -->
-        <div id="recents-section" class="recents-container" style="display: none;">
-          <div class="recents-header">
-            <span class="recents-title">Recent Explorations</span>
-            <button class="clear-btn" onclick="clearRecents()">Clear</button>
-          </div>
-          <div id="recent-list" class="recent-list"></div>
+        <div class="button-row">
+          <button class="btn-google" onclick="searchOrGenerate()">Babel Search</button>
+          <button class="btn-google" onclick="exploreRandomUrl()">I'm Feeling Lucky</button>
         </div>
+      </div>
 
-        <div class="stats-container">
-          <div class="stat-item-full">
-            <div class="stat-val-full">1,090,000,000,000,000,000,000,000,000,000,000,000</div>
-            <div class="stat-lbl-full">Number of unique locations (~1 Decillion)</div>
-          </div>
+      <!-- RECENTS / HISTORY -->
+      <div id="recents-section" class="recents-container">
+        <div class="recents-header">
+          <span>Recent Explorations</span>
+          <button class="clear-btn" onclick="clearRecents()">Clear history</button>
         </div>
+        <div id="recent-list" class="recent-list"></div>
       </div>
     </div>
 
-    <!-- VIEW LOCATION PAGE -->
-    <div id="page-view" class="page">
-      <div class="card">
-        <h1 style="text-align: left;">Calculated destination</h1>
-        <p class="subtitle" style="text-align: left;">Here is the URL associated with this Babel location:</p>
-
+    <!-- RESULT PAGE VIEW -->
+    <div id="result-view" class="result-container">
+      <div class="result-card">
+        <div class="result-url-preview" id="decoded-url-preview">https://example.com</div>
+        <div class="result-title">Babel Location Destination</div>
+        
         <div id="decoded-url-box" class="box">---</div>
 
         <div class="action-stack">
-          <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
-            Visit destination ↗
+          <a id="external-btn" class="btn-google" style="text-decoration: none; display: inline-flex; align-items: center;" href="#" target="_blank" rel="noopener noreferrer">
+            Visit URL ↗
           </a>
-          <button class="btn btn-secondary" onclick="copyCurrentLink()">
-            Copy Babel link
-          </button>
-          <button class="btn btn-secondary" onclick="window.location.hash=''">
-            ← Back to Search
-          </button>
+          <button class="btn-google" onclick="copyCurrentLink()">Copy Babel Link</button>
+          <button class="btn-google" onclick="window.location.hash=''">← Back</button>
         </div>
       </div>
     </div>
 
-    <footer>
-      Library of URLs — Universal Algorithmic Engine
-    </footer>
+  </main>
 
-  </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">The Library of Babel — Universal Algorithmic Index (~1 Decillion Locations)</div>
+    <div class="footer-bottom">
+      <span>About Babel Web</span>
+      <span>Deterministic URL Engine</span>
+    </div>
+  </footer>
 
   <div id="toast">Link copied to clipboard!</div>
 
@@ -444,7 +410,7 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* LOCAL STORAGE / RECENTS MANAGER */
+    /* HISTORY MANAGER */
     function addRecent(url, hashKey) {
       let recents = JSON.parse(localStorage.getItem('babel_recents') || '[]');
       recents = recents.filter(item => item.hashKey !== hashKey);
@@ -466,8 +432,10 @@
       section.style.display = 'block';
       list.innerHTML = recents.map(item => `
         <a class="recent-item" href="#web/${item.hashKey}">
-          <span class="recent-url">${item.url}</span>
-          <span class="recent-arrow">→</span>
+          <svg class="history-icon" viewBox="0 0 24 24">
+            <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+          </svg>
+          <span class="recent-text">${item.url}</span>
         </a>
       `).join('');
     }
@@ -477,9 +445,9 @@
       renderRecents();
     }
 
-    /* SEARCH OR DECODE LOGIC */
+    /* ACTIONS */
     function searchOrGenerate() {
-      let query = document.getElementById('home-input').value.trim();
+      let query = document.getElementById('search-input').value.trim();
       if (!query) return;
 
       if (query.includes('#web/')) query = query.split('#web/')[1];
@@ -508,6 +476,7 @@
       showToast("Link copied to clipboard!");
     }
 
+    /* ROUTING */
     function handleRoute() {
       const hash = window.location.hash;
 
@@ -522,6 +491,7 @@
         }
 
         document.getElementById('decoded-url-box').innerText = decoded;
+        document.getElementById('decoded-url-preview').innerText = decoded;
 
         const extBtn = document.getElementById('external-btn');
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
@@ -533,12 +503,12 @@
 
         addRecent(decoded, encoded);
 
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-view').classList.add('active');
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('result-view').style.display = 'block';
 
       } else {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-home').classList.add('active');
+        document.getElementById('result-view').style.display = 'none';
+        document.getElementById('home-view').style.display = 'flex';
         renderRecents();
       }
     }
