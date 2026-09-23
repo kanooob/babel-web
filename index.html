@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Bibliothèque d'URL de Babel</title>
+  <title>The Library of Babel URLs</title>
   <style>
     :root {
       --bg: #090d16;
@@ -301,82 +301,82 @@
         <span>BABEL WEB</span>
       </div>
       <div class="nav-links">
-        <a class="nav-link active-link" id="nav-home" onclick="navigateTo('home')">Accueil</a>
-        <a class="nav-link" id="nav-search" onclick="navigateTo('search')">Rechercher</a>
+        <a class="nav-link active-link" id="nav-home" onclick="navigateTo('home')">Home</a>
+        <a class="nav-link" id="nav-search" onclick="navigateTo('search')">Search</a>
         <button class="btn-nav-purple" onclick="exploreRandomUrl()">
-          <span>🎲 Aléatoire</span>
+          <span>Random</span>
         </button>
       </div>
     </nav>
 
-    <!-- PAGE 1 : ACCUEIL -->
+    <!-- PAGE 1 : HOME -->
     <div id="page-home" class="page active">
       <div class="card">
-        <h1>Toutes les URL existent déjà.</h1>
+        <h1>Every URL already exists.</h1>
         <p class="subtitle">
-          Inspiré de la Bibliothèque de Babel, ce système calcule mathématiquement l'emplacement de chaque adresse du Web.
+          Inspired by the Library of Babel, this system mathematically calculates the location of every Web address.
         </p>
 
         <div class="input-group">
-          <input type="text" id="home-input" placeholder="https://exemple.com/chemin" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
+          <input type="text" id="home-input" placeholder="https://example.com/path" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
           <button onclick="generateUrl()">
-            <span>Trouver l'emplacement</span>
+            <span>Find location</span>
             <span>→</span>
           </button>
         </div>
 
         <div class="stats-container">
           <div class="stat-item-full">
-            <div class="stat-val-full">1 090 000 000 000 000 000 000 000 000 000 000 000</div>
-            <div class="stat-lbl-full">Nombre d'emplacements uniques</div>
+            <div class="stat-val-full">1,090,000,000,000,000,000,000,000,000,000,000,000</div>
+            <div class="stat-lbl-full">Number of unique locations (~1 Decillion)</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- PAGE 2 : RECHERCHE -->
+    <!-- PAGE 2 : SEARCH -->
     <div id="page-search" class="page">
       <div class="card">
-        <h1>Rechercher un emplacement</h1>
+        <h1>Search a location</h1>
         <p class="subtitle">
-          Saisissez une clé ou une URL standard pour calculer son emplacement réciproque.
+          Enter a key or standard URL to calculate its reciprocal location.
         </p>
 
         <div class="input-group">
-          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... ou https://site.com" autocomplete="off" onkeydown="if(event.key==='Enter') searchUrl()">
-          <button onclick="searchUrl()">Calculer / Décoder</button>
+          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... or https://site.com" autocomplete="off" onkeydown="if(event.key==='Enter') searchUrl()">
+          <button onclick="searchUrl()">Calculate / Decode</button>
         </div>
 
         <div id="search-results"></div>
       </div>
     </div>
 
-    <!-- PAGE 3 : VUE D'UN EMPLACEMENT -->
+    <!-- PAGE 3 : VIEW LOCATION -->
     <div id="page-view" class="page">
       <div class="card">
-        <h1>Destination calculée</h1>
-        <p class="subtitle">Voici l'URL associée à cet emplacement Babel :</p>
+        <h1>Calculated destination</h1>
+        <p class="subtitle">Here is the URL associated with this Babel location:</p>
 
         <div id="decoded-url-box" class="box">---</div>
 
         <div class="action-stack">
           <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
-            Visiter la destination ↗
+            Visit destination ↗
           </a>
           <button class="btn btn-secondary" onclick="copyCurrentLink()">
-            Copier le lien Babel
+            Copy Babel link
           </button>
         </div>
       </div>
     </div>
 
     <footer>
-      Bibliothèque d'URL — Moteur algorithmique universel
+      Library of URLs — Universal Algorithmic Engine
     </footer>
 
   </div>
 
-  <div id="toast">Lien copié dans le presse-papier !</div>
+  <div id="toast">Link copied to clipboard!</div>
 
   <script>
     function encodeBase64(str) {
@@ -420,22 +420,11 @@
       window.location.hash = 'web/' + encoded;
     }
 
-    // Génère une URL avec juste du texte, un point et du texte à côté
+    // Simplified random generator: https://[text].[text]
     function exploreRandomUrl() {
-      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-      const randomStr = (len) => {
-        let res = '';
-        for (let i = 0; i < len; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
-        return res;
-      };
-
-      const part1 = randomStr(Math.floor(Math.random() * 8) + 3);
-      const part2 = randomStr(Math.floor(Math.random() * 6) + 2);
-      const generatedUrl = `https://${part1}.${part2}`;
-
-      const encoded = encodeBase64(generatedUrl);
-      window.location.hash = 'web/' + encoded;
+      const randStr = () => Math.random().toString(36).substring(2, 7);
+      const generatedUrl = `https://${randStr()}.${randStr()}`;
+      window.location.hash = 'web/' + encodeBase64(generatedUrl);
     }
 
     function searchUrl() {
@@ -451,9 +440,9 @@
         const decoded = decodeBase64(query);
         resultsDiv.innerHTML = `
           <div style="margin-top:20px;">
-            <p class="subtitle" style="margin-bottom:8px;">Chaîne décodée dans cet identifiant :</p>
+            <p class="subtitle" style="margin-bottom:8px;">Decoded string in this ID:</p>
             <div class="box">${decoded}</div>
-            <button onclick="window.location.hash='web/${query}'">Ouvrir cet emplacement</button>
+            <button onclick="window.location.hash='web/${query}'">Open this location</button>
           </div>
         `;
         return;
@@ -466,16 +455,16 @@
 
       resultsDiv.innerHTML = `
         <div style="margin-top:20px;">
-          <p class="subtitle" style="margin-bottom:8px;">Emplacement calculé :</p>
+          <p class="subtitle" style="margin-bottom:8px;">Calculated location:</p>
           <div class="box">${fullLink}</div>
-          <button onclick="window.location.hash='web/${encoded}'">Voir l'emplacement</button>
+          <button onclick="window.location.hash='web/${encoded}'">View location</button>
         </div>
       `;
     }
 
     function copyCurrentLink() {
       navigator.clipboard.writeText(window.location.href);
-      showToast("Lien copié dans le presse-papier !");
+      showToast("Link copied to clipboard!");
     }
 
     function handleRoute() {
@@ -488,7 +477,7 @@
         try {
           decoded = decodeBase64(encoded);
         } catch (e) {
-          decoded = "[Données brutes non décodables : " + encoded + "]";
+          decoded = "[Raw un-decodable data: " + encoded + "]";
         }
 
         document.getElementById('decoded-url-box').innerText = decoded;
