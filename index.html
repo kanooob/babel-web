@@ -34,7 +34,6 @@
       padding: 20px;
     }
 
-    /* Fond animé en grille hexagonale (Babel) */
     .bg-grid {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -44,7 +43,6 @@
       pointer-events: none;
     }
 
-    /* Container principal */
     .app-container {
       width: 100%;
       max-width: 680px;
@@ -52,7 +50,6 @@
       z-index: 1;
     }
 
-    /* Navigation */
     nav {
       display: flex;
       justify-content: space-between;
@@ -100,7 +97,6 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
-    /* Carte globale */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -154,7 +150,6 @@
       margin-bottom: 28px;
     }
 
-    /* Champs de saisie & Boutons */
     .input-group {
       display: flex;
       flex-direction: column;
@@ -194,6 +189,7 @@
       font-size: 0.95rem;
       transition: all 0.2s ease;
       text-decoration: none;
+      width: 100%;
     }
 
     button:hover, .btn:hover {
@@ -215,7 +211,6 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Zone de résultat */
     .result-box {
       margin-top: 24px;
       padding-top: 24px;
@@ -231,10 +226,15 @@
       font-family: var(--mono);
       font-size: 0.85rem;
       color: var(--accent);
-      margin: 12px 0;
+      margin: 12px 0 20px 0;
     }
 
-    /* Compteur / Footer Info */
+    .action-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -307,9 +307,9 @@
         </p>
 
         <div class="input-group">
-          <input type="text" id="home-input" placeholder="https://exemple.com/chemin/article" autocomplete="off">
+          <input type="text" id="home-input" placeholder="https://exemple.com/chemin/article" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
           <button onclick="generateUrl()">
-            <span>Calculer l'emplacement</span>
+            <span>Trouver l'emplacement</span>
             <span>→</span>
           </button>
         </div>
@@ -332,11 +332,11 @@
       <div class="card">
         <h1>Rechercher un emplacement</h1>
         <p class="subtitle">
-          Entrez un lien Babel (hash) pour le décoder, ou saisissez une URL standard pour en retrouver la clé mathématique.
+          Entrez un identifiant Babel pour le décoder, ou saisissez une URL standard pour en retrouver la clé mathématique.
         </p>
 
         <div class="input-group">
-          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... ou https://site.com" autocomplete="off">
+          <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... ou https://site.com" autocomplete="off" onkeydown="if(event.key==='Enter') searchUrl()">
           <button onclick="searchUrl()">Décoder / Rechercher</button>
         </div>
 
@@ -356,11 +356,14 @@
 
         <div id="decoded-url-box" class="box">---</div>
 
-        <div style="display:flex; gap:10px; margin-top:20px;">
+        <!-- ZONES D'ACTION : Visiter le site placé en HAUT, Copier en DESSOUS -->
+        <div class="action-stack">
           <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
             Visiter le site ↗
           </a>
-          <button class="btn btn-secondary" onclick="copyCurrentLink()">Copier le lien Babel</button>
+          <button class="btn btn-secondary" onclick="copyCurrentLink()">
+            Copier le lien Babel
+          </button>
         </div>
       </div>
     </div>
@@ -377,13 +380,12 @@
     </div>
 
     <footer>
-      Bibliothèque d'URL — Générateur déterministe sans stockage
+      Bibliothèque d'URL — Système déterministe sans stockage
     </footer>
 
   </div>
 
   <script>
-    // Algorithme de conversion Base64 URL-Safe
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -395,7 +397,6 @@
       return decodeURIComponent(escape(atob(str)));
     }
 
-    // Gestion du changement de page
     function navigateTo(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
@@ -410,7 +411,6 @@
       if(pageId === 'search') window.location.hash = 'search';
     }
 
-    // Action : Générer le lien
     function generateUrl() {
       let input = document.getElementById('home-input').value.trim();
       if (!input) return;
@@ -420,7 +420,6 @@
       window.location.hash = 'web/' + encoded;
     }
 
-    // Action : Rechercher / Décoder
     function searchUrl() {
       let query = document.getElementById('search-input').value.trim();
       if (!query) return;
@@ -453,18 +452,16 @@
         <div class="result-box">
           <p class="subtitle" style="margin-bottom:8px;">Emplacement calculé :</p>
           <div class="box">${fullLink}</div>
-          <button onclick="window.location.hash='web/${encoded}'">Voir la page</button>
+          <button onclick="window.location.hash='web/${encoded}'">Voir l'emplacement</button>
         </div>
       `;
     }
 
-    // Copier le lien
     function copyCurrentLink() {
       navigator.clipboard.writeText(window.location.href);
       alert("Lien Babel copié dans le presse-papier !");
     }
 
-    // Routage dynamique par le Hash (#)
     function handleRoute() {
       const hash = window.location.hash;
 
