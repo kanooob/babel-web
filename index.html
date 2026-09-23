@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Bibliothèque de Babel du Web</title>
+  <title>La Bibliothèque d'URL de Babel</title>
   <style>
     :root {
       --bg: #090d16;
@@ -14,6 +14,8 @@
       --accent: #58a6ff;
       --accent-hover: #1f6feb;
       --emerald: #3fb950;
+      --purple: #a371f7;
+      --red: #f85149;
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
     }
@@ -34,11 +36,12 @@
       padding: 20px;
     }
 
+    /* Fond animé grille hexagonale */
     .bg-grid {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
-      background-image: radial-gradient(rgba(88, 166, 255, 0.08) 1px, transparent 0);
-      background-size: 24px 24px;
+      background-image: radial-gradient(rgba(88, 166, 255, 0.1) 1px, transparent 0);
+      background-size: 28px 28px;
       z-index: -1;
       pointer-events: none;
     }
@@ -46,7 +49,7 @@
     .app-container {
       width: 100%;
       max-width: 680px;
-      margin: 40px auto;
+      margin: 30px auto;
       z-index: 1;
     }
 
@@ -54,8 +57,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
-      padding: 10px 16px;
+      margin-bottom: 25px;
+      padding: 10px 18px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       backdrop-filter: blur(12px);
@@ -68,15 +71,15 @@
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .brand-icon {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background-color: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent);
+      box-shadow: 0 0 12px var(--accent);
     }
 
     .nav-links { display: flex; gap: 8px; }
@@ -94,7 +97,7 @@
 
     .nav-link:hover, .nav-link.active-link {
       color: var(--text-main);
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .card {
@@ -103,7 +106,8 @@
       backdrop-filter: blur(16px);
       border-radius: 16px;
       padding: 36px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      position: relative;
     }
 
     h1 {
@@ -119,7 +123,7 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .input-group {
@@ -183,20 +187,24 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    .result-box {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--card-border);
+    .btn-purple {
+      background: rgba(163, 113, 247, 0.15);
+      border: 1px solid rgba(163, 113, 247, 0.3);
+      color: var(--purple);
+    }
+
+    .btn-purple:hover {
+      background: rgba(163, 113, 247, 0.25);
     }
 
     .box {
       background: rgba(9, 13, 22, 0.9);
       border: 1px solid var(--card-border);
-      padding: 14px;
+      padding: 16px;
       border-radius: 8px;
       word-break: break-all;
       font-family: var(--mono);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--accent);
       margin: 12px 0 20px 0;
     }
@@ -225,7 +233,7 @@
 
     .stat-val {
       font-family: var(--mono);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: #fff;
     }
@@ -234,6 +242,30 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 2px;
+    }
+
+    /* Notification Toast */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1f6feb;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
 
     .page { display: none; }
@@ -253,7 +285,6 @@
 
   <div class="app-container">
     
-    <!-- BARRE DE NAVIGATION -->
     <nav>
       <div class="brand">
         <span class="brand-icon"></span>
@@ -268,19 +299,19 @@
     <!-- PAGE 1 : ACCUEIL -->
     <div id="page-home" class="page active">
       <div class="card">
-        <h1>Chaque URL existe déjà.</h1>
+        <h1>Toutes les URL existent déjà.</h1>
         <p class="subtitle">
-          Inspiré de la métaphore de Jorge Luis Borges, ce système calcule la position universelle de n'importe quel lien web.
+          Inspiré de la Bibliothèque de Babel, ce système calcule mathématiquement l'emplacement de chaque adresse du Web.
         </p>
 
         <div class="input-group">
-          <input type="text" id="home-input" placeholder="https://exemple.com/chemin/article" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
+          <input type="text" id="home-input" placeholder="https://exemple.com/chemin" autocomplete="off" onkeydown="if(event.key==='Enter') generateUrl()">
           <button onclick="generateUrl()">
             <span>Trouver l'emplacement</span>
             <span>→</span>
           </button>
-          <button class="btn btn-secondary" onclick="randomUrl()">
-            <span>🎲 Emplacement aléatoire</span>
+          <button class="btn btn-purple" onclick="pureRandomUrl()">
+            <span>🎲 Emplacement purement aléatoire</span>
           </button>
         </div>
 
@@ -290,7 +321,7 @@
             <div class="stat-lbl">Combinatoire théorique (Base64)</div>
           </div>
           <div class="stat-item">
-            <div class="stat-val">Algorithmique</div>
+            <div class="stat-val">Stateless</div>
             <div class="stat-lbl">Architecture pur calcul</div>
           </div>
         </div>
@@ -302,12 +333,12 @@
       <div class="card">
         <h1>Rechercher un emplacement</h1>
         <p class="subtitle">
-          Entrez un identifiant Babel pour le décoder, ou saisissez une URL standard pour en retrouver la clé mathématique.
+          Saisissez une clé ou une URL standard pour calculer son emplacement réciproque.
         </p>
 
         <div class="input-group">
           <input type="text" id="search-input" placeholder="Ex: aHR0cHM6Ly9... ou https://site.com" autocomplete="off" onkeydown="if(event.key==='Enter') searchUrl()">
-          <button onclick="searchUrl()">Décoder / Rechercher</button>
+          <button onclick="searchUrl()">Calculer / Décoder</button>
         </div>
 
         <div id="search-results"></div>
@@ -317,14 +348,14 @@
     <!-- PAGE 3 : VUE D'UN EMPLACEMENT -->
     <div id="page-view" class="page">
       <div class="card">
-        <h1>Destination virtuelle</h1>
-        <p class="subtitle">Voici l'URL associée à cet identifiant universel :</p>
+        <h1>Destination calculée</h1>
+        <p class="subtitle">Voici la chaîne décodée associée à cet emplacement Babel :</p>
 
         <div id="decoded-url-box" class="box">---</div>
 
         <div class="action-stack">
           <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
-            Visiter le site ↗
+            Visiter la destination ↗
           </a>
           <button class="btn btn-secondary" onclick="copyCurrentLink()">
             Copier le lien Babel
@@ -333,22 +364,24 @@
       </div>
     </div>
 
-    <!-- PAGE 4 : ERREUR -->
+    <!-- PAGE 4 : ERREUR OU CONTENU ILLISIBLE -->
     <div id="page-error" class="page">
       <div class="card" style="text-align: center;">
-        <h1 style="color:#f85149;">404 - Emplacement Invalide</h1>
+        <h1 style="color:var(--red);">Emplacement Invalide</h1>
         <p class="subtitle">
-          Cette combinaison de caractères ne correspond à aucune URL valide dans cet univers.
+          Cet emplacement contient du texte ou une structure non interprétable comme une URL.
         </p>
         <button onclick="navigateTo('home')">Retourner à l'accueil</button>
       </div>
     </div>
 
     <footer>
-      Bibliothèque d'URL — Système déterministe
+      Bibliothèque d'URL — Moteur algorithmique universel
     </footer>
 
   </div>
+
+  <div id="toast">Lien copié dans le presse-papier !</div>
 
   <script>
     function encodeBase64(str) {
@@ -360,6 +393,13 @@
       str = str.replace(/-/g, '+').replace(/_/g, '/');
       while (str.length % 4) str += '=';
       return decodeURIComponent(escape(atob(str)));
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     function navigateTo(pageId) {
@@ -385,20 +425,15 @@
       window.location.hash = 'web/' + encoded;
     }
 
-    // Sélectionne une URL aléatoire parmi une liste de sites réels
-    function randomUrl() {
-      const sampleUrls = [
-        'https://fr.wikipedia.org/wiki/Babel',
-        'https://github.com',
-        'https://duckduckgo.com',
-        'https://archive.org',
-        'https://www.gutenberg.org',
-        'https://www.w3.org',
-        'https://frontiersin.org'
-      ];
-      const randomTarget = sampleUrls[Math.floor(Math.random() * sampleUrls.length)];
-      const encoded = encodeBase64(randomTarget);
-      window.location.hash = 'web/' + encoded;
+    // VRAI ALEATOIRE : Génère une séquence Base64 pur hasard
+    function pureRandomUrl() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+      let randomLength = Math.floor(Math.random() * 30) + 15; // Taille variable
+      let randomString = '';
+      for (let i = 0; i < randomLength; i++) {
+        randomString += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      window.location.hash = 'web/' + randomString;
     }
 
     function searchUrl() {
@@ -414,7 +449,7 @@
         const decoded = decodeBase64(query);
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
           resultsDiv.innerHTML = `
-            <div class="result-box">
+            <div style="margin-top:20px;">
               <p class="subtitle" style="margin-bottom:8px;">URL trouvée dans cet identifiant :</p>
               <div class="box">${decoded}</div>
               <button onclick="window.location.hash='web/${query}'">Ouvrir cet emplacement</button>
@@ -430,7 +465,7 @@
       const fullLink = window.location.origin + window.location.pathname + '#web/' + encoded;
 
       resultsDiv.innerHTML = `
-        <div class="result-box">
+        <div style="margin-top:20px;">
           <p class="subtitle" style="margin-bottom:8px;">Emplacement calculé :</p>
           <div class="box">${fullLink}</div>
           <button onclick="window.location.hash='web/${encoded}'">Voir l'emplacement</button>
@@ -440,7 +475,7 @@
 
     function copyCurrentLink() {
       navigator.clipboard.writeText(window.location.href);
-      alert("Lien Babel copié dans le presse-papier !");
+      showToast("Lien copié dans le presse-papier !");
     }
 
     function handleRoute() {
@@ -450,11 +485,18 @@
         const encoded = hash.replace('#web/', '');
         try {
           const decoded = decodeBase64(encoded);
-          const isValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(decoded);
-          if (!isValid) throw new Error('Invalide');
-
+          
           document.getElementById('decoded-url-box').innerText = decoded;
-          document.getElementById('external-btn').href = decoded;
+          
+          const extBtn = document.getElementById('external-btn');
+          if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+            extBtn.href = decoded;
+            extBtn.style.display = 'inline-flex';
+          } else {
+            // Si la chaîne décodée n'est pas une URL HTTP valide (ex: pur hasard)
+            extBtn.href = '#';
+            extBtn.style.display = 'none';
+          }
           
           document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
           document.getElementById('page-view').classList.add('active');
