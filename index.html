@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliothèque d'URL</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --border: #30363d;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .container {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    h1 { margin-top: 0; color: #fff; font-size: 1.8rem; }
+    p { line-height: 1.6; color: #8b949e; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px 0;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #090d16;
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    button, .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1rem;
+      text-align: center;
+    }
+    button:hover, .btn:hover { opacity: 0.9; }
+    .box {
+      background: #090d16;
+      border: 1px dashed var(--border);
+      padding: 15px;
+      border-radius: 6px;
+      word-break: break-all;
+      font-family: monospace;
+      color: #7ee787;
+      margin: 15px 0;
+    }
+    nav { margin-bottom: 20px; }
+    nav a { color: var(--accent); text-decoration: none; margin-right: 15px; font-weight: 500; cursor: pointer; }
+    nav a:hover { text-decoration: underline; }
+    .page { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a onclick="showPage('home')">Accueil</a>
+      <a onclick="showPage('search')">Recherche</a>
+    </nav>
+
+    <!-- PAGE ACCUEIL -->
+    <div id="page-home" class="page active">
+      <h1>Bibliothèque d'URL</h1>
+      <p>Entrez une URL (avec ou sans chemin) pour obtenir son emplacement virtuel.</p>
+      <input type="text" id="home-input" placeholder="https://exemple.com/mon/chemin">
+      <button onclick="generateUrl()">Générer le lien Babel</button>
+    </div>
+
+    <!-- PAGE RECHERCHE -->
+    <div id="page-search" class="page">
+      <h1>Recherche dans la Bibliothèque</h1>
+      <p>Recherchez une URL classique ou collez un code Base64 / lien pour retrouver sa destination.</p>
+      <input type="text" id="search-input" placeholder="Ex: https://site.com ou code Base64">
+      <button onclick="searchUrl()">Rechercher</button>
+      <div id="search-results"></div>
+    </div>
+
+    <!-- PAGE LIEN DECODÉ -->
+    <div id="page-view" class="page">
+      <h1>Emplacement de l'URL</h1>
+      <p>Voici l'URL décodée associée à cet emplacement Babel :</p>
+      <div id="decoded-url-box" class="box"></div>
+      <p style="margin-top:25px;">
+        <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">Accéder au site externe ↗</a>
+      </p>
+    </div>
+
+    <!-- PAGE ERREUR -->
+    <div id="page-error" class="page">
+      <h1>Emplacement Invalide</h1>
+      <p>Cet emplacement de la bibliothèque ne contient pas d'URL valide ou le code est corrompu.</p>
+      <button onclick="showPage('home')">Retourner à l'accueil</button>
+    </div>
+  </div>
+
+  <script>
+    // Encodage / Décodage Base64 URL-Safe
+    function encodeBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    function decodeBase64(str) {
+      str = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (str.length % 4) str += '=';
+      return decodeURIComponent(escape(atob(str)));
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + pageId).classList.add('active');
+    }
+
+    function generateUrl() {
+      let input = document.getElementById('home-input').value.trim();
+      if (!input) return;
+      if (!/^https?:\/\//i.test(input)) input = 'https://' + input;
+
+      const encoded = encodeBase64(input);
+      window.location.hash = 'web/' + encoded;
+    }
+
+    function searchUrl() {
+      let query = document.getElementById('search-input').value.trim();
+      if (!query) return;
+
+      if (query.includes('#web/')) query = query.split('#web/')[1];
+      if (query.includes('/web/')) query = query.split('/web/')[1];
+
+      const resultsDiv = document.getElementById('search-results');
+
+      try {
+        const decoded = decodeBase64(query);
+        if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+          resultsDiv.innerHTML = `
+            <p style="margin-top:20px;">Résultat trouvé :</p>
+            <div class="box">${decoded}</div>
+            <button onclick="window.location.hash='web/${query}'">Ouvrir la page</button>
+          `;
+          return;
+        }
+      } catch (e) {}
+
+      // Si c'est une URL classique
+      let formatted = query;
+      if (!/^https?:\/\//i.test(formatted)) formatted = 'https://' + formatted;
+      const encoded = encodeBase64(formatted);
+      const fullLink = window.location.origin + window.location.pathname + '#web/' + encoded;
+
+      resultsDiv.innerHTML = `
+        <p style="margin-top:20px;">Lien généré pour "${formatted}" :</p>
+        <div class="box">${fullLink}</div>
+        <button onclick="window.location.hash='web/${encoded}'">Voir la page</button>
+      `;
+    }
+
+    // Gestion de la navigation par URL / Hash (#web/xxxx)
+    function handleRoute() {
+      const hash = window.location.hash;
+      if (hash.startsWith('#web/')) {
+        const encoded = hash.replace('#web/', '');
+        try {
+          const decoded = decodeBase64(encoded);
+          const isValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(decoded);
+          if (!isValid) throw new Error('Invalide');
+
+          document.getElementById('decoded-url-box').innerText = decoded;
+          document.getElementById('external-btn').href = decoded;
+          showPage('view');
+        } catch (e) {
+          showPage('error');
+        }
+      } else if (hash === '#search') {
+        showPage('search');
+      } else {
+        showPage('home');
+      }
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('load', handleRoute);
+  </script>
+</body>
+</html>
