@@ -106,34 +106,6 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
-      font-family: var(--mono);
-      color: var(--emerald);
-      background: rgba(63, 185, 80, 0.1);
-      border: 1px solid rgba(63, 185, 80, 0.2);
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--emerald);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
     h1 {
       font-size: 2.1rem;
       font-weight: 800;
@@ -296,14 +268,9 @@
     <!-- PAGE 1 : ACCUEIL -->
     <div id="page-home" class="page active">
       <div class="card">
-        <div class="badge">
-          <span class="badge-dot"></span>
-          BASE DE DONNÉES : 0 OCTET
-        </div>
-        
         <h1>Chaque URL existe déjà.</h1>
         <p class="subtitle">
-          Inspiré de la métaphore de Jorge Luis Borges, ce système calcule la position universelle de n'importe quel lien web sans conserver aucune donnée.
+          Inspiré de la métaphore de Jorge Luis Borges, ce système calcule la position universelle de n'importe quel lien web.
         </p>
 
         <div class="input-group">
@@ -312,15 +279,18 @@
             <span>Trouver l'emplacement</span>
             <span>→</span>
           </button>
+          <button class="btn btn-secondary" onclick="randomUrl()">
+            <span>🎲 Emplacement aléatoire</span>
+          </button>
         </div>
 
         <div class="stats-grid">
           <div class="stat-item">
-            <div class="stat-val">∞</div>
-            <div class="stat-lbl">Liens théoriques</div>
+            <div class="stat-val">~ 1,09 × 10³⁶</div>
+            <div class="stat-lbl">Combinatoire théorique (Base64)</div>
           </div>
           <div class="stat-item">
-            <div class="stat-val">Stateless</div>
+            <div class="stat-val">Algorithmique</div>
             <div class="stat-lbl">Architecture pur calcul</div>
           </div>
         </div>
@@ -347,16 +317,11 @@
     <!-- PAGE 3 : VUE D'UN EMPLACEMENT -->
     <div id="page-view" class="page">
       <div class="card">
-        <div class="badge" style="color:var(--accent); border-color:rgba(88,166,255,0.2); background:rgba(88,166,255,0.1);">
-          EMPLACEMENT DÉCHIFFRÉ
-        </div>
-        
         <h1>Destination virtuelle</h1>
         <p class="subtitle">Voici l'URL associée à cet identifiant universel :</p>
 
         <div id="decoded-url-box" class="box">---</div>
 
-        <!-- ZONES D'ACTION : Visiter le site placé en HAUT, Copier en DESSOUS -->
         <div class="action-stack">
           <a id="external-btn" class="btn" href="#" target="_blank" rel="noopener noreferrer">
             Visiter le site ↗
@@ -380,7 +345,7 @@
     </div>
 
     <footer>
-      Bibliothèque d'URL — Système déterministe sans stockage
+      Bibliothèque d'URL — Système déterministe
     </footer>
 
   </div>
@@ -417,6 +382,22 @@
       if (!/^https?:\/\//i.test(input)) input = 'https://' + input;
 
       const encoded = encodeBase64(input);
+      window.location.hash = 'web/' + encoded;
+    }
+
+    // Sélectionne une URL aléatoire parmi une liste de sites réels
+    function randomUrl() {
+      const sampleUrls = [
+        'https://fr.wikipedia.org/wiki/Babel',
+        'https://github.com',
+        'https://duckduckgo.com',
+        'https://archive.org',
+        'https://www.gutenberg.org',
+        'https://www.w3.org',
+        'https://frontiersin.org'
+      ];
+      const randomTarget = sampleUrls[Math.floor(Math.random() * sampleUrls.length)];
+      const encoded = encodeBase64(randomTarget);
       window.location.hash = 'web/' + encoded;
     }
 
