@@ -87,7 +87,7 @@
       padding: 16px 20px;
       gap: 14px;
       cursor: text;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s ease;
     }
 
     .input-wrapper:hover {
@@ -98,15 +98,15 @@
     .input-wrapper:focus-within {
       border-color: #666670;
       background: #232328;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
     }
 
-    /* Arrondis ajustés quand l'historique est actif */
+    /* Fusion quand l'historique est affiché */
     .search-box.has-history .input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       border-bottom-color: var(--border-color);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: none;
     }
 
     .search-icon {
@@ -137,7 +137,7 @@
       opacity: 0.8;
     }
 
-    /* BOUTON EFFACER RAPIDE (×) */
+    /* BOUTON EFFACER (×) */
     .clear-input-btn {
       background: none;
       border: none;
@@ -158,7 +158,7 @@
       color: var(--text-main);
     }
 
-    /* HISTORIQUE DIRECTEMENT COLLÉ */
+    /* HISTORIQUE DIRECTEMENT COLLÉ SOUS LA BARRE */
     .history-dropdown {
       position: absolute;
       top: 100%;
@@ -170,17 +170,16 @@
       border-bottom-left-radius: 16px;
       border-bottom-right-radius: 16px;
       display: none;
-      z-index: 10;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      z-index: 20;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
       overflow: hidden;
-      margin-top: 0;
     }
 
     .history-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 20px;
+      padding: 10px 20px;
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -204,7 +203,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 14px 20px;
+      padding: 12px 20px;
       color: var(--text-main);
       text-decoration: none;
       font-size: 0.95rem;
@@ -232,7 +231,7 @@
     .button-row {
       display: flex;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 24px;
       justify-content: center;
     }
 
@@ -403,7 +402,7 @@
       transition: transform 0.25s ease, opacity 0.25s ease;
       opacity: 0;
       pointer-events: none;
-      z-index: 10;
+      z-index: 30;
     }
 
     #toast.show {
@@ -427,7 +426,7 @@
         <div id="season-name" class="season-tag">---</div>
       </div>
 
-      <!-- BARRE AMÉLIORÉE & CLIQUABLE -->
+      <!-- BLOC BARRE + HISTORIQUE COLLÉ -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <svg class="search-icon" viewBox="0 0 24 24">
@@ -437,7 +436,7 @@
           <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
         </div>
 
-        <!-- DÉROULANT HISTORIQUE COLLÉ -->
+        <!-- HISTORIQUE S'OUVRANT COLLÉ EN DESSOUS -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
             <span>Recherches récentes</span>
@@ -446,6 +445,7 @@
           <div id="history-list"></div>
         </div>
 
+        <!-- BOUTONS EN DESSOUS DE L'ENSEMBLE -->
         <div class="button-row">
           <button class="btn" onclick="searchOrGenerate()">Rechercher</button>
           <button class="btn" onclick="exploreRandomUrl()">Exploration Aléatoire</button>
@@ -510,7 +510,7 @@
   <div id="toast">Lien copié dans le presse-papier !</div>
 
   <script>
-    /* 1. DOODLE SAISONNIER */
+    /* DOODLE SAISONNIER */
     function applySeasonalDoodle() {
       const month = new Date().getMonth() + 1;
       const root = document.documentElement;
@@ -539,7 +539,7 @@
       });
     }
 
-    /* 2. BASE64 */
+    /* BASE64 */
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -558,7 +558,7 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* 3. BARRE DE RECHERCHE & HISTORIQUE */
+    /* BARRE DE RECHERCHE & HISTORIQUE */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
@@ -635,7 +635,7 @@
       hideHistory();
     }
 
-    /* 4. RECHERCHE ET NAVIGATION */
+    /* RECHERCHE ET NAVIGATION */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -665,7 +665,7 @@
       showToast("Lien copié dans le presse-papier !");
     }
 
-    /* 5. ROUTAGE ET RÉSULTATS */
+    /* ROUTAGE ET RÉSULTATS */
     function handleRoute() {
       const hash = window.location.hash;
 
