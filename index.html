@@ -9,7 +9,7 @@
       --primary: #8C935D;
       --bg: #1e2025;
       --card-bg: #2a2d34;
-      --border-color: #ffffff;
+      --border-color: rgba(255, 255, 255, 0.2);
       --text-main: #ffffff;
       --text-muted: #9aa0a6;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -75,7 +75,7 @@
     .logo span.l7 { color: var(--c7); }
     .logo span.l8 { color: var(--c8); }
 
-    /* BARRE DE RECHERCHE */
+    /* BARRE DE RECHERCHE STYLE GOOGLE (ARRONDIE EN PILULE) */
     .search-box {
       width: 100%;
       max-width: 600px;
@@ -86,15 +86,17 @@
       display: flex;
       align-items: center;
       background: var(--card-bg);
-      border: 3px solid var(--border-color);
-      border-radius: 6px;
-      padding: 10px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 28px;
+      padding: 10px 20px;
       gap: 12px;
-      transition: border-color 0.2s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     .input-wrapper:focus-within {
       border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     .search-box.has-history .input-wrapper {
@@ -109,13 +111,13 @@
       outline: none;
       color: var(--text-main);
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 500;
       font-family: var(--font);
     }
 
     input[type="text"]::placeholder {
       color: #6c727d;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .action-icon-btn {
@@ -125,18 +127,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
+      padding: 6px;
+      border-radius: 50%;
       color: var(--text-main);
-      transition: color 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
 
     .action-icon-btn:hover {
       color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .action-icon-btn svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       fill: currentColor;
     }
 
@@ -150,37 +154,43 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 4px;
+      padding: 6px;
+      border-radius: 50%;
       line-height: 1;
+      transition: background 0.2s, color 0.2s;
     }
 
     .clear-input-btn:hover {
       color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    /* HISTORIQUE DÉROULANT */
+    /* HISTORIQUE DÉROULANT ARRONDIE */
     .history-dropdown {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
       background: var(--card-bg);
-      border: 3px solid var(--border-color);
+      border: 2px solid var(--border-color);
       border-top: none;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
       display: none;
       z-index: 20;
       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
     }
 
     .history-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 16px;
+      padding: 12px 20px;
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .clear-btn {
@@ -189,17 +199,20 @@
       color: var(--text-muted);
       font-size: 0.75rem;
       cursor: pointer;
+      border-radius: 12px;
+      padding: 2px 8px;
     }
 
     .clear-btn:hover {
       color: #ff5555;
+      background: rgba(255, 85, 85, 0.1);
     }
 
     .history-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px 16px;
+      padding: 12px 20px;
       color: var(--text-main);
       font-size: 0.95rem;
       cursor: pointer;
@@ -207,7 +220,7 @@
     }
 
     .history-item:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .history-text {
@@ -235,8 +248,9 @@
     .result-card {
       background: var(--card-bg);
       border: 2px solid var(--primary);
-      border-radius: 8px;
+      border-radius: 24px;
       padding: 28px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     .result-meta-top {
@@ -247,8 +261,8 @@
     }
 
     .site-favicon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--primary);
       border: 1px solid var(--border-color);
@@ -290,9 +304,9 @@
 
     .info-item {
       background: var(--bg);
-      border: 1px solid var(--primary);
-      padding: 12px 14px;
-      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 16px;
+      border-radius: 16px;
     }
 
     .info-label {
@@ -309,9 +323,9 @@
 
     .url-box {
       background: var(--bg);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 16px;
-      border-radius: 4px;
+      border-radius: 16px;
       word-break: break-all;
       font-family: var(--mono);
       font-size: 0.95rem;
@@ -328,15 +342,17 @@
       background-color: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 10px 18px;
-      border-radius: 4px;
+      padding: 12px 24px;
+      border-radius: 50px;
       font-size: 0.9rem;
       font-weight: 500;
       cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
     }
 
     .btn:hover {
       background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
     .btn-primary {
@@ -347,22 +363,22 @@
     }
 
     .btn-primary:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.15);
     }
 
     /* FOOTER */
     footer {
       width: 100%;
-      border-top: 2px solid var(--border-color);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       font-size: 0.85rem;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .footer-cell {
-      padding: 14px 16px;
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
     }
@@ -377,6 +393,10 @@
       text-decoration: none;
     }
 
+    .footer-cell a:hover {
+      text-decoration: underline;
+    }
+
     #toast {
       position: fixed;
       bottom: 70px;
@@ -386,12 +406,13 @@
       border: 1px solid var(--primary);
       color: var(--text-main);
       padding: 12px 24px;
-      border-radius: 4px;
+      border-radius: 50px;
       font-size: 0.88rem;
       transition: transform 0.25s ease, opacity 0.25s ease;
       opacity: 0;
       pointer-events: none;
       z-index: 30;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
 
     #toast.show {
@@ -405,7 +426,7 @@
       }
       .footer-cell {
         border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
     }
   </style>
@@ -423,7 +444,7 @@
         </div>
       </div>
 
-      <!-- BARRE DE RECHERCHE -->
+      <!-- BARRE DE RECHERCHE ARRONDIE -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
