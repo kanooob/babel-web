@@ -1,9 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
+  <!-- CHARSET & VIEWPORT -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Internet Babel</title>
+
+  <!-- PRIMARY SEO METATAGS -->
+  <title id="seo-title">Internet Babel — Convertisseur et Décodeur d'URL Universel</title>
+  <meta name="title" content="Internet Babel — Convertisseur et Décodeur d'URL Universel">
+  <meta name="description" id="seo-description" content="Explorez, décodez et partagez des destinations Web instantanément grâce à l'index déterministe d'Internet Babel. Accès rapide et sécurisé.">
+  <meta name="keywords" content="Internet Babel, décodeur URL, base64 URL, raccourcisseur lien, index web, outils web, convertisseur URL">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="French">
+  <meta name="author" content="Internet Babel">
+  <link rel="canonical" href="https://babel.index/">
+
+  <!-- OPEN GRAPH / FACEBOOK / DISCORD -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://babel.index/">
+  <meta property="og:title" id="og-title" content="Internet Babel — Convertisseur et Décodeur d'URL Universel">
+  <meta property="og:description" id="og-description" content="Explorez, décodez et partagez des destinations Web instantanément grâce à l'index déterministe d'Internet Babel.">
+  <meta property="og:site_name" content="Internet Babel">
+
+  <!-- TWITTER CARDS -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://babel.index/">
+  <meta name="twitter:title" id="tw-title" content="Internet Babel — Convertisseur et Décodeur d'URL Universel">
+  <meta name="twitter:description" id="tw-description" content="Explorez, décodez et partagez des destinations Web instantanément grâce à l'index déterministe d'Internet Babel.">
+
+  <!-- SCHEMA.ORG STRUCTURED DATA (JSON-LD FOR GOOGLE) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Internet Babel",
+    "url": "https://babel.index/",
+    "description": "Un outil en ligne déterministe d'indexation, décodage et résolution d'URL.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://babel.index/#web/{search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
   <style>
     :root {
       --bg: #202124;
@@ -340,7 +382,7 @@
       word-break: break-all;
     }
 
-    /* CODE / TERMINAL DISPLAY BOX */
+    /* TERMINAL DISPLAY BOX */
     .terminal-box {
       background: #17181c;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -482,27 +524,27 @@
 
   <main>
     <!-- HOME VIEW -->
-    <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <section id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- LOGO DOODLE -->
+      <!-- LOGO DOODLE (H1 FOR MAIN KEYWORD HEADING) -->
       <div class="logo-container">
-        <div class="logo" onclick="window.location.hash=''">
+        <h1 class="logo" onclick="window.location.hash=''" title="Retour à l'accueil Internet Babel">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
-        </div>
+        </h1>
       </div>
 
       <!-- SEARCH BOX -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
-          <input type="text" id="search-input" placeholder="Search a URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Rechercher ou encoder une URL..." autocomplete="off" aria-label="Saisir une URL à encoder ou décoder" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="I'm Feeling Lucky (Random URL)">
+          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="Générer une URL aléatoire" aria-label="Chancer / URL Aléatoire">
             <span id="dice-face" class="dice-icon">⚄</span>
           </button>
 
-          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Clear">✕</button>
+          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer la recherche" aria-label="Effacer">✕</button>
 
-          <button class="action-icon-btn" onclick="searchOrGenerate()" title="Search">
+          <button class="action-icon-btn" onclick="searchOrGenerate()" title="Rechercher" aria-label="Lancer la recherche">
             <svg viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
@@ -511,27 +553,27 @@
 
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
-            <span>Recent searches</span>
-            <button class="clear-btn" onclick="clearHistory(event)">Clear</button>
+            <span>Recherches récentes</span>
+            <button class="clear-btn" onclick="clearHistory(event)">Effacer</button>
           </div>
           <div id="history-list"></div>
         </div>
       </div>
 
-    </div>
+    </section>
 
     <!-- RESULT VIEW -->
-    <div id="result-view" class="result-container">
+    <section id="result-view" class="result-container">
       
       <!-- TOP NAVIGATION BAR -->
       <div class="results-top-bar">
-        <div class="logo mini" onclick="window.location.hash=''">
+        <div class="logo mini" onclick="window.location.hash=''" title="Retour à l'accueil">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
         </div>
         <div class="search-box" style="max-width: 520px;">
           <div class="input-wrapper" style="padding: 6px 16px;">
-            <input type="text" id="result-search-input" placeholder="Search another URL..." autocomplete="off" onkeydown="if(event.key==='Enter') searchFromResults()">
-            <button class="action-icon-btn" onclick="searchFromResults()">
+            <input type="text" id="result-search-input" placeholder="Rechercher une autre URL..." autocomplete="off" aria-label="Rechercher une autre URL" onkeydown="if(event.key==='Enter') searchFromResults()">
+            <button class="action-icon-btn" onclick="searchFromResults()" title="Lancer la recherche" aria-label="Rechercher">
               <svg viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
               </svg>
@@ -541,12 +583,12 @@
       </div>
 
       <!-- DESTINATION HUB CARD -->
-      <div class="destination-hub-card">
+      <article class="destination-hub-card">
         
         <!-- HEADER BADGE -->
         <div class="hub-header">
           <div class="hub-site-badge">
-            <div id="res-favicon" class="hub-avatar">B</div>
+            <div id="res-favicon" class="hub-avatar" aria-hidden="true">B</div>
             <div class="hub-title-box">
               <span id="res-domain" class="hub-domain-name">babel.index</span>
               <span id="res-breadcrumb" class="hub-breadcrumb">https://...</span>
@@ -556,42 +598,42 @@
 
         <!-- TERMINAL DECODED DISPLAY -->
         <div class="terminal-box">
-          <span class="terminal-label">Target URL Destination</span>
+          <span class="terminal-label">URL de destination ciblée</span>
           <span id="decoded-url-box" class="terminal-text">---</span>
         </div>
 
         <!-- ACTION BUTTONS -->
         <div class="hub-actions-row">
           <a id="external-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">
-            Open URL ↗
+            Ouvrir l'URL ↗
           </a>
           <button class="btn" onclick="copyDecodedUrl()">
-            Copy Target URL
+            Copier l'URL cible
           </button>
           <button class="btn" onclick="copyPageUrl()">
-            Copy Page Link
+            Copier le lien de la page
           </button>
         </div>
 
-      </div>
+      </article>
 
-    </div>
+    </section>
   </main>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-container">
       <div class="footer-metrics">
-        <div class="metric-item">Index: <span class="metric-value">1 trillion URLs</span></div>
+        <div class="metric-item">Index : <span class="metric-value">1 billion d'URLs</span></div>
         <div class="metric-item">•</div>
-        <div class="metric-item">Total: <span id="total-requests" class="metric-value">...</span></div>
+        <div class="metric-item">Total : <span id="total-requests" class="metric-value">...</span></div>
         <div class="metric-item">•</div>
-        <div class="metric-item">Today: <span id="daily-requests" class="metric-value">...</span></div>
+        <div class="metric-item">Aujourd'hui : <span id="daily-requests" class="metric-value">...</span></div>
       </div>
     </div>
   </footer>
 
-  <div id="toast">Link copied to clipboard!</div>
+  <div id="toast" role="status" aria-live="polite">Lien copié dans le presse-papier !</div>
 
   <script>
     const API_KEY = "url_babel_galaxie_s9";
@@ -810,12 +852,26 @@
     function copyDecodedUrl() {
       const urlText = document.getElementById('decoded-url-box').innerText;
       navigator.clipboard.writeText(urlText);
-      showToast("Target URL copied to clipboard!");
+      showToast("URL cible copiée !");
     }
 
     function copyPageUrl() {
       navigator.clipboard.writeText(window.location.href);
-      showToast("Page link copied to clipboard!");
+      showToast("Lien de la page copié !");
+    }
+
+    /* DYNAMIC SEO METADATA UPDATER */
+    function updateSeoMetadata(domain, decodedUrl) {
+      const title = domain ? `${domain} — Résolution Internet Babel` : "Internet Babel — Convertisseur et Décodeur d'URL Universel";
+      const desc = decodedUrl ? `Consultez et décodez la destination pour ${domain} (${decodedUrl}) sur Internet Babel.` : "Explorez, décodez et partagez des destinations Web instantanément grâce à l'index déterministe d'Internet Babel.";
+
+      document.title = title;
+      document.getElementById('seo-title').innerText = title;
+      document.getElementById('seo-description').setAttribute('content', desc);
+      document.getElementById('og-title').setAttribute('content', title);
+      document.getElementById('og-description').setAttribute('content', desc);
+      document.getElementById('tw-title').setAttribute('content', title);
+      document.getElementById('tw-description').setAttribute('content', desc);
     }
 
     function handleRoute() {
@@ -828,7 +884,7 @@
         try {
           decoded = decodeBase64(encoded);
         } catch (e) {
-          decoded = "[Undecodable data: " + encoded + "]";
+          decoded = "[Données indécodables: " + encoded + "]";
         }
 
         document.getElementById('decoded-url-box').innerText = decoded;
@@ -857,11 +913,13 @@
         }
 
         addHistory(decoded, encoded);
+        updateSeoMetadata(domain, decoded);
 
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('result-view').style.display = 'block';
 
       } else {
+        updateSeoMetadata(null, null);
         document.getElementById('result-view').style.display = 'none';
         document.getElementById('home-view').style.display = 'flex';
       }
