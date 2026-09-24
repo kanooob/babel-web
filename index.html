@@ -7,14 +7,15 @@
   <style>
     :root {
       --primary: #8C935D;
-      --bg: #21242a;
-      --card-bg: #2d3139;
+      --bg: #1e2025;
+      --card-bg: #2a2d34;
       --border-color: #ffffff;
       --text-main: #ffffff;
-      --text-muted: #a0a5b1;
-      --font: system-ui, -apple-system, sans-serif;
-      --mono: ui-monospace, SFMono-Regular, monospace;
+      --text-muted: #9aa0a6;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
+      /* Variables pour les 8 lettres de "Internet" */
       --c1: #ffffff;
       --c2: #ffffff;
       --c3: #ffffff;
@@ -25,7 +26,11 @@
       --c8: #ffffff;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       background-color: var(--bg);
@@ -37,7 +42,7 @@
       justify-content: space-between;
     }
 
-    /* MAIN CONTAINER */
+    /* CONTENEUR PRINCIPAL */
     main {
       display: flex;
       flex-direction: column;
@@ -47,16 +52,16 @@
       padding: 20px;
     }
 
-    /* LOGO */
+    /* LOGO DOODLE (SANS SOUS-TITRE) */
     .logo-container {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .logo {
-      font-size: 4.8rem;
+      font-size: 5rem;
       font-weight: 800;
-      letter-spacing: -1.5px;
+      letter-spacing: -2px;
       user-select: none;
       line-height: 1;
     }
@@ -73,7 +78,7 @@
     /* BARRE DE RECHERCHE */
     .search-box {
       width: 100%;
-      max-width: 580px;
+      max-width: 600px;
       position: relative;
     }
 
@@ -82,10 +87,10 @@
       align-items: center;
       background: var(--card-bg);
       border: 3px solid var(--border-color);
-      border-radius: 4px;
+      border-radius: 6px;
       padding: 10px 16px;
       gap: 12px;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s ease;
     }
 
     .input-wrapper:focus-within {
@@ -109,8 +114,8 @@
     }
 
     input[type="text"]::placeholder {
-      color: #727782;
-      font-weight: 600;
+      color: #6c727d;
+      font-weight: 500;
     }
 
     .action-icon-btn {
@@ -122,7 +127,7 @@
       justify-content: center;
       padding: 4px;
       color: var(--text-main);
-      transition: color 0.2s, opacity 0.2s;
+      transition: color 0.2s;
     }
 
     .action-icon-btn:hover {
@@ -130,8 +135,8 @@
     }
 
     .action-icon-btn svg {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       fill: currentColor;
     }
 
@@ -139,7 +144,7 @@
       background: none;
       border: none;
       color: var(--text-main);
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: bold;
       cursor: pointer;
       display: none;
@@ -175,7 +180,7 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .clear-btn {
@@ -202,7 +207,7 @@
     }
 
     .history-item:hover {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .history-text {
@@ -212,7 +217,7 @@
       flex: 1;
     }
 
-    /* RÉSULTATS */
+    /* VUE RÉSULTAT */
     .result-container {
       width: 100%;
       max-width: 680px;
@@ -242,8 +247,8 @@
     }
 
     .site-favicon {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: var(--primary);
       border: 1px solid var(--border-color);
@@ -260,7 +265,7 @@
     }
 
     .site-name {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
     }
 
@@ -304,7 +309,7 @@
 
     .url-box {
       background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 16px;
       border-radius: 4px;
       word-break: break-all;
@@ -331,7 +336,7 @@
     }
 
     .btn:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .btn-primary {
@@ -357,7 +362,7 @@
 
     .footer-cell {
       padding: 14px 16px;
-      border-right: 1px solid rgba(255,255,255,0.3);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
     }
@@ -400,20 +405,18 @@
       }
       .footer-cell {
         border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- MAIN -->
   <main>
-    
-    <!-- ACCUEIL -->
+    <!-- VUE ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- DOODLE SAISONNIER SANS SOUS-TITRE -->
+      <!-- LOGO 8 LETTRES -->
       <div class="logo-container">
         <div class="logo">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
@@ -423,19 +426,19 @@
       <!-- BARRE DE RECHERCHE -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
-          <input type="text" id="search-input" placeholder="Recherche votre url" autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <!-- DÉ (AFFICHE QUAND VIDE) -->
-          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration Aléatoire">
+          <!-- BOUTON DÉ (CHANCE) -->
+          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration aléatoire">
             <svg viewBox="0 0 24 24">
               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.83 0 1.5.67 1.5 1.5S7.83 10 7 10s-1.5-.67-1.5-1.5S6.17 7 7 7zm0 10c-.83 0-1.5-.67-1.5-1.5S6.17 14 7 14s1.5.67 1.5 1.5S7.83 17 7 17zm5-5c-.83 0-1.5-.67-1.5-1.5S11.17 9 12 9s1.5.67 1.5 1.5S12.83 12 12 12zm5 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-8c-.83 0-1.5-.67-1.5-1.5S16.17 7 17 7s1.5.67 1.5 1.5S17.83 9 17 9z"/>
             </svg>
           </button>
 
-          <!-- CROIX (AFFICHE QUAND TEXTE PRÉSENT) -->
+          <!-- BOUTON CROIX -->
           <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
 
-          <!-- LOUPE -->
+          <!-- BOUTON LOUPE -->
           <button class="action-icon-btn" onclick="searchOrGenerate()" title="Rechercher">
             <svg viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -443,7 +446,7 @@
           </button>
         </div>
 
-        <!-- HISTORIQUE COLLÉ EN DESSOUS -->
+        <!-- MENU HISTORIQUE -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
             <span>Recherches récentes</span>
@@ -455,7 +458,7 @@
 
     </div>
 
-    <!-- PAGE DE RÉSULTATS -->
+    <!-- VUE RÉSULTAT -->
     <div id="result-view" class="result-container">
       <div class="result-header">
         <button class="btn" onclick="window.location.hash=''">← Nouvelle recherche</button>
@@ -496,14 +499,13 @@
         </div>
       </div>
     </div>
-
   </main>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-cell">1 billion d'url</div>
-    <div class="footer-cell">requête totale :&nbsp;<span id="total-requests">...</span></div>
-    <div class="footer-cell">requête du jour :&nbsp;<span id="daily-requests">...</span></div>
+    <div class="footer-cell">1 billion d'URL</div>
+    <div class="footer-cell">requêtes totales :&nbsp;<span id="total-requests">...</span></div>
+    <div class="footer-cell">requêtes du jour :&nbsp;<span id="daily-requests">...</span></div>
     <div class="footer-cell"><a href="#">Legal</a></div>
   </footer>
 
@@ -512,13 +514,12 @@
   <script>
     const API_KEY = "url_babel_galaxie_s9";
 
-    /* DOODLE SAISONNIER POUR INTERNET (8 LETTRES / PAS DE MÊME COULEUR CÔTE À CÔTE) */
+    /* COULEURS SAISONNIÈRES DES LETTRES (PAS DE COULEURS ÉGALES ADJACENTES) */
     function applySeasonalDoodle() {
       const month = new Date().getMonth() + 1;
       const root = document.documentElement;
 
       let palette = [];
-
       if (month >= 3 && month <= 5) {
         palette = ['#88d498', '#1a936f', '#8C935D', '#f3e9d2'];
       } else if (month >= 6 && month <= 8) {
@@ -530,12 +531,11 @@
       }
 
       for (let i = 0; i < 8; i++) {
-        const color = palette[i % palette.length];
-        root.style.setProperty(`--c${i + 1}`, color);
+        root.style.setProperty(`--c${i + 1}`, palette[i % palette.length]);
       }
     }
 
-    /* BASE64 */
+    /* ENCODAGE / DÉCODAGE BASE64 */
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -559,7 +559,7 @@
       try {
         const res = await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${API_KEY}`);
         const data = await res.json();
-        document.getElementById('total-requests').innerText = data.value !== undefined ? data.value : '0';
+        document.getElementById('total-requests').innerText = data.value !== undefined ? data.value : '1';
       } catch (e) {
         document.getElementById('total-requests').innerText = '1';
       }
@@ -575,7 +575,7 @@
       document.getElementById('daily-requests').innerText = dailyData.count;
     }
 
-    /* GESTION DÉ / CROIX */
+    /* INTERFACE RECHERCHE & HISTORIQUE */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
@@ -584,13 +584,8 @@
 
     function toggleInputState() {
       const hasText = searchInput.value.trim().length > 0;
-      if (hasText) {
-        diceBtn.style.display = 'none';
-        clearInputBtn.style.display = 'flex';
-      } else {
-        diceBtn.style.display = 'flex';
-        clearInputBtn.style.display = 'none';
-      }
+      diceBtn.style.display = hasText ? 'none' : 'flex';
+      clearInputBtn.style.display = hasText ? 'flex' : 'none';
     }
 
     function focusSearchInput() {
@@ -657,7 +652,7 @@
       hideHistory();
     }
 
-    /* RECHERCHE ET NAVIGATION */
+    /* RECHERCHE & ROUTAGE */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -665,15 +660,14 @@
       if (query.includes('#web/')) query = query.split('#web/')[1];
 
       try {
-        const decoded = decodeBase64(query);
+        decodeBase64(query);
         window.location.hash = 'web/' + query;
         return;
       } catch (e) {}
 
       let formatted = query;
       if (!/^https?:\/\//i.test(formatted)) formatted = 'https://' + formatted;
-      const encoded = encodeBase64(formatted);
-      window.location.hash = 'web/' + encoded;
+      window.location.hash = 'web/' + encodeBase64(formatted);
     }
 
     function exploreRandomUrl() {
@@ -687,7 +681,6 @@
       showToast("Lien copié dans le presse-papier !");
     }
 
-    /* ROUTAGE */
     function handleRoute() {
       const hash = window.location.hash;
 
