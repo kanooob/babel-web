@@ -267,7 +267,7 @@
       flex: 1;
     }
 
-    /* NOVO DESIGN DESTINATION HUB (REPLACING GOOGLE SEARCH STYLE) */
+    /* DESTINATION HUB DESIGN */
     .result-container {
       width: 100%;
       max-width: 720px;
@@ -367,34 +367,25 @@
       border-radius: 18px;
       padding: 18px 20px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      flex-direction: column;
+      gap: 6px;
       font-family: var(--mono);
       font-size: 0.95rem;
       word-break: break-all;
     }
 
+    .terminal-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font);
+    }
+
     .terminal-text {
       color: #e8eaed;
-      flex: 1;
-    }
-
-    .copy-icon-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 0.8rem;
+      font-size: 1rem;
       font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-
-    .copy-icon-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
     }
 
     /* METRICS GRID */
@@ -438,12 +429,16 @@
       background-color: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 12px 24px;
+      padding: 12px 20px;
       border-radius: 50px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn:hover {
@@ -456,9 +451,6 @@
       color: #202124;
       border: none;
       font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .btn-primary:hover {
@@ -581,7 +573,7 @@
 
     </div>
 
-    <!-- RESULT VIEW (NEW DESTINATION HUB DESIGN) -->
+    <!-- RESULT VIEW -->
     <div id="result-view" class="result-container">
       
       <!-- TOP NAVIGATION BAR -->
@@ -594,7 +586,7 @@
             <input type="text" id="result-search-input" placeholder="Search another URL..." autocomplete="off" onkeydown="if(event.key==='Enter') searchFromResults()">
             <button class="action-icon-btn" onclick="searchFromResults()">
               <svg viewBox="0 0 24 24">
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/>
               </svg>
             </button>
           </div>
@@ -621,8 +613,8 @@
 
         <!-- TERMINAL DECODED DISPLAY -->
         <div class="terminal-box">
+          <span class="terminal-label">Target URL Destination</span>
           <span id="decoded-url-box" class="terminal-text">---</span>
-          <button class="copy-icon-btn" onclick="copyDecodedUrl()">Copy Link</button>
         </div>
 
         <!-- METRICS GRID -->
@@ -632,17 +624,22 @@
             <span id="res-protocol" class="hub-metric-value">HTTPS</span>
           </div>
           <div class="hub-metric-card">
-            <span class="hub-metric-label">Index Matrix</span>
-            <span id="res-hash-id" class="hub-metric-value">Deterministic</span>
+            <span class="hub-metric-label">Babel Index ID</span>
+            <span id="res-hash-id" class="hub-metric-value">#---</span>
           </div>
         </div>
 
         <!-- ACTION BUTTONS -->
         <div class="hub-actions-row">
           <a id="external-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">
-            Open Web Destination ↗
+            Open URL ↗
           </a>
-          <button class="btn" onclick="copyCurrentLink()">Copy Babel Key</button>
+          <button class="btn" onclick="copyDecodedUrl()">
+            Copy Target URL
+          </button>
+          <button class="btn" onclick="copyPageUrl()">
+            Copy Page Link
+          </button>
         </div>
 
       </div>
@@ -879,15 +876,15 @@
       }, 150);
     }
 
-    function copyCurrentLink() {
-      navigator.clipboard.writeText(window.location.href);
-      showToast("Babel Key copied to clipboard!");
-    }
-
     function copyDecodedUrl() {
       const urlText = document.getElementById('decoded-url-box').innerText;
       navigator.clipboard.writeText(urlText);
-      showToast("URL copied to clipboard!");
+      showToast("Target URL copied to clipboard!");
+    }
+
+    function copyPageUrl() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast("Page link copied to clipboard!");
     }
 
     function handleRoute() {
