@@ -136,7 +136,7 @@
       padding: 6px;
       border-radius: 50%;
       color: var(--text-muted);
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, transform 0.15s ease;
     }
 
     .action-icon-btn:hover {
@@ -148,6 +148,23 @@
       width: 22px;
       height: 22px;
       fill: currentColor;
+    }
+
+    /* STYLE DE LA FACE DU DÉ */
+    .dice-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .dice-spin {
+      animation: spinDice 0.4s ease-out;
+    }
+
+    @keyframes spinDice {
+      0% { transform: rotate(0deg) scale(0.8); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
     }
 
     .clear-input-btn {
@@ -372,7 +389,7 @@
       background-color: #e8eaed;
     }
 
-    /* FOOTER ULTRA CLEAN & SANS LIENS INUTILES */
+    /* FOOTER ÉPURÉ SANS LOCALISATION */
     footer {
       width: 100%;
       background: #171717;
@@ -385,26 +402,11 @@
     .footer-container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 16px;
       max-width: 1200px;
       margin: 0 auto;
-    }
-
-    .footer-location {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    .dot-indicator {
-      width: 8px;
-      height: 8px;
-      background-color: #34a853;
-      border-radius: 50%;
     }
 
     .footer-metrics {
@@ -447,13 +449,6 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
-
-    @media (max-width: 600px) {
-      .footer-container {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
   </style>
 </head>
 <body>
@@ -474,11 +469,9 @@
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <!-- BOUTON DÉ (CHANCE) -->
+          <!-- BOUTON DÉ AVEC FACES ALEATOIRES -->
           <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="J'ai de la chance (URL aléatoire)">
-            <svg viewBox="0 0 24 24">
-              <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm0 2v14h14V5H5zm2 2h3v3H7V7zm7 0h3v3h-3V7zm-3.5 5h3v3h-3v-3zM7 14h3v3H7v-3zm7 0h3v3h-3v-3z"/>
-            </svg>
+            <span id="dice-face" class="dice-icon">⚄</span>
           </button>
 
           <!-- BOUTON CROIX -->
@@ -547,14 +540,9 @@
     </div>
   </main>
 
-  <!-- FOOTER ÉPURÉ & ESSENTIEL -->
+  <!-- FOOTER SANS LOCALISATION -->
   <footer>
     <div class="footer-container">
-      <div class="footer-location">
-        <span class="dot-indicator"></span>
-        <span>France</span>
-      </div>
-
       <div class="footer-metrics">
         <div class="metric-item">Index: <span class="metric-value">1 billion d'URL</span></div>
         <div class="metric-item">•</div>
@@ -569,6 +557,7 @@
 
   <script>
     const API_KEY = "url_babel_galaxie_s9";
+    const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
     /* ENCODAGE / DÉCODAGE BASE64 */
     function encodeBase64(str) {
@@ -616,6 +605,7 @@
     const searchBoxContainer = document.getElementById('search-box-container');
     const clearInputBtn = document.getElementById('clear-input-btn');
     const diceBtn = document.getElementById('dice-btn');
+    const diceFace = document.getElementById('dice-face');
 
     function toggleInputState() {
       const hasText = searchInput.value.trim().length > 0;
@@ -705,10 +695,23 @@
       window.location.hash = 'web/' + encodeBase64(formatted);
     }
 
+    /* DÉ CHANCE AVEC TIRAGE DE FACE ALEATOIRE ET ANIMATION */
     function exploreRandomUrl() {
+      // Changer la face du dé au hasard
+      const randomFace = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
+      diceFace.innerText = randomFace;
+
+      // Ajouter l'animation de rotation
+      diceBtn.classList.remove('dice-spin');
+      void diceBtn.offsetWidth; // Trigger reflow
+      diceBtn.classList.add('dice-spin');
+
       const randStr = () => Math.random().toString(36).substring(2, 7);
       const generatedUrl = `https://${randStr()}.${randStr()}`;
-      window.location.hash = 'web/' + encodeBase64(generatedUrl);
+      
+      setTimeout(() => {
+        window.location.hash = 'web/' + encodeBase64(generatedUrl);
+      }, 150);
     }
 
     function copyCurrentLink() {
@@ -771,6 +774,8 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
+      // Choisir une face de dé aléatoire dès le chargement
+      diceFace.innerText = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
       handleRoute();
       initCounters();
       toggleInputState();
