@@ -6,11 +6,10 @@
   <title>Internet Babel</title>
   <style>
     :root {
-      --primary: #8C935D;
-      --bg: #1e2025;
-      --card-bg: #2a2d34;
-      --border-color: rgba(255, 255, 255, 0.2);
-      --text-main: #ffffff;
+      --bg: #202124;
+      --card-bg: #303134;
+      --border-color: #5f6368;
+      --text-main: #e8eaed;
       --text-muted: #9aa0a6;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
@@ -86,17 +85,23 @@
       display: flex;
       align-items: center;
       background: var(--card-bg);
-      border: 2px solid var(--border-color);
+      border: 1px solid var(--border-color);
       border-radius: 28px;
       padding: 10px 20px;
       gap: 12px;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .input-wrapper:hover {
+      background: #3c4043;
+      border-color: transparent;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
     }
 
     .input-wrapper:focus-within {
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      background: var(--card-bg);
+      border-color: #8ab4f8;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
     }
 
     .search-box.has-history .input-wrapper {
@@ -116,7 +121,7 @@
     }
 
     input[type="text"]::placeholder {
-      color: #6c727d;
+      color: var(--text-muted);
       font-weight: 400;
     }
 
@@ -129,25 +134,25 @@
       justify-content: center;
       padding: 6px;
       border-radius: 50%;
-      color: var(--text-main);
+      color: var(--text-muted);
       transition: background 0.2s, color 0.2s;
     }
 
     .action-icon-btn:hover {
-      color: var(--primary);
-      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .action-icon-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
     .clear-input-btn {
       background: none;
       border: none;
-      color: var(--text-main);
+      color: var(--text-muted);
       font-size: 1.2rem;
       font-weight: bold;
       cursor: pointer;
@@ -161,8 +166,8 @@
     }
 
     .clear-input-btn:hover {
-      color: var(--primary);
-      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     /* HISTORIQUE DÉROULANT */
@@ -172,13 +177,13 @@
       left: 0;
       right: 0;
       background: var(--card-bg);
-      border: 2px solid var(--border-color);
+      border: 1px solid var(--border-color);
       border-top: none;
       border-bottom-left-radius: 24px;
       border-bottom-right-radius: 24px;
       display: none;
       z-index: 20;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
       overflow: hidden;
     }
 
@@ -204,8 +209,8 @@
     }
 
     .clear-btn:hover {
-      color: #ff5555;
-      background: rgba(255, 85, 85, 0.1);
+      color: #f28b82;
+      background: rgba(242, 139, 130, 0.1);
     }
 
     .history-item {
@@ -247,10 +252,10 @@
 
     .result-card {
       background: var(--card-bg);
-      border: 2px solid var(--primary);
+      border: 1px solid var(--border-color);
       border-radius: 24px;
       padding: 28px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .result-meta-top {
@@ -264,13 +269,13 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: var(--primary);
+      background: #3c4043;
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      color: #ffffff;
+      color: var(--text-main);
     }
 
     .site-info {
@@ -304,7 +309,7 @@
 
     .info-item {
       background: var(--bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 14px 16px;
       border-radius: 16px;
     }
@@ -323,7 +328,7 @@
 
     .url-box {
       background: var(--bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 16px;
       border-radius: 16px;
       word-break: break-all;
@@ -351,33 +356,32 @@
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .btn-primary {
-      background-color: var(--primary);
-      color: #ffffff;
+      background-color: #8ab4f8;
+      color: #202124;
       border: none;
       font-weight: 600;
     }
 
     .btn-primary:hover {
-      filter: brightness(1.15);
+      background-color: #aecbfa;
     }
 
-    /* FOOTER STYLE GOOGLE AMÉLIORÉ */
+    /* FOOTER MODERNISÉ (STYLE GOOGLE CLEAN) */
     footer {
       width: 100%;
-      background: rgba(24, 26, 30, 0.8);
-      backdrop-filter: blur(10px);
+      background: #171717;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 0.85rem;
       color: var(--text-muted);
     }
 
-    .footer-top {
-      padding: 14px 24px;
+    .footer-row-1 {
+      padding: 12px 24px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
@@ -390,39 +394,34 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-weight: 500;
-      color: var(--text-main);
     }
 
-    .footer-location-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--primary);
+    .dot-indicator {
+      width: 7px;
+      height: 7px;
+      background-color: #8ab4f8;
       border-radius: 50%;
     }
 
-    .footer-stats-pills {
+    .footer-metrics {
       display: flex;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.8rem;
     }
 
-    .stat-pill {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
+    .metric-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .stat-pill strong {
+    .metric-value {
       color: var(--text-main);
-      font-weight: 600;
+      font-weight: 500;
     }
 
-    .footer-bottom {
+    .footer-row-2 {
       padding: 14px 24px;
       display: flex;
       align-items: center;
@@ -431,21 +430,20 @@
       gap: 16px;
     }
 
-    .footer-links {
+    .footer-links-group {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
       flex-wrap: wrap;
     }
 
-    .footer-links a {
+    .footer-links-group a {
       color: var(--text-muted);
       text-decoration: none;
-      border-radius: 12px;
-      transition: color 0.2s;
+      transition: color 0.15s;
     }
 
-    .footer-links a:hover {
+    .footer-links-group a:hover {
       color: var(--text-main);
     }
 
@@ -455,7 +453,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--card-bg);
-      border: 1px solid var(--primary);
+      border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 12px 24px;
       border-radius: 50px;
@@ -472,13 +470,13 @@
       opacity: 1;
     }
 
-    @media (max-width: 650px) {
-      .footer-top, .footer-bottom {
+    @media (max-width: 600px) {
+      .footer-row-1, .footer-row-2 {
         flex-direction: column;
         align-items: flex-start;
       }
-      .footer-links {
-        gap: 12px;
+      .footer-links-group {
+        gap: 16px;
       }
     }
   </style>
@@ -501,10 +499,10 @@
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <!-- BOUTON DÉ (CHANCE) -->
-          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration aléatoire">
+          <!-- NOUVEAU BOUTON DÉ (STYLE CASINO / CHANCE) -->
+          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="J'ai de la chance (URL aléatoire)">
             <svg viewBox="0 0 24 24">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.83 0 1.5.67 1.5 1.5S7.83 10 7 10s-1.5-.67-1.5-1.5S6.17 7 7 7zm0 10c-.83 0-1.5-.67-1.5-1.5S6.17 14 7 14s1.5.67 1.5 1.5S7.83 17 7 17zm5-5c-.83 0-1.5-.67-1.5-1.5S11.17 9 12 9s1.5.67 1.5 1.5S12.83 12 12 12zm5 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-8c-.83 0-1.5-.67-1.5-1.5S16.17 7 17 7s1.5.67 1.5 1.5S17.83 9 17 9z"/>
+              <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm0 2v14h14V5H5zm2 2h3v3H7V7zm7 0h3v3h-3V7zm-3.5 5h3v3h-3v-3zM7 14h3v3H7v-3zm7 0h3v3h-3v-3z"/>
             </svg>
           </button>
 
@@ -556,7 +554,7 @@
           </div>
           <div class="info-item">
             <div class="info-label">Statut du lien</div>
-            <div id="res-status" class="info-value" style="color: #88d498;">Indexé & Prêt</div>
+            <div id="res-status" class="info-value" style="color: #8ab4f8;">Indexé & Prêt</div>
           </div>
         </div>
 
@@ -574,27 +572,29 @@
     </div>
   </main>
 
-  <!-- FOOTER SENS BÉARN & MATERIAL YOU -->
+  <!-- NOUVEAU FOOTER GOOGLE MINIMALISTE -->
   <footer>
-    <div class="footer-top">
+    <div class="footer-row-1">
       <div class="footer-location">
-        <span class="footer-location-dot"></span>
+        <span class="dot-indicator"></span>
         <span>France</span>
       </div>
-      <div class="footer-stats-pills">
-        <div class="stat-pill">Index : <strong>1 billion d'URL</strong></div>
-        <div class="stat-pill">Total : <strong id="total-requests">...</strong></div>
-        <div class="stat-pill">Aujourd'hui : <strong id="daily-requests">...</strong></div>
+      <div class="footer-metrics">
+        <div class="metric-item">Index: <span class="metric-value">1 billion d'URL</span></div>
+        <div class="metric-item">•</div>
+        <div class="metric-item">Total: <span id="total-requests" class="metric-value">...</span></div>
+        <div class="metric-item">•</div>
+        <div class="metric-item">Aujourd'hui: <span id="daily-requests" class="metric-value">...</span></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-links">
+    <div class="footer-row-2">
+      <div class="footer-links-group">
         <a href="#">À propos</a>
         <a href="#">Projet Babel</a>
         <a href="#">Confidentialité</a>
         <a href="#">Conditions</a>
       </div>
-      <div class="footer-links">
+      <div class="footer-links-group">
         <a href="#">Paramètres</a>
       </div>
     </div>
@@ -612,13 +612,13 @@
 
       let palette = [];
       if (month >= 3 && month <= 5) {
-        palette = ['#88d498', '#1a936f', '#8C935D', '#f3e9d2'];
+        palette = ['#81c995', '#a8dab5', '#8ab4f8', '#fde293'];
       } else if (month >= 6 && month <= 8) {
-        palette = ['#ffb703', '#fb8500', '#2a9d8f', '#8C935D'];
+        palette = ['#fde293', '#fba9d6', '#8ab4f8', '#81c995'];
       } else if (month >= 9 && month <= 11) {
-        palette = ['#d62828', '#f77f00', '#fcbf49', '#8C935D'];
+        palette = ['#f28b82', '#fdd663', '#8ab4f8', '#81c995'];
       } else {
-        palette = ['#a2d2ff', '#bde0fe', '#ffafcc', '#8C935D'];
+        palette = ['#8ab4f8', '#c6dafc', '#fba9d6', '#81c995'];
       }
 
       for (let i = 0; i < 8; i++) {
