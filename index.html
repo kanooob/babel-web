@@ -9,12 +9,12 @@
       --bg: #202124;
       --card-bg: #303134;
       --border-color: #5f6368;
-      --text-main: #e8eaed;
+      --text-main: #ffffff;
       --text-muted: #9aa0a6;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
-      /* Variables pour les 8 lettres de "Internet" */
+      /* Couleur principale blanche / claire */
       --c1: #ffffff;
       --c2: #ffffff;
       --c3: #ffffff;
@@ -51,7 +51,7 @@
       padding: 20px;
     }
 
-    /* LOGO DOODLE */
+    /* LOGO DOODLE BLANC / CLAIR */
     .logo-container {
       text-align: center;
       margin-bottom: 28px;
@@ -63,6 +63,7 @@
       letter-spacing: -2px;
       user-select: none;
       line-height: 1;
+      color: var(--text-main);
     }
 
     .logo span.l1 { color: var(--c1); }
@@ -100,8 +101,8 @@
 
     .input-wrapper:focus-within {
       background: var(--card-bg);
-      border-color: #8ab4f8;
-      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+      border-color: #ffffff;
+      box-shadow: 0 1px 8px rgba(255, 255, 255, 0.2);
     }
 
     .search-box.has-history .input-wrapper {
@@ -361,45 +362,48 @@
     }
 
     .btn-primary {
-      background-color: #8ab4f8;
+      background-color: #ffffff;
       color: #202124;
       border: none;
       font-weight: 600;
     }
 
     .btn-primary:hover {
-      background-color: #aecbfa;
+      background-color: #e8eaed;
     }
 
-    /* FOOTER MODERNISÉ (STYLE GOOGLE CLEAN) */
+    /* FOOTER ULTRA CLEAN & SANS LIENS INUTILES */
     footer {
       width: 100%;
       background: #171717;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 0.85rem;
       color: var(--text-muted);
+      padding: 16px 24px;
     }
 
-    .footer-row-1 {
-      padding: 12px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    .footer-container {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .footer-location {
       display: flex;
       align-items: center;
       gap: 8px;
+      font-weight: 500;
+      color: var(--text-main);
     }
 
     .dot-indicator {
-      width: 7px;
-      height: 7px;
-      background-color: #8ab4f8;
+      width: 8px;
+      height: 8px;
+      background-color: #34a853;
       border-radius: 50%;
     }
 
@@ -418,33 +422,7 @@
 
     .metric-value {
       color: var(--text-main);
-      font-weight: 500;
-    }
-
-    .footer-row-2 {
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .footer-links-group {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links-group a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    .footer-links-group a:hover {
-      color: var(--text-main);
+      font-weight: 600;
     }
 
     #toast {
@@ -471,12 +449,9 @@
     }
 
     @media (max-width: 600px) {
-      .footer-row-1, .footer-row-2 {
+      .footer-container {
         flex-direction: column;
-        align-items: flex-start;
-      }
-      .footer-links-group {
-        gap: 16px;
+        align-items: center;
       }
     }
   </style>
@@ -487,7 +462,7 @@
     <!-- VUE ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- LOGO 8 LETTRES -->
+      <!-- LOGO 8 LETTRES EN BLANC -->
       <div class="logo-container">
         <div class="logo">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
@@ -499,7 +474,7 @@
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
           <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <!-- NOUVEAU BOUTON DÉ (STYLE CASINO / CHANCE) -->
+          <!-- BOUTON DÉ (CHANCE) -->
           <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="J'ai de la chance (URL aléatoire)">
             <svg viewBox="0 0 24 24">
               <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm0 2v14h14V5H5zm2 2h3v3H7V7zm7 0h3v3h-3V7zm-3.5 5h3v3h-3v-3zM7 14h3v3H7v-3zm7 0h3v3h-3v-3z"/>
@@ -554,7 +529,7 @@
           </div>
           <div class="info-item">
             <div class="info-label">Statut du lien</div>
-            <div id="res-status" class="info-value" style="color: #8ab4f8;">Indexé & Prêt</div>
+            <div id="res-status" class="info-value" style="color: #34a853;">Indexé & Prêt</div>
           </div>
         </div>
 
@@ -572,13 +547,14 @@
     </div>
   </main>
 
-  <!-- NOUVEAU FOOTER GOOGLE MINIMALISTE -->
+  <!-- FOOTER ÉPURÉ & ESSENTIEL -->
   <footer>
-    <div class="footer-row-1">
+    <div class="footer-container">
       <div class="footer-location">
         <span class="dot-indicator"></span>
         <span>France</span>
       </div>
+
       <div class="footer-metrics">
         <div class="metric-item">Index: <span class="metric-value">1 billion d'URL</span></div>
         <div class="metric-item">•</div>
@@ -587,44 +563,12 @@
         <div class="metric-item">Aujourd'hui: <span id="daily-requests" class="metric-value">...</span></div>
       </div>
     </div>
-    <div class="footer-row-2">
-      <div class="footer-links-group">
-        <a href="#">À propos</a>
-        <a href="#">Projet Babel</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">Conditions</a>
-      </div>
-      <div class="footer-links-group">
-        <a href="#">Paramètres</a>
-      </div>
-    </div>
   </footer>
 
   <div id="toast">Lien copié dans le presse-papier !</div>
 
   <script>
     const API_KEY = "url_babel_galaxie_s9";
-
-    /* COULEURS SAISONNIÈRES DES LETTRES */
-    function applySeasonalDoodle() {
-      const month = new Date().getMonth() + 1;
-      const root = document.documentElement;
-
-      let palette = [];
-      if (month >= 3 && month <= 5) {
-        palette = ['#81c995', '#a8dab5', '#8ab4f8', '#fde293'];
-      } else if (month >= 6 && month <= 8) {
-        palette = ['#fde293', '#fba9d6', '#8ab4f8', '#81c995'];
-      } else if (month >= 9 && month <= 11) {
-        palette = ['#f28b82', '#fdd663', '#8ab4f8', '#81c995'];
-      } else {
-        palette = ['#8ab4f8', '#c6dafc', '#fba9d6', '#81c995'];
-      }
-
-      for (let i = 0; i < 8; i++) {
-        root.style.setProperty(`--c${i + 1}`, palette[i % palette.length]);
-      }
-    }
 
     /* ENCODAGE / DÉCODAGE BASE64 */
     function encodeBase64(str) {
@@ -827,7 +771,6 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
-      applySeasonalDoodle();
       handleRoute();
       initCounters();
       toggleInputState();
