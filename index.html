@@ -52,7 +52,7 @@
       padding: 20px;
     }
 
-    /* LOGO DOODLE (SANS SOUS-TITRE) */
+    /* LOGO DOODLE */
     .logo-container {
       text-align: center;
       margin-bottom: 28px;
@@ -75,7 +75,7 @@
     .logo span.l7 { color: var(--c7); }
     .logo span.l8 { color: var(--c8); }
 
-    /* BARRE DE RECHERCHE STYLE GOOGLE (ARRONDIE EN PILULE) */
+    /* BARRE DE RECHERCHE ARRONDIE */
     .search-box {
       width: 100%;
       max-width: 600px;
@@ -165,7 +165,7 @@
       background: rgba(255, 255, 255, 0.08);
     }
 
-    /* HISTORIQUE DÉROULANT ARRONDIE */
+    /* HISTORIQUE DÉROULANT */
     .history-dropdown {
       position: absolute;
       top: 100%;
@@ -366,40 +366,92 @@
       filter: brightness(1.15);
     }
 
-    /* FOOTER */
+    /* FOOTER STYLE GOOGLE AMÉLIORÉ */
     footer {
       width: 100%;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      background: rgba(24, 26, 30, 0.8);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 0.85rem;
-      font-weight: 500;
+      color: var(--text-muted);
     }
 
-    .footer-cell {
-      padding: 16px;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    .footer-top {
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .footer-cell:last-child {
-      border-right: none;
-      justify-content: center;
-    }
-
-    .footer-cell a {
+    .footer-location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
       color: var(--text-main);
-      text-decoration: none;
     }
 
-    .footer-cell a:hover {
-      text-decoration: underline;
+    .footer-location-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    .footer-stats-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .stat-pill strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .footer-bottom {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
     }
 
     #toast {
       position: fixed;
-      bottom: 70px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--card-bg);
@@ -421,12 +473,12 @@
     }
 
     @media (max-width: 650px) {
-      footer {
-        grid-template-columns: 1fr;
+      .footer-top, .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
       }
-      .footer-cell {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      .footer-links {
+        gap: 12px;
       }
     }
   </style>
@@ -522,12 +574,30 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER SENS BÉARN & MATERIAL YOU -->
   <footer>
-    <div class="footer-cell">1 billion d'URL</div>
-    <div class="footer-cell">requêtes totales :&nbsp;<span id="total-requests">...</span></div>
-    <div class="footer-cell">requêtes du jour :&nbsp;<span id="daily-requests">...</span></div>
-    <div class="footer-cell"><a href="#">Legal</a></div>
+    <div class="footer-top">
+      <div class="footer-location">
+        <span class="footer-location-dot"></span>
+        <span>France</span>
+      </div>
+      <div class="footer-stats-pills">
+        <div class="stat-pill">Index : <strong>1 billion d'URL</strong></div>
+        <div class="stat-pill">Total : <strong id="total-requests">...</strong></div>
+        <div class="stat-pill">Aujourd'hui : <strong id="daily-requests">...</strong></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-links">
+        <a href="#">À propos</a>
+        <a href="#">Projet Babel</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Conditions</a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Paramètres</a>
+      </div>
+    </div>
   </footer>
 
   <div id="toast">Lien copié dans le presse-papier !</div>
@@ -535,7 +605,7 @@
   <script>
     const API_KEY = "url_babel_galaxie_s9";
 
-    /* COULEURS SAISONNIÈRES DES LETTRES (PAS DE COULEURS ÉGALES ADJACENTES) */
+    /* COULEURS SAISONNIÈRES DES LETTRES */
     function applySeasonalDoodle() {
       const month = new Date().getMonth() + 1;
       const root = document.documentElement;
