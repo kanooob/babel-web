@@ -14,15 +14,15 @@
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
-      /* Primary white / light colors */
-      --c1: #ffffff;
-      --c2: #ffffff;
-      --c3: #ffffff;
-      --c4: #ffffff;
-      --c5: #ffffff;
-      --c6: #ffffff;
-      --c7: #ffffff;
-      --c8: #ffffff;
+      /* Dynamic letter colors (fallback) */
+      --l1: #ffffff;
+      --l2: #ffffff;
+      --l3: #ffffff;
+      --l4: #ffffff;
+      --l5: #ffffff;
+      --l6: #ffffff;
+      --l7: #ffffff;
+      --l8: #ffffff;
     }
 
     * {
@@ -51,10 +51,14 @@
       padding: 20px;
     }
 
-    /* LOGO DOODLE */
+    /* DOODLE LOGO WITH SEASONAL & SPECIAL EVENT COLORS */
     .logo-container {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
 
     .logo {
@@ -63,17 +67,39 @@
       letter-spacing: -2px;
       user-select: none;
       line-height: 1;
-      color: var(--text-main);
+      transition: transform 0.3s ease;
     }
 
-    .logo span.l1 { color: var(--c1); }
-    .logo span.l2 { color: var(--c2); }
-    .logo span.l3 { color: var(--c3); }
-    .logo span.l4 { color: var(--c4); }
-    .logo span.l5 { color: var(--c5); }
-    .logo span.l6 { color: var(--c6); }
-    .logo span.l7 { color: var(--c7); }
-    .logo span.l8 { color: var(--c8); }
+    .logo:hover {
+      transform: scale(1.03);
+    }
+
+    /* Dynamic Coloring per letter */
+    .logo span {
+      transition: color 0.5s ease;
+    }
+    .logo span.l1 { color: var(--l1); }
+    .logo span.l2 { color: var(--l2); }
+    .logo span.l3 { color: var(--l3); }
+    .logo span.l4 { color: var(--l4); }
+    .logo span.l5 { color: var(--l5); }
+    .logo span.l6 { color: var(--l6); }
+    .logo span.l7 { color: var(--l7); }
+    .logo span.l8 { color: var(--l8); }
+
+    /* Doodle Theme Subtitle Tag */
+    .doodle-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.3s ease;
+    }
 
     /* ROUNDED SEARCH BOX */
     .search-box {
@@ -389,7 +415,7 @@
       background-color: #e8eaed;
     }
 
-    /* MINIMAL FOOTER */
+    /* FOOTER & DOODLE SELECTOR */
     footer {
       width: 100%;
       background: #171717;
@@ -401,10 +427,9 @@
 
     .footer-container {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -425,6 +450,24 @@
     .metric-value {
       color: var(--text-main);
       font-weight: 600;
+    }
+
+    .theme-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+    }
+
+    .theme-selector select {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 12px;
+      outline: none;
+      cursor: pointer;
+      font-size: 0.75rem;
     }
 
     #toast {
@@ -457,11 +500,12 @@
     <!-- HOME VIEW -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- LOGO -->
+      <!-- LOGO DOODLE -->
       <div class="logo-container">
-        <div class="logo">
+        <div class="logo" id="doodle-logo">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
         </div>
+        <div class="doodle-badge" id="doodle-badge">✨ Default Theme</div>
       </div>
 
       <!-- SEARCH BOX -->
@@ -550,6 +594,24 @@
         <div class="metric-item">•</div>
         <div class="metric-item">Today: <span id="daily-requests" class="metric-value">...</span></div>
       </div>
+
+      <!-- DOODLE MANUAL THEME SELECTOR -->
+      <div class="theme-selector">
+        <span>🎨 Doodle Theme:</span>
+        <select id="theme-select" onchange="applySelectedTheme(this.value)">
+          <option value="auto">✨ Auto (Today's Event/Season)</option>
+          <option value="autumn">🍁 Autumn / Fall Edition</option>
+          <option value="halloween">🎃 Halloween Doodle</option>
+          <option value="winter">❄️ Winter Season</option>
+          <option value="christmas">🎄 Christmas Doodle</option>
+          <option value="newyear">🎉 New Year Doodle</option>
+          <option value="valentine">❤️ Valentine's Day</option>
+          <option value="stpatrick">☘️ St. Patrick's Day</option>
+          <option value="spring">🌸 Spring Season</option>
+          <option value="summer">☀️ Summer Season</option>
+          <option value="classic">⚪ Classic Minimalist</option>
+        </select>
+      </div>
     </div>
   </footer>
 
@@ -558,6 +620,89 @@
   <script>
     const API_KEY = "url_babel_galaxie_s9";
     const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
+    /* DOODLE COLOR THEMES & EVENTS */
+    const DOODLE_THEMES = {
+      autumn: {
+        badge: "🍁 Autumn Season",
+        colors: ["#e65100", "#f57c00", "#ffb74d", "#d84315", "#ef6c00", "#ff9800", "#ffb74d", "#bf360c"]
+      },
+      halloween: {
+        badge: "🎃 Happy Halloween!",
+        colors: ["#f57c00", "#9c27b0", "#76ff03", "#ff9800", "#ab47bc", "#64dd17", "#ff6d00", "#8e24aa"]
+      },
+      winter: {
+        badge: "❄️ Winter Edition",
+        colors: ["#00e5ff", "#80deea", "#e0f7fa", "#00b0ff", "#81d4fa", "#b2ebf2", "#40c4ff", "#e0f7fa"]
+      },
+      christmas: {
+        badge: "🎄 Merry Christmas!",
+        colors: ["#d32f2f", "#388e3c", "#fbc02d", "#e53935", "#43a047", "#fdd835", "#c62828", "#2e7d32"]
+      },
+      newyear: {
+        badge: "🎉 Happy New Year!",
+        colors: ["#ffd700", "#e0e0e0", "#ffb300", "#f5f5f5", "#ffc107", "#ffffff", "#ffca28", "#bdbdbd"]
+      },
+      valentine: {
+        badge: "❤️ Valentine's Day",
+        colors: ["#e91e63", "#ff4081", "#f48fb1", "#d81b60", "#ff80ab", "#f06292", "#c2185b", "#ff4081"]
+      },
+      stpatrick: {
+        badge: "☘️ St. Patrick's Day",
+        colors: ["#2e7d32", "#4caf50", "#a5d6a7", "#388e3c", "#66bb6a", "#81c784", "#1b5e20", "#43a047"]
+      },
+      spring: {
+        badge: "🌸 Spring Season",
+        colors: ["#f48fb1", "#81c784", "#ce93d8", "#80cbd3", "#ffb74d", "#a5d6a7", "#f06292", "#b39ddb"]
+      },
+      summer: {
+        badge: "☀️ Summer Season",
+        colors: ["#ffeb3b", "#00e5ff", "#ff6e40", "#ffd600", "#18ffff", "#ff3d00", "#ffee58", "#00b0ff"]
+      },
+      classic: {
+        badge: "⚪ Minimalist White",
+        colors: ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]
+      }
+    };
+
+    /* AUTOMATIC DOODLE SELECTION BASED ON DATE */
+    function getAutoDoodleTheme() {
+      const now = new Date();
+      const month = now.getMonth() + 1; // 1-12
+      const day = now.getDate();
+
+      // Special Date Doodles
+      if (month === 10 && day >= 25) return 'halloween';
+      if (month === 12 && day >= 20 && day <= 26) return 'christmas';
+      if ((month === 12 && day >= 31) || (month === 1 && day <= 2)) return 'newyear';
+      if (month === 2 && day === 14) return 'valentine';
+      if (month === 3 && day === 17) return 'stpatrick';
+
+      // Seasonal Fallback
+      if (month >= 3 && month <= 5) return 'spring';
+      if (month >= 6 && month <= 8) return 'summer';
+      if (month >= 9 && month <= 11) return 'autumn';
+      return 'winter';
+    }
+
+    function applyTheme(themeKey) {
+      const theme = DOODLE_THEMES[themeKey] || DOODLE_THEMES.classic;
+      const root = document.documentElement;
+
+      theme.colors.forEach((col, idx) => {
+        root.style.setProperty(`--l${idx + 1}`, col);
+      });
+
+      document.getElementById('doodle-badge').innerText = theme.badge;
+    }
+
+    function applySelectedTheme(val) {
+      if (val === 'auto') {
+        applyTheme(getAutoDoodleTheme());
+      } else {
+        applyTheme(val);
+      }
+    }
 
     /* BASE64 ENCODING / DECODING */
     function encodeBase64(str) {
@@ -772,6 +917,9 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
+      // Initialize automatic theme based on date
+      applyTheme(getAutoDoodleTheme());
+      
       diceFace.innerText = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
       handleRoute();
       initCounters();
