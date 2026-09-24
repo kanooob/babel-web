@@ -6,11 +6,11 @@
   <title>Internet Babel</title>
   <style>
     :root {
-      --bg: #2d3139;
-      --card-bg: #21242a;
+      --bg: #8C935D;
+      --card-bg: #7a8050;
       --border-color: #ffffff;
       --text-main: #ffffff;
-      --text-muted: #a0a5b1;
+      --text-muted: #e2e5d3;
       --font: system-ui, -apple-system, sans-serif;
       --mono: ui-monospace, SFMono-Regular, monospace;
 
@@ -19,6 +19,9 @@
       --c3: #ffffff;
       --c4: #ffffff;
       --c5: #ffffff;
+      --c6: #ffffff;
+      --c7: #ffffff;
+      --c8: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -62,13 +65,17 @@
     .logo span.l3 { color: var(--c3); }
     .logo span.l4 { color: var(--c4); }
     .logo span.l5 { color: var(--c5); }
+    .logo span.l6 { color: var(--c6); }
+    .logo span.l7 { color: var(--c7); }
+    .logo span.l8 { color: var(--c8); }
 
     .season-tag {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 8px;
+      margin-top: 10px;
+      font-weight: 600;
     }
 
     /* BARRE DE RECHERCHE */
@@ -81,7 +88,7 @@
     .input-wrapper {
       display: flex;
       align-items: center;
-      background: transparent;
+      background: rgba(0, 0, 0, 0.1);
       border: 3px solid var(--border-color);
       border-radius: 4px;
       padding: 10px 16px;
@@ -106,7 +113,7 @@
     }
 
     input[type="text"]::placeholder {
-      color: #727782;
+      color: rgba(255, 255, 255, 0.75);
       font-weight: 600;
     }
 
@@ -161,7 +168,7 @@
       border-top: none;
       display: none;
       z-index: 20;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
     }
 
     .history-header {
@@ -172,7 +179,7 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
     .clear-btn {
@@ -184,7 +191,7 @@
     }
 
     .clear-btn:hover {
-      color: #ff5555;
+      color: #ff8888;
     }
 
     .history-item {
@@ -199,7 +206,7 @@
     }
 
     .history-item:hover {
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.1);
     }
 
     .history-text {
@@ -282,7 +289,7 @@
 
     .info-item {
       background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 12px 14px;
       border-radius: 4px;
     }
@@ -301,7 +308,7 @@
 
     .url-box {
       background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 16px;
       border-radius: 4px;
       word-break: break-all;
@@ -328,7 +335,7 @@
     }
 
     .btn:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.15);
     }
 
     .btn-primary {
@@ -339,7 +346,7 @@
     }
 
     .btn-primary:hover {
-      background-color: #d1d1d6;
+      background-color: #f0f0f0;
     }
 
     /* FOOTER */
@@ -354,7 +361,7 @@
 
     .footer-cell {
       padding: 14px 16px;
-      border-right: 1px solid rgba(255,255,255,0.3);
+      border-right: 1px solid rgba(255,255,255,0.4);
       display: flex;
       align-items: center;
     }
@@ -397,7 +404,7 @@
       }
       .footer-cell {
         border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
+        border-bottom: 1px solid rgba(255,255,255,0.3);
       }
     }
   </style>
@@ -410,10 +417,10 @@
     <!-- ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- DOODLE SAISONNIER -->
+      <!-- DOODLE SAISONNIER POUR "INTERNET" (8 LETTRES) -->
       <div class="logo-container">
         <div class="logo">
-          <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">rnet</span>
+          <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
         </div>
         <div id="season-name" class="season-tag">---</div>
       </div>
@@ -478,7 +485,7 @@
           </div>
           <div class="info-item">
             <div class="info-label">Statut du lien</div>
-            <div id="res-status" class="info-value" style="color: #88d498;">Indexé & Prêt</div>
+            <div id="res-status" class="info-value" style="color: #b1ffbe;">Indexé & Prêt</div>
           </div>
         </div>
 
@@ -497,7 +504,7 @@
 
   </main>
 
-  <!-- FOOTER MAQUETTE -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-cell">1 billion d'url</div>
     <div class="footer-cell">requête totale :&nbsp;<span id="total-requests">...</span></div>
@@ -510,33 +517,36 @@
   <script>
     const API_KEY = "url_babel_galaxie_s9";
 
-    /* DOODLE SAISONNIER */
+    /* DOODLE SAISONNIER (AUCUNE LETTRE ADJACENTE DE MÊME COULEUR) */
     function applySeasonalDoodle() {
       const month = new Date().getMonth() + 1;
       const root = document.documentElement;
       const tag = document.getElementById('season-name');
 
       let season = '';
-      let colors = [];
+      let palette = [];
 
       if (month >= 3 && month <= 5) {
-        season = 'Édition Printemps';
-        colors = ['#88d498', '#1a936f', '#114b5f', '#f3e9d2', '#c6dabf'];
+        season = 'Printemps';
+        palette = ['#d4f7a1', '#ffffff', '#ffdf85', '#b2e2f8'];
       } else if (month >= 6 && month <= 8) {
-        season = 'Édition Été';
-        colors = ['#ffb703', '#fb8500', '#2a9d8f', '#e76f51', '#e9c46a'];
+        season = 'Été';
+        palette = ['#ffe169', '#ffffff', '#ff9f1c', '#4ecdc4'];
       } else if (month >= 9 && month <= 11) {
-        season = 'Édition Automne';
-        colors = ['#d62828', '#f77f00', '#fcbf49', '#a44a3f', '#e3a857'];
+        season = 'Automne';
+        palette = ['#ffd166', '#ffffff', '#f4a261', '#e76f51'];
       } else {
-        season = 'Édition Hiver';
-        colors = ['#a2d2ff', '#bde0fe', '#ffafcc', '#cdb4db', '#80ed99'];
+        season = 'Hiver';
+        palette = ['#e0f7fa', '#ffffff', '#80deea', '#b3e5fc'];
       }
 
       tag.innerText = season;
-      colors.forEach((col, i) => {
-        root.style.setProperty(`--c${i + 1}`, col);
-      });
+
+      // Assignation alternée pour garantir que deux lettres adjacentes ne se touchent jamais avec la même couleur
+      for (let i = 0; i < 8; i++) {
+        const color = palette[i % palette.length];
+        root.style.setProperty(`--c${i + 1}`, color);
+      }
     }
 
     /* BASE64 */
@@ -579,7 +589,7 @@
       document.getElementById('daily-requests').innerText = dailyData.count;
     }
 
-    /* GESTION ENTRE DÉ ET CROIX */
+    /* GESTION DÉ / CROIX */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
