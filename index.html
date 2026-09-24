@@ -6,11 +6,12 @@
   <title>Internet Babel</title>
   <style>
     :root {
-      --bg: #8C935D;
-      --card-bg: #7a8050;
+      --primary: #8C935D;
+      --bg: #21242a;
+      --card-bg: #2d3139;
       --border-color: #ffffff;
       --text-main: #ffffff;
-      --text-muted: #e2e5d3;
+      --text-muted: #a0a5b1;
       --font: system-ui, -apple-system, sans-serif;
       --mono: ui-monospace, SFMono-Regular, monospace;
 
@@ -46,7 +47,7 @@
       padding: 20px;
     }
 
-    /* LOGO & DOODLE */
+    /* LOGO */
     .logo-container {
       text-align: center;
       margin-bottom: 24px;
@@ -69,15 +70,6 @@
     .logo span.l7 { color: var(--c7); }
     .logo span.l8 { color: var(--c8); }
 
-    .season-tag {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 10px;
-      font-weight: 600;
-    }
-
     /* BARRE DE RECHERCHE */
     .search-box {
       width: 100%;
@@ -88,12 +80,16 @@
     .input-wrapper {
       display: flex;
       align-items: center;
-      background: rgba(0, 0, 0, 0.1);
+      background: var(--card-bg);
       border: 3px solid var(--border-color);
       border-radius: 4px;
       padding: 10px 16px;
       gap: 12px;
       transition: all 0.2s ease;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: var(--primary);
     }
 
     .search-box.has-history .input-wrapper {
@@ -113,7 +109,7 @@
     }
 
     input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.75);
+      color: #727782;
       font-weight: 600;
     }
 
@@ -126,11 +122,11 @@
       justify-content: center;
       padding: 4px;
       color: var(--text-main);
-      transition: opacity 0.2s;
+      transition: color 0.2s, opacity 0.2s;
     }
 
     .action-icon-btn:hover {
-      opacity: 0.7;
+      color: var(--primary);
     }
 
     .action-icon-btn svg {
@@ -154,7 +150,7 @@
     }
 
     .clear-input-btn:hover {
-      opacity: 0.7;
+      color: var(--primary);
     }
 
     /* HISTORIQUE DÉROULANT */
@@ -168,7 +164,7 @@
       border-top: none;
       display: none;
       z-index: 20;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
     }
 
     .history-header {
@@ -179,7 +175,7 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .clear-btn {
@@ -191,7 +187,7 @@
     }
 
     .clear-btn:hover {
-      color: #ff8888;
+      color: #ff5555;
     }
 
     .history-item {
@@ -206,7 +202,7 @@
     }
 
     .history-item:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
     }
 
     .history-text {
@@ -233,7 +229,7 @@
 
     .result-card {
       background: var(--card-bg);
-      border: 2px solid var(--border-color);
+      border: 2px solid var(--primary);
       border-radius: 8px;
       padding: 28px;
     }
@@ -249,13 +245,13 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--bg);
+      background: var(--primary);
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      color: var(--text-main);
+      color: #ffffff;
     }
 
     .site-info {
@@ -289,7 +285,7 @@
 
     .info-item {
       background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid var(--primary);
       padding: 12px 14px;
       border-radius: 4px;
     }
@@ -308,7 +304,7 @@
 
     .url-box {
       background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
       padding: 16px;
       border-radius: 4px;
       word-break: break-all;
@@ -335,18 +331,18 @@
     }
 
     .btn:hover {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.1);
     }
 
     .btn-primary {
-      background-color: var(--text-main);
-      color: var(--bg);
+      background-color: var(--primary);
+      color: #ffffff;
       border: none;
       font-weight: 600;
     }
 
     .btn-primary:hover {
-      background-color: #f0f0f0;
+      filter: brightness(1.1);
     }
 
     /* FOOTER */
@@ -361,7 +357,7 @@
 
     .footer-cell {
       padding: 14px 16px;
-      border-right: 1px solid rgba(255,255,255,0.4);
+      border-right: 1px solid rgba(255,255,255,0.3);
       display: flex;
       align-items: center;
     }
@@ -382,7 +378,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--primary);
       color: var(--text-main);
       padding: 12px 24px;
       border-radius: 4px;
@@ -404,7 +400,7 @@
       }
       .footer-cell {
         border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.3);
+        border-bottom: 1px solid rgba(255,255,255,0.2);
       }
     }
   </style>
@@ -417,12 +413,11 @@
     <!-- ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- DOODLE SAISONNIER POUR "INTERNET" (8 LETTRES) -->
+      <!-- DOODLE SAISONNIER SANS SOUS-TITRE -->
       <div class="logo-container">
         <div class="logo">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
         </div>
-        <div id="season-name" class="season-tag">---</div>
       </div>
 
       <!-- BARRE DE RECHERCHE -->
@@ -485,7 +480,7 @@
           </div>
           <div class="info-item">
             <div class="info-label">Statut du lien</div>
-            <div id="res-status" class="info-value" style="color: #b1ffbe;">Indexé & Prêt</div>
+            <div id="res-status" class="info-value" style="color: #88d498;">Indexé & Prêt</div>
           </div>
         </div>
 
@@ -517,32 +512,23 @@
   <script>
     const API_KEY = "url_babel_galaxie_s9";
 
-    /* DOODLE SAISONNIER (AUCUNE LETTRE ADJACENTE DE MÊME COULEUR) */
+    /* DOODLE SAISONNIER POUR INTERNET (8 LETTRES / PAS DE MÊME COULEUR CÔTE À CÔTE) */
     function applySeasonalDoodle() {
       const month = new Date().getMonth() + 1;
       const root = document.documentElement;
-      const tag = document.getElementById('season-name');
 
-      let season = '';
       let palette = [];
 
       if (month >= 3 && month <= 5) {
-        season = 'Printemps';
-        palette = ['#d4f7a1', '#ffffff', '#ffdf85', '#b2e2f8'];
+        palette = ['#88d498', '#1a936f', '#8C935D', '#f3e9d2'];
       } else if (month >= 6 && month <= 8) {
-        season = 'Été';
-        palette = ['#ffe169', '#ffffff', '#ff9f1c', '#4ecdc4'];
+        palette = ['#ffb703', '#fb8500', '#2a9d8f', '#8C935D'];
       } else if (month >= 9 && month <= 11) {
-        season = 'Automne';
-        palette = ['#ffd166', '#ffffff', '#f4a261', '#e76f51'];
+        palette = ['#d62828', '#f77f00', '#fcbf49', '#8C935D'];
       } else {
-        season = 'Hiver';
-        palette = ['#e0f7fa', '#ffffff', '#80deea', '#b3e5fc'];
+        palette = ['#a2d2ff', '#bde0fe', '#ffafcc', '#8C935D'];
       }
 
-      tag.innerText = season;
-
-      // Assignation alternée pour garantir que deux lettres adjacentes ne se touchent jamais avec la même couleur
       for (let i = 0; i < 8; i++) {
         const color = palette[i % palette.length];
         root.style.setProperty(`--c${i + 1}`, color);
