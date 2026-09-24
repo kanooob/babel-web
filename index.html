@@ -3,23 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Babel Search</title>
+  <title>Internet Babel</title>
   <style>
     :root {
-      --bg: #121214;
-      --card-bg: #1e1e22;
-      --border-color: #2e2e34;
-      --border-hover: #44444c;
+      --bg: #2d3139;
+      --card-bg: #21242a;
+      --border-color: #ffffff;
       --text-main: #ffffff;
-      --text-muted: #8e8e93;
+      --text-muted: #a0a5b1;
       --font: system-ui, -apple-system, sans-serif;
       --mono: ui-monospace, SFMono-Regular, monospace;
-
-      --c1: #ffffff;
-      --c2: #ffffff;
-      --c3: #ffffff;
-      --c4: #ffffff;
-      --c5: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,82 +37,38 @@
       padding: 20px;
     }
 
-    /* LOGO DOODLE SAISONNIER */
-    .logo-container {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .logo {
-      font-size: 5.2rem;
+    /* TITRE DE PAGE */
+    .main-title {
+      font-size: 4.5rem;
       font-weight: 800;
-      letter-spacing: -1.5px;
+      letter-spacing: -1px;
       user-select: none;
+      margin-bottom: 40px;
+      color: var(--text-main);
     }
 
-    .logo span.l1 { color: var(--c1); }
-    .logo span.l2 { color: var(--c2); }
-    .logo span.l3 { color: var(--c3); }
-    .logo span.l4 { color: var(--c4); }
-    .logo span.l5 { color: var(--c5); }
-
-    .season-tag {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 6px;
-    }
-
-    /* BARRE DE RECHERCHE OPTIMISÉE */
+    /* BARRE DE RECHERCHE DU STYLE MAQUETTE */
     .search-box {
       width: 100%;
-      max-width: 620px;
+      max-width: 580px;
       position: relative;
     }
 
     .input-wrapper {
       display: flex;
       align-items: center;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px 20px;
-      gap: 14px;
-      cursor: text;
+      background: transparent;
+      border: 3px solid var(--border-color);
+      border-radius: 4px;
+      padding: 10px 16px;
+      gap: 12px;
       transition: all 0.2s ease;
     }
 
-    .input-wrapper:hover {
-      border-color: var(--border-hover);
-      background: #232328;
-    }
-
-    .input-wrapper:focus-within {
-      border-color: #666670;
-      background: #232328;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
-    }
-
-    /* Fusion quand l'historique est affiché */
+    /* Fusion avec l'historique quand affiché */
     .search-box.has-history .input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      border-bottom-color: var(--border-color);
-      box-shadow: none;
-    }
-
-    .search-icon {
-      width: 20px;
-      height: 20px;
-      fill: var(--text-muted);
-      flex-shrink: 0;
-      pointer-events: none;
-      transition: fill 0.2s;
-    }
-
-    .input-wrapper:focus-within .search-icon {
-      fill: var(--text-main);
     }
 
     input[type="text"] {
@@ -128,16 +77,40 @@
       border: none;
       outline: none;
       color: var(--text-main);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      font-weight: 600;
       font-family: var(--font);
     }
 
     input[type="text"]::placeholder {
-      color: var(--text-muted);
-      opacity: 0.8;
+      color: #727782;
+      font-weight: 600;
     }
 
-    /* BOUTON EFFACER (×) */
+    /* BOUTONS D'ACTION DANS LA BARRE */
+    .action-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      color: var(--text-main);
+      transition: opacity 0.2s;
+    }
+
+    .action-icon-btn:hover {
+      opacity: 0.7;
+    }
+
+    .action-icon-btn svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    /* BOUTON EFFACER */
     .clear-input-btn {
       background: none;
       border: none;
@@ -149,42 +122,35 @@
       justify-content: center;
       width: 24px;
       height: 24px;
-      border-radius: 50%;
-      transition: background 0.15s, color 0.15s;
     }
 
     .clear-input-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
       color: var(--text-main);
     }
 
-    /* HISTORIQUE DIRECTEMENT COLLÉ SOUS LA BARRE */
+    /* HISTORIQUE DEROULANT */
     .history-dropdown {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background: #232328;
-      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      border: 3px solid var(--border-color);
       border-top: none;
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
       display: none;
       z-index: 20;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
     }
 
     .history-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px 16px;
       font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .clear-btn {
@@ -202,23 +168,16 @@
     .history-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 20px;
+      gap: 12px;
+      padding: 12px 16px;
       color: var(--text-main);
-      text-decoration: none;
       font-size: 0.95rem;
       cursor: pointer;
       transition: background 0.15s;
     }
 
     .history-item:hover {
-      background: var(--card-bg);
-    }
-
-    .history-icon {
-      width: 16px;
-      height: 16px;
-      fill: var(--text-muted);
+      background: rgba(255,255,255,0.05);
     }
 
     .history-text {
@@ -226,30 +185,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
-    }
-
-    .button-row {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-      justify-content: center;
-    }
-
-    .btn {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 11px 22px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      background-color: var(--border-hover);
-      border-color: #555560;
     }
 
     /* PAGE DE RÉSULTATS */
@@ -269,10 +204,9 @@
 
     .result-card {
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
       padding: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .result-meta-top {
@@ -286,12 +220,12 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--border-color);
+      background: var(--bg);
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 0.9rem;
       color: var(--text-main);
     }
 
@@ -303,7 +237,6 @@
     .site-name {
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--text-main);
     }
 
     .site-url-breadcrumb {
@@ -315,9 +248,7 @@
     .result-title-main {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #ffffff;
       margin-bottom: 18px;
-      line-height: 1.3;
     }
 
     .info-grid {
@@ -329,35 +260,31 @@
 
     .info-item {
       background: var(--bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255,255,255,0.2);
       padding: 12px 14px;
-      border-radius: 8px;
+      border-radius: 4px;
     }
 
     .info-label {
       font-size: 0.72rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
 
     .info-value {
       font-size: 0.88rem;
       font-weight: 500;
-      color: var(--text-main);
-      word-break: break-all;
     }
 
     .url-box {
       background: var(--bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255,255,255,0.2);
       padding: 16px;
-      border-radius: 10px;
+      border-radius: 4px;
       word-break: break-all;
       font-family: var(--mono);
       font-size: 0.95rem;
-      color: var(--text-main);
       margin-bottom: 24px;
     }
 
@@ -365,6 +292,21 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 18px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.1);
     }
 
     .btn-primary {
@@ -378,26 +320,43 @@
       background-color: #d1d1d6;
     }
 
-    /* FOOTER */
+    /* FOOTER CONFORME À LA MAQUETTE */
     footer {
-      padding: 20px 28px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      width: 100%;
+      border-top: 2px solid var(--border-color);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .footer-cell {
+      padding: 14px 16px;
+      border-right: 1px solid rgba(255,255,255,0.3);
       display: flex;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-color);
+      align-items: center;
+    }
+
+    .footer-cell:last-child {
+      border-right: none;
+      justify-content: center;
+    }
+
+    .footer-cell a {
+      color: var(--text-main);
+      text-decoration: none;
     }
 
     #toast {
       position: fixed;
-      bottom: 60px;
+      bottom: 70px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 12px 24px;
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 0.88rem;
       transition: transform 0.25s ease, opacity 0.25s ease;
       opacity: 0;
@@ -409,6 +368,16 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
+    @media (max-width: 650px) {
+      footer {
+        grid-template-columns: 1fr;
+      }
+      .footer-cell {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+    }
   </style>
 </head>
 <body>
@@ -419,21 +388,28 @@
     <!-- ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <div class="logo-container">
-        <div class="logo">
-          <span class="l1">B</span><span class="l2">a</span><span class="l3">b</span><span class="l4">e</span><span class="l5">l</span>
-        </div>
-        <div id="season-name" class="season-tag">---</div>
-      </div>
+      <h1 class="main-title">Internet</h1>
 
-      <!-- BLOC BARRE + HISTORIQUE COLLÉ -->
+      <!-- BARRE DE RECHERCHE DE LA MAQUETTE -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
-          <svg class="search-icon" viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-          </svg>
-          <input type="text" id="search-input" placeholder="Entrer une URL ou une clé Babel..." autocomplete="off" oninput="toggleClearBtn()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Recherche votre url" autocomplete="off" oninput="toggleClearBtn()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          
           <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
+
+          <!-- BOUTON DÉ (EXPLORATION ALÉATOIRE) -->
+          <button class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration Aléatoire">
+            <svg viewBox="0 0 24 24">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.83 0 1.5.67 1.5 1.5S7.83 10 7 10s-1.5-.67-1.5-1.5S6.17 7 7 7zm0 10c-.83 0-1.5-.67-1.5-1.5S6.17 14 7 14s1.5.67 1.5 1.5S7.83 17 7 17zm5-5c-.83 0-1.5-.67-1.5-1.5S11.17 9 12 9s1.5.67 1.5 1.5S12.83 12 12 12zm5 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-8c-.83 0-1.5-.67-1.5-1.5S16.17 7 17 7s1.5.67 1.5 1.5S17.83 9 17 9z"/>
+            </svg>
+          </button>
+
+          <!-- BOUTON LOUPE (RECHERCHER) -->
+          <button class="action-icon-btn" onclick="searchOrGenerate()" title="Rechercher">
+            <svg viewBox="0 0 24 24">
+              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+          </button>
         </div>
 
         <!-- HISTORIQUE S'OUVRANT COLLÉ EN DESSOUS -->
@@ -444,26 +420,18 @@
           </div>
           <div id="history-list"></div>
         </div>
-
-        <!-- BOUTONS EN DESSOUS DE L'ENSEMBLE -->
-        <div class="button-row">
-          <button class="btn" onclick="searchOrGenerate()">Rechercher</button>
-          <button class="btn" onclick="exploreRandomUrl()">Exploration Aléatoire</button>
-        </div>
       </div>
 
     </div>
 
     <!-- PAGE DE RÉSULTATS -->
     <div id="result-view" class="result-container">
-      
       <div class="result-header">
         <button class="btn" onclick="window.location.hash=''">← Nouvelle recherche</button>
         <span style="font-size: 0.8rem; color: var(--text-muted);">Résultat déterministe Babel</span>
       </div>
 
       <div class="result-card">
-        
         <div class="result-meta-top">
           <div id="res-favicon" class="site-favicon">B</div>
           <div class="site-info">
@@ -495,49 +463,23 @@
           </a>
           <button class="btn" onclick="copyCurrentLink()">Copier la clé Babel</button>
         </div>
-
       </div>
     </div>
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER DU STYLE MAQUETTE -->
   <footer>
-    <span>La Bibliothèque de Babel — Index Déterministe</span>
-    <span>~1 Decillion d'emplacements</span>
+    <div class="footer-cell">1 billion d'url</div>
+    <div class="footer-cell">requête totale :&nbsp;<span id="total-requests">...</span></div>
+    <div class="footer-cell">requête du jour :&nbsp;<span id="daily-requests">...</span></div>
+    <div class="footer-cell"><a href="#">Legal</a></div>
   </footer>
 
   <div id="toast">Lien copié dans le presse-papier !</div>
 
   <script>
-    /* DOODLE SAISONNIER */
-    function applySeasonalDoodle() {
-      const month = new Date().getMonth() + 1;
-      const root = document.documentElement;
-      const tag = document.getElementById('season-name');
-
-      let season = '';
-      let colors = [];
-
-      if (month >= 3 && month <= 5) {
-        season = 'Édition Printemps';
-        colors = ['#88d498', '#1a936f', '#114b5f', '#f3e9d2', '#c6dabf'];
-      } else if (month >= 6 && month <= 8) {
-        season = 'Édition Été';
-        colors = ['#ffb703', '#fb8500', '#2a9d8f', '#e76f51', '#e9c46a'];
-      } else if (month >= 9 && month <= 11) {
-        season = 'Édition Automne';
-        colors = ['#d62828', '#f77f00', '#fcbf49', '#a44a3f', '#e3a857'];
-      } else {
-        season = 'Édition Hiver';
-        colors = ['#a2d2ff', '#bde0fe', '#ffafcc', '#cdb4db', '#80ed99'];
-      }
-
-      tag.innerText = season;
-      colors.forEach((col, i) => {
-        root.style.setProperty(`--c${i + 1}`, col);
-      });
-    }
+    const API_KEY = "url_babel_galaxie_s9";
 
     /* BASE64 */
     function encodeBase64(str) {
@@ -558,7 +500,33 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* BARRE DE RECHERCHE & HISTORIQUE */
+    /* COMPTEUR AVEC LA CLÉ url_babel_galaxie_s9 */
+    async function initCounters() {
+      try {
+        const res = await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${API_KEY}`);
+        const data = await res.json();
+        if (data.value !== undefined) {
+          document.getElementById('total-requests').innerText = data.value;
+        } else {
+          document.getElementById('total-requests').innerText = '0';
+        }
+      } catch (e) {
+        document.getElementById('total-requests').innerText = '1';
+      }
+
+      // Requêtes du jour gérées en local par date
+      const today = new Date().toISOString().split('T')[0];
+      let dailyData = JSON.parse(localStorage.getItem('babel_daily_count') || '{}');
+      if (dailyData.date === today) {
+        dailyData.count += 1;
+      } else {
+        dailyData = { date: today, count: 1 };
+      }
+      localStorage.setItem('babel_daily_count', JSON.stringify(dailyData));
+      document.getElementById('daily-requests').innerText = dailyData.count;
+    }
+
+    /* HISTORIQUE ET BARRE DE RECHERCHE */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
@@ -607,9 +575,6 @@
 
       list.innerHTML = history.map(item => `
         <div class="history-item" onclick="loadFromHistory('${item.hashKey}', event)">
-          <svg class="history-icon" viewBox="0 0 24 24">
-            <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-          </svg>
           <span class="history-text">${item.url}</span>
         </div>
       `).join('');
@@ -635,7 +600,7 @@
       hideHistory();
     }
 
-    /* RECHERCHE ET NAVIGATION */
+    /* NAVIGATION ET RECHERCHE */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -665,7 +630,7 @@
       showToast("Lien copié dans le presse-papier !");
     }
 
-    /* ROUTAGE ET RÉSULTATS */
+    /* ROUTAGE */
     function handleRoute() {
       const hash = window.location.hash;
 
@@ -721,8 +686,8 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
-      applySeasonalDoodle();
       handleRoute();
+      initCounters();
     });
   </script>
 </body>
