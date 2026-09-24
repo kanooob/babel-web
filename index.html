@@ -13,6 +13,12 @@
       --text-muted: #a0a5b1;
       --font: system-ui, -apple-system, sans-serif;
       --mono: ui-monospace, SFMono-Regular, monospace;
+
+      --c1: #ffffff;
+      --c2: #ffffff;
+      --c3: #ffffff;
+      --c4: #ffffff;
+      --c5: #ffffff;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,17 +43,35 @@
       padding: 20px;
     }
 
-    /* TITRE DE PAGE */
-    .main-title {
-      font-size: 4.5rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      user-select: none;
-      margin-bottom: 40px;
-      color: var(--text-main);
+    /* LOGO & DOODLE */
+    .logo-container {
+      text-align: center;
+      margin-bottom: 24px;
     }
 
-    /* BARRE DE RECHERCHE DU STYLE MAQUETTE */
+    .logo {
+      font-size: 4.8rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .logo span.l1 { color: var(--c1); }
+    .logo span.l2 { color: var(--c2); }
+    .logo span.l3 { color: var(--c3); }
+    .logo span.l4 { color: var(--c4); }
+    .logo span.l5 { color: var(--c5); }
+
+    .season-tag {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+
+    /* BARRE DE RECHERCHE */
     .search-box {
       width: 100%;
       max-width: 580px;
@@ -65,7 +89,6 @@
       transition: all 0.2s ease;
     }
 
-    /* Fusion avec l'historique quand affiché */
     .search-box.has-history .input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -87,7 +110,6 @@
       font-weight: 600;
     }
 
-    /* BOUTONS D'ACTION DANS LA BARRE */
     .action-icon-btn {
       background: none;
       border: none;
@@ -105,30 +127,30 @@
     }
 
     .action-icon-btn svg {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       fill: currentColor;
     }
 
-    /* BOUTON EFFACER */
     .clear-input-btn {
       background: none;
       border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
+      color: var(--text-main);
+      font-size: 1.3rem;
+      font-weight: bold;
       cursor: pointer;
       display: none;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
+      padding: 4px;
+      line-height: 1;
     }
 
     .clear-input-btn:hover {
-      color: var(--text-main);
+      opacity: 0.7;
     }
 
-    /* HISTORIQUE DEROULANT */
+    /* HISTORIQUE DÉROULANT */
     .history-dropdown {
       position: absolute;
       top: 100%;
@@ -187,7 +209,7 @@
       flex: 1;
     }
 
-    /* PAGE DE RÉSULTATS */
+    /* RÉSULTATS */
     .result-container {
       width: 100%;
       max-width: 680px;
@@ -320,7 +342,7 @@
       background-color: #d1d1d6;
     }
 
-    /* FOOTER CONFORME À LA MAQUETTE */
+    /* FOOTER */
     footer {
       width: 100%;
       border-top: 2px solid var(--border-color);
@@ -388,23 +410,30 @@
     <!-- ACCUEIL -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <h1 class="main-title">Internet</h1>
+      <!-- DOODLE SAISONNIER -->
+      <div class="logo-container">
+        <div class="logo">
+          <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">rnet</span>
+        </div>
+        <div id="season-name" class="season-tag">---</div>
+      </div>
 
-      <!-- BARRE DE RECHERCHE DE LA MAQUETTE -->
+      <!-- BARRE DE RECHERCHE -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
-          <input type="text" id="search-input" placeholder="Recherche votre url" autocomplete="off" oninput="toggleClearBtn()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Recherche votre url" autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
-
-          <!-- BOUTON DÉ (EXPLORATION ALÉATOIRE) -->
-          <button class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration Aléatoire">
+          <!-- DÉ (AFFICHE QUAND VIDE) -->
+          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="Exploration Aléatoire">
             <svg viewBox="0 0 24 24">
               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 7c.83 0 1.5.67 1.5 1.5S7.83 10 7 10s-1.5-.67-1.5-1.5S6.17 7 7 7zm0 10c-.83 0-1.5-.67-1.5-1.5S6.17 14 7 14s1.5.67 1.5 1.5S7.83 17 7 17zm5-5c-.83 0-1.5-.67-1.5-1.5S11.17 9 12 9s1.5.67 1.5 1.5S12.83 12 12 12zm5 5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-8c-.83 0-1.5-.67-1.5-1.5S16.17 7 17 7s1.5.67 1.5 1.5S17.83 9 17 9z"/>
             </svg>
           </button>
 
-          <!-- BOUTON LOUPE (RECHERCHER) -->
+          <!-- CROIX (AFFICHE QUAND TEXTE PRÉSENT) -->
+          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
+
+          <!-- LOUPE -->
           <button class="action-icon-btn" onclick="searchOrGenerate()" title="Rechercher">
             <svg viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -412,7 +441,7 @@
           </button>
         </div>
 
-        <!-- HISTORIQUE S'OUVRANT COLLÉ EN DESSOUS -->
+        <!-- HISTORIQUE COLLÉ EN DESSOUS -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
             <span>Recherches récentes</span>
@@ -468,7 +497,7 @@
 
   </main>
 
-  <!-- FOOTER DU STYLE MAQUETTE -->
+  <!-- FOOTER MAQUETTE -->
   <footer>
     <div class="footer-cell">1 billion d'url</div>
     <div class="footer-cell">requête totale :&nbsp;<span id="total-requests">...</span></div>
@@ -480,6 +509,35 @@
 
   <script>
     const API_KEY = "url_babel_galaxie_s9";
+
+    /* DOODLE SAISONNIER */
+    function applySeasonalDoodle() {
+      const month = new Date().getMonth() + 1;
+      const root = document.documentElement;
+      const tag = document.getElementById('season-name');
+
+      let season = '';
+      let colors = [];
+
+      if (month >= 3 && month <= 5) {
+        season = 'Édition Printemps';
+        colors = ['#88d498', '#1a936f', '#114b5f', '#f3e9d2', '#c6dabf'];
+      } else if (month >= 6 && month <= 8) {
+        season = 'Édition Été';
+        colors = ['#ffb703', '#fb8500', '#2a9d8f', '#e76f51', '#e9c46a'];
+      } else if (month >= 9 && month <= 11) {
+        season = 'Édition Automne';
+        colors = ['#d62828', '#f77f00', '#fcbf49', '#a44a3f', '#e3a857'];
+      } else {
+        season = 'Édition Hiver';
+        colors = ['#a2d2ff', '#bde0fe', '#ffafcc', '#cdb4db', '#80ed99'];
+      }
+
+      tag.innerText = season;
+      colors.forEach((col, i) => {
+        root.style.setProperty(`--c${i + 1}`, col);
+      });
+    }
 
     /* BASE64 */
     function encodeBase64(str) {
@@ -500,21 +558,16 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* COMPTEUR AVEC LA CLÉ url_babel_galaxie_s9 */
+    /* COMPTEURS */
     async function initCounters() {
       try {
         const res = await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${API_KEY}`);
         const data = await res.json();
-        if (data.value !== undefined) {
-          document.getElementById('total-requests').innerText = data.value;
-        } else {
-          document.getElementById('total-requests').innerText = '0';
-        }
+        document.getElementById('total-requests').innerText = data.value !== undefined ? data.value : '0';
       } catch (e) {
         document.getElementById('total-requests').innerText = '1';
       }
 
-      // Requêtes du jour gérées en local par date
       const today = new Date().toISOString().split('T')[0];
       let dailyData = JSON.parse(localStorage.getItem('babel_daily_count') || '{}');
       if (dailyData.date === today) {
@@ -526,25 +579,33 @@
       document.getElementById('daily-requests').innerText = dailyData.count;
     }
 
-    /* HISTORIQUE ET BARRE DE RECHERCHE */
+    /* GESTION ENTRE DÉ ET CROIX */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
     const clearInputBtn = document.getElementById('clear-input-btn');
+    const diceBtn = document.getElementById('dice-btn');
+
+    function toggleInputState() {
+      const hasText = searchInput.value.trim().length > 0;
+      if (hasText) {
+        diceBtn.style.display = 'none';
+        clearInputBtn.style.display = 'flex';
+      } else {
+        diceBtn.style.display = 'flex';
+        clearInputBtn.style.display = 'none';
+      }
+    }
 
     function focusSearchInput() {
       searchInput.focus();
       showHistory();
     }
 
-    function toggleClearBtn() {
-      clearInputBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
-    }
-
     function clearSearchInput(e) {
       e.stopPropagation();
       searchInput.value = '';
-      toggleClearBtn();
+      toggleInputState();
       searchInput.focus();
     }
 
@@ -600,7 +661,7 @@
       hideHistory();
     }
 
-    /* NAVIGATION ET RECHERCHE */
+    /* RECHERCHE ET NAVIGATION */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -686,8 +747,10 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
+      applySeasonalDoodle();
       handleRoute();
       initCounters();
+      toggleInputState();
     });
   </script>
 </body>
