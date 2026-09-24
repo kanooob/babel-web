@@ -7,11 +7,10 @@
   <style>
     :root {
       --bg: #202124;
-      --card-bg: #303134;
+      --card-bg: #2a2d34;
       --border-color: #5f6368;
       --text-main: #ffffff;
       --text-muted: #9aa0a6;
-      --accent-blue: #8ab4f8;
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
@@ -52,7 +51,7 @@
       width: 100%;
     }
 
-    /* DOODLE LOGO WITH SEASONAL & SPECIAL EVENT COLORS */
+    /* LOGO DOODLE WITH SEASONAL & SPECIAL EVENT COLORS */
     .logo-container {
       text-align: center;
       margin-bottom: 28px;
@@ -268,10 +267,10 @@
       flex: 1;
     }
 
-    /* NEW SEARCH RESULTS PAGE DESIGN */
+    /* NOVO DESIGN DESTINATION HUB (REPLACING GOOGLE SEARCH STYLE) */
     .result-container {
       width: 100%;
-      max-width: 820px;
+      max-width: 720px;
       display: none;
       margin: 10px auto 40px auto;
     }
@@ -281,123 +280,157 @@
       align-items: center;
       gap: 20px;
       width: 100%;
-      margin-bottom: 24px;
+      margin-bottom: 30px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 20px;
     }
 
-    .results-stats-text {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    /* GOOGLE STYLE SEARCH CARD */
-    .search-result-card {
+    .destination-hub-card {
       background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
-    .search-result-card:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    }
-
-    .result-site-header {
+    .hub-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .result-site-icon {
-      width: 28px;
-      height: 28px;
+    .hub-site-badge {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hub-avatar {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: #3c4043;
+      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 1.2rem;
+      font-weight: 700;
       color: var(--text-main);
     }
 
-    .result-site-meta {
+    .hub-title-box {
       display: flex;
       flex-direction: column;
     }
 
-    .result-site-name {
-      font-size: 0.88rem;
-      font-weight: 500;
+    .hub-domain-name {
+      font-size: 1.25rem;
+      font-weight: 700;
       color: var(--text-main);
     }
 
-    .result-site-url {
-      font-size: 0.78rem;
+    .hub-breadcrumb {
+      font-size: 0.85rem;
       color: var(--text-muted);
       word-break: break-all;
     }
 
-    .result-link-title {
-      font-size: 1.3rem;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      background: rgba(52, 168, 83, 0.12);
+      border: 1px solid rgba(52, 168, 83, 0.3);
+      color: #34a853;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: var(--accent-blue);
-      text-decoration: none;
-      display: inline-block;
-      margin-bottom: 10px;
     }
 
-    .result-link-title:hover {
-      text-decoration: underline;
+    .status-pill-dot {
+      width: 6px;
+      height: 6px;
+      background: #34a853;
+      border-radius: 50%;
     }
 
-    .result-snippet-text {
-      font-size: 0.92rem;
-      color: #bdc1c6;
-      line-height: 1.5;
-      margin-bottom: 18px;
+    /* CODE / TERMINAL DISPLAY BOX */
+    .terminal-box {
+      background: #17181c;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      word-break: break-all;
     }
 
-    .tech-details-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .terminal-text {
+      color: #e8eaed;
+      flex: 1;
     }
 
-    .tech-detail-box {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px 14px;
+    .copy-icon-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 8px 12px;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
     }
 
-    .tech-detail-label {
-      font-size: 0.7rem;
+    .copy-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* METRICS GRID */
+    .hub-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .hub-metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hub-metric-label {
+      font-size: 0.75rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      margin-bottom: 2px;
+      letter-spacing: 0.5px;
     }
 
-    .tech-detail-val {
-      font-size: 0.85rem;
+    .hub-metric-value {
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-main);
     }
 
-    .action-row {
+    /* BUTTONS ROW */
+    .hub-actions-row {
       display: flex;
       gap: 12px;
-      margin-top: 20px;
       flex-wrap: wrap;
     }
 
@@ -405,9 +438,9 @@
       background-color: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 10px 20px;
+      padding: 12px 24px;
       border-radius: 50px;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 500;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
@@ -419,14 +452,17 @@
     }
 
     .btn-primary {
-      background-color: var(--accent-blue);
+      background-color: #ffffff;
       color: #202124;
       border: none;
       font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-primary:hover {
-      background-color: #aecbfa;
+      background-color: #e8eaed;
     }
 
     /* FOOTER */
@@ -493,6 +529,13 @@
         flex-direction: column;
         align-items: flex-start;
       }
+      .hub-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hub-metrics-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -538,10 +581,10 @@
 
     </div>
 
-    <!-- RESULT VIEW (REDESIGNED) -->
+    <!-- RESULT VIEW (NEW DESTINATION HUB DESIGN) -->
     <div id="result-view" class="result-container">
       
-      <!-- SEARCH HEADER ON RESULTS PAGE -->
+      <!-- TOP NAVIGATION BAR -->
       <div class="results-top-bar">
         <div class="logo mini" onclick="window.location.hash=''">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
@@ -558,55 +601,50 @@
         </div>
       </div>
 
-      <div class="results-stats-text">
-        About 1 result (0.00004 seconds) • Deterministic Index #<span id="res-hash-id">---</span>
-      </div>
-
-      <!-- MAIN RESULT CARD -->
-      <div class="search-result-card">
-        <div class="result-site-header">
-          <div id="res-favicon" class="result-site-icon">B</div>
-          <div class="result-site-meta">
-            <span id="res-domain" class="result-site-name">babel.index</span>
-            <span id="res-breadcrumb" class="result-site-url">https://...</span>
+      <!-- DESTINATION HUB CARD -->
+      <div class="destination-hub-card">
+        
+        <!-- HEADER BADGE -->
+        <div class="hub-header">
+          <div class="hub-site-badge">
+            <div id="res-favicon" class="hub-avatar">B</div>
+            <div class="hub-title-box">
+              <span id="res-domain" class="hub-domain-name">babel.index</span>
+              <span id="res-breadcrumb" class="hub-breadcrumb">https://...</span>
+            </div>
+          </div>
+          <div class="status-pill">
+            <span class="status-pill-dot"></span>
+            <span>Indexed & Ready</span>
           </div>
         </div>
 
-        <a id="res-title-link" class="result-link-title" href="#" target="_blank" rel="noopener noreferrer">
-          Destination Web Location
-        </a>
+        <!-- TERMINAL DECODED DISPLAY -->
+        <div class="terminal-box">
+          <span id="decoded-url-box" class="terminal-text">---</span>
+          <button class="copy-icon-btn" onclick="copyDecodedUrl()">Copy Link</button>
+        </div>
 
-        <p id="res-snippet" class="result-snippet-text">
-          Deterministic web destination resolved across the universal index. Encoded via Base64 URL-Safe protocol. Click the title or button below to navigate to the live website.
-        </p>
-
-        <!-- TECHNICAL METADATA GRID -->
-        <div class="tech-details-grid">
-          <div class="tech-detail-box">
-            <div class="tech-detail-label">Protocol</div>
-            <div id="res-protocol" class="tech-detail-val">HTTPS</div>
+        <!-- METRICS GRID -->
+        <div class="hub-metrics-grid">
+          <div class="hub-metric-card">
+            <span class="hub-metric-label">Protocol</span>
+            <span id="res-protocol" class="hub-metric-value">HTTPS</span>
           </div>
-          <div class="tech-detail-box">
-            <div class="tech-detail-label">Status</div>
-            <div id="res-status" class="tech-detail-val" style="color: #34a853;">Indexed & Active</div>
-          </div>
-          <div class="tech-detail-box">
-            <div class="tech-detail-label">Encoding</div>
-            <div class="tech-detail-val">Base64 URL-Safe</div>
+          <div class="hub-metric-card">
+            <span class="hub-metric-label">Index Matrix</span>
+            <span id="res-hash-id" class="hub-metric-value">Deterministic</span>
           </div>
         </div>
 
-        <!-- RAW DECODED URL DISPLAY -->
-        <div class="url-box" style="margin-top: 16px; margin-bottom: 0;">
-          <span id="decoded-url-box">---</span>
-        </div>
-
-        <div class="action-row">
+        <!-- ACTION BUTTONS -->
+        <div class="hub-actions-row">
           <a id="external-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">
-            Visit destination ↗
+            Open Web Destination ↗
           </a>
-          <button class="btn" onclick="copyCurrentLink()">Copy Babel key</button>
+          <button class="btn" onclick="copyCurrentLink()">Copy Babel Key</button>
         </div>
+
       </div>
 
     </div>
@@ -843,7 +881,13 @@
 
     function copyCurrentLink() {
       navigator.clipboard.writeText(window.location.href);
-      showToast("Link copied to clipboard!");
+      showToast("Babel Key copied to clipboard!");
+    }
+
+    function copyDecodedUrl() {
+      const urlText = document.getElementById('decoded-url-box').innerText;
+      navigator.clipboard.writeText(urlText);
+      showToast("URL copied to clipboard!");
     }
 
     function handleRoute() {
@@ -861,7 +905,7 @@
 
         document.getElementById('decoded-url-box').innerText = decoded;
         document.getElementById('res-breadcrumb').innerText = decoded;
-        document.getElementById('res-hash-id').innerText = encoded.substring(0, 12);
+        document.getElementById('res-hash-id').innerText = "#" + encoded.substring(0, 10);
 
         let domain = 'Web Location';
         let initial = 'B';
@@ -877,20 +921,15 @@
         }
 
         document.getElementById('res-domain').innerText = domain;
-        const titleLink = document.getElementById('res-title-link');
-        titleLink.innerText = domain !== 'Web Location' ? `${domain} — Official Destination` : 'Babel Location Result';
-        
         document.getElementById('res-favicon').innerText = initial;
         document.getElementById('res-protocol').innerText = protocol;
 
         const extBtn = document.getElementById('external-btn');
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
           extBtn.href = decoded;
-          titleLink.href = decoded;
           extBtn.style.display = 'inline-flex';
         } else {
           extBtn.style.display = 'none';
-          titleLink.removeAttribute('href');
         }
 
         addHistory(decoded, encoded);
