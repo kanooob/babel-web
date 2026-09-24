@@ -340,26 +340,6 @@
       word-break: break-all;
     }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 50px;
-      background: rgba(52, 168, 83, 0.12);
-      border: 1px solid rgba(52, 168, 83, 0.3);
-      color: #34a853;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .status-pill-dot {
-      width: 6px;
-      height: 6px;
-      background: #34a853;
-      border-radius: 50%;
-    }
-
     /* CODE / TERMINAL DISPLAY BOX */
     .terminal-box {
       background: #17181c;
@@ -386,36 +366,6 @@
       color: #e8eaed;
       font-size: 1rem;
       font-weight: 500;
-    }
-
-    /* METRICS GRID */
-    .hub-metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .hub-metric-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 16px;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .hub-metric-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .hub-metric-value {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-main);
     }
 
     /* BUTTONS ROW */
@@ -525,9 +475,6 @@
         flex-direction: column;
         align-items: flex-start;
       }
-      .hub-metrics-grid {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -586,7 +533,7 @@
             <input type="text" id="result-search-input" placeholder="Search another URL..." autocomplete="off" onkeydown="if(event.key==='Enter') searchFromResults()">
             <button class="action-icon-btn" onclick="searchFromResults()">
               <svg viewBox="0 0 24 24">
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/>
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
               </svg>
             </button>
           </div>
@@ -605,28 +552,12 @@
               <span id="res-breadcrumb" class="hub-breadcrumb">https://...</span>
             </div>
           </div>
-          <div class="status-pill">
-            <span class="status-pill-dot"></span>
-            <span>Indexed & Ready</span>
-          </div>
         </div>
 
         <!-- TERMINAL DECODED DISPLAY -->
         <div class="terminal-box">
           <span class="terminal-label">Target URL Destination</span>
           <span id="decoded-url-box" class="terminal-text">---</span>
-        </div>
-
-        <!-- METRICS GRID -->
-        <div class="hub-metrics-grid">
-          <div class="hub-metric-card">
-            <span class="hub-metric-label">Protocol</span>
-            <span id="res-protocol" class="hub-metric-value">HTTPS</span>
-          </div>
-          <div class="hub-metric-card">
-            <span class="hub-metric-label">Babel Index ID</span>
-            <span id="res-hash-id" class="hub-metric-value">#---</span>
-          </div>
         </div>
 
         <!-- ACTION BUTTONS -->
@@ -902,24 +833,20 @@
 
         document.getElementById('decoded-url-box').innerText = decoded;
         document.getElementById('res-breadcrumb').innerText = decoded;
-        document.getElementById('res-hash-id').innerText = "#" + encoded.substring(0, 10);
 
         let domain = 'Web Location';
         let initial = 'B';
-        let protocol = 'Generic';
 
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
           try {
             const urlObj = new URL(decoded);
             domain = urlObj.hostname;
             initial = domain.replace('www.', '')[0].toUpperCase();
-            protocol = urlObj.protocol.replace(':', '').toUpperCase();
           } catch(e) {}
         }
 
         document.getElementById('res-domain').innerText = domain;
         document.getElementById('res-favicon').innerText = initial;
-        document.getElementById('res-protocol').innerText = protocol;
 
         const extBtn = document.getElementById('external-btn');
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
