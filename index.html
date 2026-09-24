@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
       --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
-      /* Couleur principale blanche / claire */
+      /* Primary white / light colors */
       --c1: #ffffff;
       --c2: #ffffff;
       --c3: #ffffff;
@@ -41,7 +41,7 @@
       justify-content: space-between;
     }
 
-    /* CONTENEUR PRINCIPAL */
+    /* MAIN CONTAINER */
     main {
       display: flex;
       flex-direction: column;
@@ -51,7 +51,7 @@
       padding: 20px;
     }
 
-    /* LOGO DOODLE BLANC / CLAIR */
+    /* LOGO DOODLE */
     .logo-container {
       text-align: center;
       margin-bottom: 28px;
@@ -75,7 +75,7 @@
     .logo span.l7 { color: var(--c7); }
     .logo span.l8 { color: var(--c8); }
 
-    /* BARRE DE RECHERCHE ARRONDIE */
+    /* ROUNDED SEARCH BOX */
     .search-box {
       width: 100%;
       max-width: 600px;
@@ -150,7 +150,7 @@
       fill: currentColor;
     }
 
-    /* STYLE DE LA FACE DU DÉ */
+    /* DICE FACE STYLE */
     .dice-icon {
       font-size: 1.4rem;
       line-height: 1;
@@ -188,7 +188,7 @@
       background: rgba(255, 255, 255, 0.1);
     }
 
-    /* HISTORIQUE DÉROULANT */
+    /* HISTORY DROPDOWN */
     .history-dropdown {
       position: absolute;
       top: 100%;
@@ -253,7 +253,7 @@
       flex: 1;
     }
 
-    /* VUE RÉSULTAT */
+    /* RESULT VIEW */
     .result-container {
       width: 100%;
       max-width: 680px;
@@ -389,7 +389,7 @@
       background-color: #e8eaed;
     }
 
-    /* FOOTER ÉPURÉ SANS LOCALISATION */
+    /* MINIMAL FOOTER */
     footer {
       width: 100%;
       background: #171717;
@@ -454,42 +454,42 @@
 <body>
 
   <main>
-    <!-- VUE ACCUEIL -->
+    <!-- HOME VIEW -->
     <div id="home-view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
       
-      <!-- LOGO 8 LETTRES EN BLANC -->
+      <!-- LOGO -->
       <div class="logo-container">
         <div class="logo">
           <span class="l1">I</span><span class="l2">n</span><span class="l3">t</span><span class="l4">e</span><span class="l5">r</span><span class="l6">n</span><span class="l7">e</span><span class="l8">t</span>
         </div>
       </div>
 
-      <!-- BARRE DE RECHERCHE ARRONDIE -->
+      <!-- SEARCH BOX -->
       <div class="search-box" id="search-box-container">
         <div class="input-wrapper" id="input-wrapper" onclick="focusSearchInput()">
-          <input type="text" id="search-input" placeholder="Rechercher une URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
+          <input type="text" id="search-input" placeholder="Search a URL..." autocomplete="off" oninput="toggleInputState()" onkeydown="if(event.key==='Enter') searchOrGenerate()">
           
-          <!-- BOUTON DÉ AVEC FACES ALEATOIRES -->
-          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="J'ai de la chance (URL aléatoire)">
+          <!-- RANDOM DICE BUTTON -->
+          <button id="dice-btn" class="action-icon-btn" onclick="exploreRandomUrl()" title="I'm Feeling Lucky (Random URL)">
             <span id="dice-face" class="dice-icon">⚄</span>
           </button>
 
-          <!-- BOUTON CROIX -->
-          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Effacer">✕</button>
+          <!-- CLEAR BUTTON -->
+          <button id="clear-input-btn" class="clear-input-btn" onclick="clearSearchInput(event)" title="Clear">✕</button>
 
-          <!-- BOUTON LOUPE -->
-          <button class="action-icon-btn" onclick="searchOrGenerate()" title="Rechercher">
+          <!-- SEARCH BUTTON -->
+          <button class="action-icon-btn" onclick="searchOrGenerate()" title="Search">
             <svg viewBox="0 0 24 24">
               <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
           </button>
         </div>
 
-        <!-- MENU HISTORIQUE -->
+        <!-- HISTORY DROPDOWN -->
         <div id="history-dropdown" class="history-dropdown">
           <div class="history-header">
-            <span>Recherches récentes</span>
-            <button class="clear-btn" onclick="clearHistory(event)">Effacer</button>
+            <span>Recent searches</span>
+            <button class="clear-btn" onclick="clearHistory(event)">Clear</button>
           </div>
           <div id="history-list"></div>
         </div>
@@ -497,11 +497,11 @@
 
     </div>
 
-    <!-- VUE RÉSULTAT -->
+    <!-- RESULT VIEW -->
     <div id="result-view" class="result-container">
       <div class="result-header">
-        <button class="btn" onclick="window.location.hash=''">← Nouvelle recherche</button>
-        <span style="font-size: 0.8rem; color: var(--text-muted);">Résultat déterministe Babel</span>
+        <button class="btn" onclick="window.location.hash=''">← New search</button>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Deterministic Babel Result</span>
       </div>
 
       <div class="result-card">
@@ -513,16 +513,16 @@
           </div>
         </div>
 
-        <h1 id="res-title" class="result-title-main">Emplacement de destination</h1>
+        <h1 id="res-title" class="result-title-main">Destination Location</h1>
 
         <div class="info-grid">
           <div class="info-item">
-            <div class="info-label">Protocole</div>
+            <div class="info-label">Protocol</div>
             <div id="res-protocol" class="info-value">HTTPS</div>
           </div>
           <div class="info-item">
-            <div class="info-label">Statut du lien</div>
-            <div id="res-status" class="info-value" style="color: #34a853;">Indexé & Prêt</div>
+            <div class="info-label">Link Status</div>
+            <div id="res-status" class="info-value" style="color: #34a853;">Indexed & Ready</div>
           </div>
         </div>
 
@@ -532,34 +532,34 @@
 
         <div class="action-stack">
           <a id="external-btn" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center;" href="#" target="_blank" rel="noopener noreferrer">
-            Visiter la destination ↗
+            Visit destination ↗
           </a>
-          <button class="btn" onclick="copyCurrentLink()">Copier la clé Babel</button>
+          <button class="btn" onclick="copyCurrentLink()">Copy Babel key</button>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- FOOTER SANS LOCALISATION -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
       <div class="footer-metrics">
-        <div class="metric-item">Index: <span class="metric-value">1 billion d'URL</span></div>
+        <div class="metric-item">Index: <span class="metric-value">1 trillion URLs</span></div>
         <div class="metric-item">•</div>
         <div class="metric-item">Total: <span id="total-requests" class="metric-value">...</span></div>
         <div class="metric-item">•</div>
-        <div class="metric-item">Aujourd'hui: <span id="daily-requests" class="metric-value">...</span></div>
+        <div class="metric-item">Today: <span id="daily-requests" class="metric-value">...</span></div>
       </div>
     </div>
   </footer>
 
-  <div id="toast">Lien copié dans le presse-papier !</div>
+  <div id="toast">Link copied to clipboard!</div>
 
   <script>
     const API_KEY = "url_babel_galaxie_s9";
     const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
-    /* ENCODAGE / DÉCODAGE BASE64 */
+    /* BASE64 ENCODING / DECODING */
     function encodeBase64(str) {
       return btoa(unescape(encodeURIComponent(str)))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -578,7 +578,7 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    /* COMPTEURS */
+    /* COUNTERS */
     async function initCounters() {
       try {
         const res = await fetch(`https://countapi.mileshilliard.com/api/v1/hit/${API_KEY}`);
@@ -599,7 +599,7 @@
       document.getElementById('daily-requests').innerText = dailyData.count;
     }
 
-    /* INTERFACE RECHERCHE & HISTORIQUE */
+    /* SEARCH & HISTORY UI */
     const searchInput = document.getElementById('search-input');
     const historyDropdown = document.getElementById('history-dropdown');
     const searchBoxContainer = document.getElementById('search-box-container');
@@ -677,7 +677,7 @@
       hideHistory();
     }
 
-    /* RECHERCHE & ROUTAGE */
+    /* SEARCH & ROUTING */
     function searchOrGenerate() {
       let query = searchInput.value.trim();
       if (!query) return;
@@ -695,13 +695,11 @@
       window.location.hash = 'web/' + encodeBase64(formatted);
     }
 
-    /* DÉ CHANCE AVEC TIRAGE DE FACE ALEATOIRE ET ANIMATION */
+    /* RANDOM DICE ROLL WITH ANIMATION */
     function exploreRandomUrl() {
-      // Changer la face du dé au hasard
       const randomFace = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
       diceFace.innerText = randomFace;
 
-      // Ajouter l'animation de rotation
       diceBtn.classList.remove('dice-spin');
       void diceBtn.offsetWidth; // Trigger reflow
       diceBtn.classList.add('dice-spin');
@@ -716,7 +714,7 @@
 
     function copyCurrentLink() {
       navigator.clipboard.writeText(window.location.href);
-      showToast("Lien copié dans le presse-papier !");
+      showToast("Link copied to clipboard!");
     }
 
     function handleRoute() {
@@ -729,15 +727,15 @@
         try {
           decoded = decodeBase64(encoded);
         } catch (e) {
-          decoded = "[Données non déchiffrables: " + encoded + "]";
+          decoded = "[Undecodable data: " + encoded + "]";
         }
 
         document.getElementById('decoded-url-box').innerText = decoded;
         document.getElementById('res-breadcrumb').innerText = decoded;
 
-        let domain = 'Emplacement Web';
+        let domain = 'Web Location';
         let initial = 'B';
-        let protocol = 'Générique';
+        let protocol = 'Generic';
 
         if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
           try {
@@ -749,7 +747,7 @@
         }
 
         document.getElementById('res-domain').innerText = domain;
-        document.getElementById('res-title').innerText = domain !== 'Emplacement Web' ? `Destination : ${domain}` : 'Résultat d\'emplacement Babel';
+        document.getElementById('res-title').innerText = domain !== 'Web Location' ? `Destination: ${domain}` : 'Babel Location Result';
         document.getElementById('res-favicon').innerText = initial;
         document.getElementById('res-protocol').innerText = protocol;
 
@@ -774,7 +772,6 @@
 
     window.addEventListener('hashchange', handleRoute);
     window.addEventListener('load', () => {
-      // Choisir une face de dé aléatoire dès le chargement
       diceFace.innerText = DICE_FACES[Math.floor(Math.random() * DICE_FACES.length)];
       handleRoute();
       initCounters();
